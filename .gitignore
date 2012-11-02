@@ -1,1 +1,5 @@
 .idea/*
+.meteor
+.project
+.settings
+.buildpath
