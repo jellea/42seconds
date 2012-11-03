@@ -10,7 +10,7 @@
     <div id="wrapper">
         <h1>Logo</h1>
         {{ test }}
-        <input type="button" class="startgame" value="New game"/>
+        <input type="button" class="newgame" value="New game"/>
         <br />
         <input type="button" class="joingame" value="Join game"/>
     </div>
@@ -19,13 +19,14 @@
 <template name="newgame">
     <div id="wrapper">
         <p>
-            Five rounds</br>
-            All categories</br>
-            Medium difficulty
+          Five rounds</br>
+          All categories</br>
+          Medium difficulty
         </p>
+
         <input type="button" class="startgame" value="Quick match"/>
         <p>or</p>
-        <input type="button" class="joingame" value="Advanced game">
+        <input type="button" class="advancedsettings" value="Advanced settings">
         <p>Choose your options</p>
     </div>
 </template>
@@ -39,24 +40,24 @@
 <template name="advancedsettings">
     <div id="wrapper">
         <h3>Rounds</h3>
-	<ul>
-            <li><input type="radio" name="rounds" value="3"> 3</li>
-            <li><input type="radio" name="rounds" value="5"> 5</li>
-            <li><input type="radio" name="rounds" value="7"> 7</li>
-	</ul>
+            <ul>
+                    <li><input type="radio" name="rounds" id="round_3" value="3"><label for="round_3"> 3</label></li>
+                    <li><input type="radio" name="rounds" id="round_5" value="5"><label for="round_5"> 5</label></li>
+                    <li><input type="radio" name="rounds" id="round_7" value="7"><label for="round_7"> 7</label></li>
+            </ul>
         <h3>Category</h3>
             <ul>
-                <li><input type="radio" name="rounds" value=""> Everything</li>
-                <li><input type="radio" name="rounds" value="people"> People</li>
-                <li><input type="radio" name="rounds" value="disney"> Disney</li>
+                    <li><input type="radio" name="category" id="category_everything" value=""><label for="category_everything"> Everything</label></li>
+                    <li><input type="radio" name="category" id="category_people" value="people"><label for="category_people"> People</label></li>
+                    <li><input type="radio" name="category" id="category_disney" value="disney"><label for="category_disney"> Disney</label></li>
             </ul>
         <h3>Difficulty</h3>
             <ul>
-                <li><input type="radio" name="rounds" value="easy"> Pussy</li>
-                <li><input type="radio" name="rounds" value="medium"> Doable</li>
-                <li><input type="radio" name="rounds" value="hard"> Bring it on!</li>
+                    <li><input type="radio" name="difficulty" id="difficulty_easy" value="easy"><label for="difficulty_easy"> Pussy</label></li>
+                    <li><input type="radio" name="difficulty" id="difficulty_medium" value="medium"><label for="difficulty_medium"> Doable</label></li>
+                    <li><input type="radio" name="difficulty" id="difficulty_hard" value="hard"><label for="difficulty_hard"> Bring it on!</label></li>
             </ul>
-        <input type="button" class="joingame" value="Done"/>
+        <input type="button" class="startgame" value="Start game!"/>
     </div>
 </template>
 
@@ -104,10 +105,10 @@
 
 <template name="gameActiveteam">
     <div id="wrapper">
-        <h3>Round ={{roundnumber}}</h3>
+        <h3>Round = {{roundnumber}}</h3>
         <ul>
-            {{#each anwsers}}
-            <li><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+            {{#each answers}}
+            <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>2</div>Handicap</li>
             <li><div>2</div>Total</li>
@@ -121,8 +122,8 @@
         <h3>Round ={{roundnumber}}</h3>
         <p>Score: {{score}}</p>
         <ul>
-            {{#each anwsers}}
-            <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
         </ul>
         <div class="clock">42</div>
@@ -133,8 +134,8 @@
     <div id="wrapper">
         <h3>Score check</h3>
         <ul>
-            {{#each anwsers}}
-            <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
@@ -147,8 +148,8 @@
     <div id="wrapper">
         <h3>Results</h3>
         <ul>
-            {{#each anwsers}}
-            <li data-questionid="{{id}}" class="inactive">{{anwser}}</li>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="inactive">{{answer}}</li>
             {{/each}}
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
