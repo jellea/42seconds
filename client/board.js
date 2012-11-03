@@ -26,6 +26,17 @@ var game = function () {
 };
 
 Template.lobby.events({
+  'click input.newgame': function () {
+    Meteor.call('newgame', function(error,result) {
+    	$("body").html(Meteor.render(Template.newgame));
+    });
+  },
+  'click input.joingame': function () {
+     $("body").html(Meteor.render(Template.join));
+  }
+});
+
+Template.newgame.events({
   'click input.startgame': function () {
   Meteor.call('start_new_game', function(error,gamecode) {
     Template.showcode.gamecode = gamecode;
@@ -33,8 +44,27 @@ Template.lobby.events({
       $("body").html(fragment);
     });
   },
-  'click input.joingame': function () {
-     $("body").html(Meteor.render(Template.join));
+  'click input.advancedsettings': function () {
+  	Meteor.call('advancedsettings', function(error,gamecode) {
+  		$("body").html(Meteor.render(Template.advancedsettings));
+  	});
+  }
+});
+
+Template.advancedsettings.events({
+  'click input.startgame': function () {
+  rounds = $('input[name="rounds"]').val();
+  category = $('input[name="category"]').val();
+  difficulty = $('input[name="difficulty"]').val();
+  
+  Meteor.call('start_new_game', rounds, category, difficulty, function(error,gamecode) {
+    Template.showcode.rounds = rounds;
+    Template.showcode.rounds = category;
+    Template.showcode.rounds = difficulty;
+    Template.showcode.gamecode = gamecode;
+      var fragment = Meteor.render(Template.showcode);
+      $("body").html(fragment);
+    });
   }
 });
 
@@ -86,7 +116,7 @@ Meteor.startup(function () {
   		team = Teams.findOne(Session.get('team_id'));
   		if(typeof team.gamecode!='undefined' && team.gamecode.length) {
   			game = Games.findOne({gamecode: team.gamecode});
-			console.log('There are '+game.teams.length+' in the game!');
+			console.log('Teams in game; '+game.teams.length);
   		} else {
   			console.log('Team not yet in game.');
   		}

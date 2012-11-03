@@ -9,7 +9,7 @@
 <template name="lobby">
     <h1>Logo</h1>
     {{ test }}
-    <input type="button" class="startgame" value="New game"/>
+    <input type="button" class="newgame" value="New game"/>
     <br />
     <input type="button" class="joingame" value="Join game"/>
 </template>
@@ -23,7 +23,7 @@
 
     <input type="button" class="startgame" value="Quick match"/>
     <p>or</p>
-    <input type="button" class="joingame" value="Advanced game">
+    <input type="button" class="advancedsettings" value="Advanced settings">
     <p>Choose your options</p>
 </template>
 
@@ -40,17 +40,17 @@
 	</ul>
     <h3>Category</h3>
 	<ul>
-		<li><input type="radio" name="rounds" value=""> Everything</li>
-		<li><input type="radio" name="rounds" value="people"> People</li>
-		<li><input type="radio" name="rounds" value="disney"> Disney</li>
+		<li><input type="radio" name="category" value=""> Everything</li>
+		<li><input type="radio" name="category" value="people"> People</li>
+		<li><input type="radio" name="category" value="disney"> Disney</li>
 	</ul>
     <h3>Difficulty</h3>
 	<ul>
-		<li><input type="radio" name="rounds" value="easy"> Pussy</li>
-		<li><input type="radio" name="rounds" value="medium"> Doable</li>
-		<li><input type="radio" name="rounds" value="hard"> Bring it on!</li>
+		<li><input type="radio" name="difficulty" value="easy"> Pussy</li>
+		<li><input type="radio" name="difficulty" value="medium"> Doable</li>
+		<li><input type="radio" name="difficulty" value="hard"> Bring it on!</li>
 	</ul>
-    <input type="button" class="joingame" value="Done"/>
+    <input type="button" class="startgame" value="Done"/>
 </template>
 
 <template name="join">

@@ -9,26 +9,37 @@ var game = function () {
 };
 
 Meteor.methods({
+
+  newgame: function () {
+      return 'newgame';
+  },
+  
+  advancedsettings: function () {
+      return 'advancedsettings';
+  },
+  
   start_new_game: function (evt) {
-	var clock = 42;
-function createGamecode() {
-    var gamecode = '';
-	for(i=0;i<3;i++) {
-		if(i==0) {
-			 // don't allow 0 as first digit
-			random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-		} else {
-			random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-		}
-		gamecode += ''+random;
-	}
-	found = Games.findOne({'gamecode':gamecode});
-	if(found) {
-		return createGameCode();
-	}
-	return gamecode;
-}
-	gamecode = createGamecode();
+    var clock = 42;
+
+    function createGamecode() {
+        var gamecode = '';
+        for(i=0;i<3;i++) {
+            if(i==0) {
+                 // don't allow 0 as first digit
+                random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+            } else {
+                random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+            }
+            gamecode += ''+random;
+        }
+        found = Games.findOne({'gamecode':gamecode});
+        if(found) {
+            return createGameCode();
+        }
+        return gamecode;
+    }
+    
+    gamecode = createGamecode();
 
     // create a new game with the current team in it
     Games.insert({team: team(), clock: clock, gamecode: gamecode});
@@ -43,7 +54,7 @@ function createGamecode() {
     var p = Teams.find({gamecode: gamecode},
                          {fields: {_id: true, name: true}}).fetch();
     Games.update({gamecode: gamecode}, {$set: {teams: p}});
-	
+    
     // wind down the game clock
     var interval = Meteor.setInterval(function () {
       clock -= 1;
@@ -76,7 +87,7 @@ function createGamecode() {
                   {$set: {last_keepalive: (new Date()).getTime(),
                           idle: false}});
   },
-
+  
   joined_game: function (gamecode) {
     // move everyone who is ready in the lobby to the game
     Teams.update({gamecode: null, idle: false, team_id: Session.get('team_id')},
