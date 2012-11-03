@@ -21,6 +21,8 @@ Awnsers = new Meteor.Collection('awnsers');
 //	awnserd_correct: 0 
 // }
 
+Players = new Meteor.Collection('players');
+
 var TEAM_CHOICES = [
 	'RED', 'GREEN', 'ORANGE', 'BLUE'
 ]
