@@ -52,7 +52,11 @@
 </template>
 
 <template name="gameDice">
-
+    {{#if diceThrow}}
+    Dice: {{diceThrow.throw}}
+    {{else}}
+    <input type="button" class="dice" value="Roll the dice!">
+    {{/if}}
 </template>
 
 <template name="gameActiveteam">
