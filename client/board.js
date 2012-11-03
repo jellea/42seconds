@@ -1,4 +1,4 @@
-Template.game.events({
+Template.gameDice.events({
     'click input.dice': function () {
         if(Dice.findOne({'access_code' : Session.get('gameid')})) {
             Dice.update({'access_code' : Session.get('gameid')}, {$set: {'throw': Math.floor(Math.random() * 3)}});
@@ -8,7 +8,7 @@ Template.game.events({
     }
 });
 
-Template.game.diceThrow = function () {
+Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code' : Session.get('gameid')});
 }
 
