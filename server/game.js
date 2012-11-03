@@ -38,6 +38,10 @@ Meteor.methods({
     advancedsettings:function () {
         return 'advancedsettings';
     },
+    
+    rules:function () {
+    	return 'rules';
+    },
 
     start_new_game:function (team_id, rounds, category, difficulty) {
     	if(typeof rounds=='undefined') {
