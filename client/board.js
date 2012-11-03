@@ -20,8 +20,11 @@ var team = function () {
     return Teams.findOne(Session.get('team_id'));
 }
 
+//Session.set('currentanswers', answers.find({},{limit:5}).fetch());
+
+
 Template.gameActiveteam.answers = function() {
-    return [{'answer':'bla','id':'bla'},{'answer':'whoop','id':'bla'}]
+    return Session.get('currentanswers')
 }
 
 var player = function () {
