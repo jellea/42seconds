@@ -82,10 +82,10 @@ Meteor.methods({
         Games.insert({team:team(), clock:clock, gamecode:gamecode});
 
         // move everyone who is ready in the lobby to the game
-        Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
+        /*Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
             {$set:{gamecode:gamecode}},
             {multi:true});
-
+*/
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({gamecode:gamecode},
