@@ -21,6 +21,12 @@ Awnsers = new Meteor.Collection('awnsers');
 //	awnserd_correct: 0 
 // }
 
+Dice = new Meteor.Collection('dice');
+// {
+//     access_code : 1234
+//     throw : 0-2
+// }
+
 var TEAM_CHOICES = [
 	'RED', 'GREEN', 'ORANGE', 'BLUE'
 ]
