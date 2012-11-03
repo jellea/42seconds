@@ -2,6 +2,7 @@
     <title>42seconds</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <link href='http://fonts.googleapis.com/css?family=Kameron:400,700' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 </head>
 
 <body>
@@ -12,7 +13,7 @@
     <div id="wrapper">
         <img src="/images/logo.png" class="lobby">
         <div class="bluebg lobby">
-            <input type="button" id="newgame" class="newgame" value="New game"/>
+            <input type="button" id="newgame" class="startgame" value="New game"/>
             <p><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="joingame" class="joingame blue" value="Join game"/>
         </div>
@@ -21,16 +22,23 @@
 
 <template name="newgame">
     <div id="wrapper">
-        <p>
-          Five rounds</br>
-          All categories</br>
-          Medium difficulty
-        </p>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="newgame bluebg">
+            <h3>Eya! Choose your gametype here..</h3>
+            <ul class="newgame">
+              <li>Rounds<br><strong>5</strong></li>
+              <li>Category<br><strong>All</strong></li>
+              <li>Difficulty<br><strong>Medium</strong></li>
+            </p>
 
-        <input type="button" id="startgame" class="startgame" value="Quick match"/>
-        <p>or</p>
-        <input type="button" id="advancedsettings" class="advancedsettings" value="Advanced settings">
-        <p>Choose your options</p>
+            <input type="button" id="startgame" class="startgame" value="Quick match"/>
+            <p><span class="bar"></span> or <span class="bar"></span></p>
+            <input type="button" id="advancedsettings" class="advancedsettings blue" value="Advanced settings">
+            <p>Choose your options</p>
+        </div>
     </div>
 </template>
 
