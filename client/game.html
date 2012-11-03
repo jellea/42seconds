@@ -7,13 +7,23 @@
 </body>
 
 <template name="lobby">
-    <h1>Lobby</h1>
+    <h1>Logo</h1>
+    {{ test }}
     <input type="button" class="startgame" value="New game"/>
     <br />
     <input type="button" class="joingame" value="Join game"/>
 </template>
 
 <template name="newgame">
+    <p>
+      Five rounds</br>
+      All categories</br>
+      Medium difficulty
+    </p>
+
+    <input type="button" class="startgame" value="New game"/>
+    <br />
+    <input type="button" class="joingame" value="Join game"/>
 </template>
 
 <template name="gamerules">
@@ -34,11 +44,6 @@
 <template name="game-opponent">
 </template>
 
-<template name="wait">
-    <h1>New game started</h1>
-    <span style="font-size:50px">{{gamecode}}</span>
-</template>
-
 <template name="game-scorecheck">
 </template>
 
@@ -47,5 +52,3 @@
 
 <template name="scoreboard">
 </template>
-
-
