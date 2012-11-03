@@ -1,5 +1,5 @@
 Template.gameDice.events({
-    'click input.dice':function () {
+    'click #dice':function () {
         if (!Session.get('gamecode')) {
             console.log("gamecode not set");
             return;
@@ -37,25 +37,27 @@ var game = function () {
 };
 
 Template.lobby.events({
-    'click input.newgame':function () {
+    'click #newgame':function () {
         Meteor.call('newgame', function (error, result) {
             $("body").html(Meteor.render(Template.newgame));
         });
     },
-    'click input.joingame':function () {
+    'click #joingame':function () {
         $("body").html(Meteor.render(Template.join));
     }
 });
 
 Template.newgame.events({
-    'click input.startgame':function () {
-        Meteor.call('start_new_game', function (error, gamecode) {
-            Template.showcode.gamecode = gamecode;
+    'click #startgame':function () {
+        Meteor.call('start_new_game', function (error, game) {
+            Template.showcode.team = game.teams.length;
+            Session.set('gamecode', game.gamecode);
+            Template.showcode.gamecode = game.gamecode;
             var fragment = Meteor.render(Template.showcode);
             $("body").html(fragment);
         });
     },
-    'click input.advancedsettings':function () {
+    'click #advancedsettings':function () {
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
@@ -63,16 +65,18 @@ Template.newgame.events({
 });
 
 Template.advancedsettings.events({
-    'click input.startgame':function () {
+    'click #startgame':function () {
         var rounds = $('input[name="rounds"]').val();
         var category = $('input[name="category"]').val();
         var difficulty = $('input[name="difficulty"]').val();
 
-        Meteor.call('start_new_game', rounds, category, difficulty, function (error, gamecode) {
+        Meteor.call('start_new_game', rounds, category, difficulty, function (error, game) {
             Template.showcode.rounds = rounds;
             Template.showcode.rounds = category;
             Template.showcode.rounds = difficulty;
-            Template.showcode.gamecode = gamecode;
+            Template.showcode.gamecode = game.gamecode;
+            var game = Games.findOne({'gamecode':game.gamecode});
+            Template.showcode.team = game.teams.length;
             var fragment = Meteor.render(Template.showcode);
             $("body").html(fragment);
         });
@@ -80,7 +84,7 @@ Template.advancedsettings.events({
 });
 
 Template.join.events({
-    'click input.joingame':function () {
+    'click #joingame':function () {
         var gamecode = $("#gamecode").val();
         Meteor.call('joined_game', gamecode, function (error, result) {
             if (error) {
@@ -118,11 +122,11 @@ Meteor.startup(function () {
     // Session.get('team_id') will return a real id. We should check for
     // a pre-existing team, and if it exists, make sure the server still
     // knows about us.
-    var team_id = Teams.insert({name:'', idle:false});
-    Session.set('team_id', team_id);
+	Meteor.call('create_team', function(error, team_id) {
+        Session.set('team_id', team_id);
+    });
 
-    // subscribe to all the teams, the game i'm in, and all
-    // the words in that game.
+    // subscribe to all the teams and the game i'm in
     Meteor.autosubscribe(function () {
         Meteor.subscribe('teams');
 
