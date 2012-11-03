@@ -49,6 +49,7 @@ var game = function () {
             }
             var found = Games.findOne({'gamecode':gamecode});
             if (found) {
+            	console.log(gamecode+' was already found.');
                 return createGamecode();
             }
             return gamecode;
@@ -65,9 +66,17 @@ Meteor.methods({
     },
 
     start_new_game:function (evt) {
+    	var gamecodes = Games.find({}).fetch();
+    	var gcstring;
+    	for(i=0;i<gamecodes.length;i++) {
+    		gcstring += gamecodes[i].gamecode+' ';
+    	}
+    	console.log(gcstring);
+    	
         var clock = 42;
 
         var gamecode = createGamecode();
+		console.log('Decided on gamecode '+gamecode);
 		
         // create a new game with the current team in it
         Games.insert({team:team(), clock:clock, gamecode:gamecode});
