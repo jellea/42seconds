@@ -1,5 +1,10 @@
 ////////// Server only logic //////////
 
+var defaultRounds = 5;
+var defaultCategory = 'all';
+var defaultDifficulty = 'medium';
+var defaultClock = 42;
+
 function createGamecode() {
     var gamecode = '';
     for (i = 0; i < 3; i++) {
@@ -33,15 +38,30 @@ Meteor.methods({
     advancedsettings:function () {
         return 'advancedsettings';
     },
+    
+    rules:function () {
+    	return 'rules';
+    },
 
-    start_new_game:function (team_id) {
-        var clock = 42;
+    start_new_game:function (team_id, rounds, category, difficulty) {
+    	if(typeof rounds=='undefined') {
+    		var rounds = defaultRounds;
+    	}
+    	if(typeof category=='undefined') {
+    		var category = defaultCategory;
+    	}
+    	if(typeof difficulty=='undefined') {
+    		var difficulty = defaultDifficulty;
+    	}
+    	if(typeof clock=='undefined') {
+        	var clock = defaultClock;
+        }
 
         var gamecode = createGamecode();
 		
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode, 'round' : 0});
+        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':0});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
