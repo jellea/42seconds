@@ -5,10 +5,13 @@ from fortytwoseconds.items import FortyTwoSecondsItem
 nl_domain = 'http://nl.wikipedia.org'
 
 
-def create_items(answers, language, category):
+def create_items(response, xpath, category):
     '''
     Helper function for the spiders below to create scrapy items.
     '''
+    hxs = HtmlXPathSelector(response)
+    language = hxs.select('/html/@lang').extract()[0]
+    answers = hxs.select(xpath)
     items = []
     for answer in answers:
         link = answer.select('@href').extract()[0]
@@ -29,10 +32,8 @@ class WikiApparatuurSpider(BaseSpider):
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_huishoudelijke_apparatuur',]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        language = hxs.select('/html/@lang').extract()[0]
-        answers = hxs.select('//html/body/div[3]/div[3]/div[4]/ul/li/a')
-        return create_items(answers, language, 'Apparatuur')
+        xpath = '//html/body/div[3]/div[3]/div[4]/ul/li/a'
+        return create_items(response, xpath, 'Apparatuur')
 
 
 class WikiAttractieparkenSpider(BaseSpider):
@@ -41,23 +42,28 @@ class WikiAttractieparkenSpider(BaseSpider):
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_attractieparken_in_Nederland',]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        language = hxs.select('/html/@lang').extract()[0]
-        answers = hxs.select('//tr/td[1]/a')
-        return create_items(answers, language, 'Attractieparken')
+        xpath = '//tr/td[1]/a'
+        return create_items(response, xpath, 'Attractieparken')
+
+
+class WikiHeelalSpider(BaseSpider):
+    name = 'heelal'
+    allowed_domains = [nl_domain,]
+    start_urls = ['http://nl.wikipedia.org/wiki/Zonnestelsel',]
+
+    def parse(self, response):
+        xpath = '//tr[2]/td/a'
+        return create_items(response, xpath, 'Heelal')
 
 
 class WikiLandenSpider(BaseSpider):
     name = 'landen'
-    allowed_domains = ['nl.wikipedia.org',]
     allowed_domains = [nl_domain,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_Europese_landen',]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        language = hxs.select('/html/@lang').extract()[0]
-        answers = hxs.select('//tr/td/a[2]')
-        return create_items(answers, language, 'Landen')
+        xpath ='//tr/td/a[2]'
+        return create_items(response, xpath, 'Landen')
 
 
 class WikiStedenSpider(BaseSpider):
@@ -66,10 +72,8 @@ class WikiStedenSpider(BaseSpider):
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_grote_Nederlandse_steden',]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        language = hxs.select('/html/@lang').extract()[0]
-        answers = hxs.select('//tr/td[2]/span/a[2]')
-        return create_items(answers, language, 'Steden')
+        xpath = '//tr/td[2]/span/a[2]'
+        return create_items(response, xpath, 'Steden')
 
 
 class WikiSterrenbeeldenSpider(BaseSpider):
@@ -78,7 +82,5 @@ class WikiSterrenbeeldenSpider(BaseSpider):
     start_urls = ['http://nl.wikipedia.org/wiki/Dierenriem',]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        language = hxs.select('/html/@lang').extract()[0]
-        answers = hxs.select('//td[3]/a')
-        return create_items(answers, language, 'Sterrenbeelden')
+        xpath = '//td[3]/a'
+        return create_items(response, xpath, 'Sterrenbeelden')

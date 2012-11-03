@@ -3,7 +3,7 @@ Games = new Meteor.Collection('games');
 // { 
 //	access_code: 000,  
 //	devices: [id, id,...], 
-//	anwsers_played: [id, id,...] 
+//	answers_played: [id, id,...] 
 // }
 
 Teams = new Meteor.Collection('teams');
@@ -12,12 +12,12 @@ Teams = new Meteor.Collection('teams');
 Devices = new Meteor.Collection('devices');
 // { game: game_id }
 
-anwsers = new Meteor.Collection('anwsers');
+answers = new Meteor.Collection('answers');
 // {
-//	anwser: 'string in here', 
+//	answer: 'string in here', 
 //	language: 'en',
 //	played: 0, 
-//	anwserd_correct: 0 
+//	answerd_correct: 0 
 // }
 
 Dice = new Meteor.Collection('dice');

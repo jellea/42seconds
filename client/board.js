@@ -18,6 +18,17 @@ Template.gameDice.diceThrow = function () {
 
 var team = function () {
     return Teams.findOne(Session.get('team_id'));
+}
+
+//Session.set('currentanswers', answers.find({},{limit:5}).fetch());
+
+
+Template.gameActiveteam.answers = function() {
+    return Session.get('currentanswers')
+}
+
+var player = function () {
+    return Players.findOne(Session.get('player_id'));
 };
 
 var game = function () {
@@ -143,4 +154,5 @@ Meteor.startup(function () {
             console.log('Team not yet in game.');
         }
     }, 1000);
+
 });

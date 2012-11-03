@@ -90,10 +90,10 @@
 </template>
 
 <template name="gameActiveteam">
-    <h3>Round ={{roundnumber}}</h3>
+    <h3>Round = {{roundnumber}}</h3>
     <ul>
-        {{#each anwsers}}
-        <li><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{#each answers}}
+        <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
         {{/each}}
         <li class="handicap"><div>2</div>Handicap</li>
         <li><div>2</div>Total</li>
@@ -105,8 +105,8 @@
     <h3>Round ={{roundnumber}}</h3>
     <p>Score: {{score}}</p>
     <ul>
-        {{#each anwsers}}
-        <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{#each answers}}
+        <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
         {{/each}}
     </ul>
     <div class="clock">42</div>
@@ -115,8 +115,8 @@
 <template name="gameScorecheck">
     <h3>Score check</h3>
     <ul>
-        {{#each anwsers}}
-        <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{#each answers}}
+        <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{answer}}</li>
         {{/each}}
         <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
         <li class="total"><div>{{total}}</div>Total</li>
@@ -127,8 +127,8 @@
 <template name="gameResults">
     <h3>Results</h3>
     <ul>
-        {{#each anwsers}}
-        <li data-questionid="{{id}}" class="inactive">{{anwser}}</li>
+        {{#each answers}}
+        <li data-questionid="{{id}}" class="inactive">{{answer}}</li>
         {{/each}}
         <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
         <li class="total"><div>{{total}}</div>Total</li>
