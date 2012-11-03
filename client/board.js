@@ -75,7 +75,6 @@ Template.advancedsettings.events({
             Template.showcode.rounds = category;
             Template.showcode.rounds = difficulty;
             Template.showcode.gamecode = game.gamecode;
-            var game = Games.findOne({'gamecode':game.gamecode});
             Template.showcode.team = game.teams.length;
             var fragment = Meteor.render(Template.showcode);
             $("body").html(fragment);
