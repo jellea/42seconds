@@ -11,9 +11,9 @@
     <div id="wrapper">
         <img src="/images/logo.png" class="lobby">
         <div class="bluebg lobby">
-            <input type="button" class="startgame" value="New game"/>
+            <input type="button" id="startgame" class="startgame" value="New game"/>
             <p><span class="bar"></span> or <span class="bar"></span></p>
-            <input type="button" class="joingame blue" value="Join game"/>
+            <input type="button" id="joingame" class="joingame blue" value="Join game"/>
         </div>
     </div>
 </template>
@@ -26,9 +26,9 @@
           Medium difficulty
         </p>
 
-        <input type="button" class="startgame" value="Quick match"/>
+        <input type="button" id="startgame" class="startgame" value="Quick match"/>
         <p>or</p>
-        <input type="button" class="advancedsettings" value="Advanced settings">
+        <input type="button" id="advancedsettings" class="advancedsettings" value="Advanced settings">
         <p>Choose your options</p>
     </div>
 </template>
@@ -67,7 +67,7 @@
     <div id="wrapper">
         <h3>Enter code</h3>
         <input type="number" id="gamecode">
-        <input type="button" class="joingame" value="Go!"/>
+        <input type="button" id="joingame" class="joingame" value="Go!"/>
     </div>
 </template>
 
@@ -100,7 +100,7 @@
         {{#if diceThrow}}
         Dice: {{diceThrow.throw}}
         {{else}}
-        <input type="button" class="dice" value="Roll the dice!">
+        <input type="button" id="dice" class="dice" value="Roll the dice!">
         {{/if}}
     </div>
 </template>
@@ -142,7 +142,7 @@
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
         </ul>
-        <input type="button" class="nextround" value="Done!"/>
+        <input type="button" id="nextround"  class="nextround" value="Done!"/>
     </div>
 </template>
 
@@ -156,7 +156,7 @@
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
         </ul>
-        <input type="button" class="scoreok" value="Done!"/>
+        <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>
 </template>
 
