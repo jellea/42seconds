@@ -87,7 +87,7 @@ Template.join.events({
     'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
 	        Session.set('gamecode',gamecode);
-        Meteor.call('joined_game', gamecode, team_id, function (error, game) {
+        Meteor.call('joined_game', gamecode, Session.get('team_id'), function (error, game) {
             if (error) {
                 console.log(error);
                 return;
