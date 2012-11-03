@@ -1,18 +1,9 @@
 ////////// Server only logic //////////
 
-var game = function () {
-    var me = player();
-    return me && me.gamecode && Games.findOne(me.gamecode);
-};
-
-function team() {
-    return Teams.findOne({_id:Session.get('team_id')});
-}
-
-var game = function () {
-    var me = team();
-    return me && me.gamecode && Games.findOne(me.gamecode);
-};
+var defaultRounds = 5;
+var defaultCategory = 'all';
+var defaultDifficulty = 'medium';
+var defaultClock = 42;
 
 function createGamecode() {
     var gamecode = '';
@@ -36,7 +27,7 @@ Meteor.methods({
 
 	create_team: function () {
         var team_id = Teams.insert({'name':'Team'});
-        Session.set('team_id',team_id);
+        //Session.set('team_id',team_id);
         return team_id;
 	},
 	
@@ -47,19 +38,34 @@ Meteor.methods({
     advancedsettings:function () {
         return 'advancedsettings';
     },
+    
+    rules:function () {
+    	return 'rules';
+    },
 
-    start_new_game:function (evt) {
-        var clock = 42;
+    start_new_game:function (team_id, rounds, category, difficulty) {
+    	if(typeof rounds=='undefined') {
+    		var rounds = defaultRounds;
+    	}
+    	if(typeof category=='undefined') {
+    		var category = defaultCategory;
+    	}
+    	if(typeof difficulty=='undefined') {
+    		var difficulty = defaultDifficulty;
+    	}
+    	if(typeof clock=='undefined') {
+        	var clock = defaultClock;
+        }
 
         var gamecode = createGamecode();
 		
-        var team = Teams.findOne({_id:Session.get('team_id')});
+        var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode});
+        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-		Teams.update({_id: Session.get('team_id')}, {$set:{'gamecode':gamecode}});
+		Teams.update({_id: team_id}, {$set:{'gamecode':gamecode}});
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
@@ -90,7 +96,7 @@ Meteor.methods({
             }
         }, 1000);
 
-        Session.set('gamecode', gamecode);
+        //Session.set('gamecode', gamecode);
         
         var game = Games.findOne({'gamecode':gamecode});
 
@@ -104,9 +110,9 @@ Meteor.methods({
                 idle:false}});
     },
 
-    joined_game:function (gamecode) {
-    	Session.set('gamecode',gamecode);
-        Teams.update({_id:Session.get('team_id')},
+    joined_game:function (gamecode,team_id) {
+    	//Session.set('gamecode',gamecode);
+        Teams.update({_id:team_id},
             {$set:{'gamecode':gamecode}},
             {multi:true});
         // Save a record of who is in the game, so when they leave we can
