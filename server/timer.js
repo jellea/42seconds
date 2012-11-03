@@ -1,3 +1,8 @@
+// Timer function
+//
+// ResetTimer
+// Check if user is in active team
+//
 Meteor.setInterval(function () {
   var now = (new Date()).getTime();
   var idle_threshold = now - 42*1000; // 70 sec
