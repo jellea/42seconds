@@ -53,12 +53,12 @@ Meteor.methods({
 
         var gamecode = createGamecode();
 		
+        var team = Teams.findOne({_id:Session.get('team_id')});
         // create a new game with the current team in it
-        Games.insert({team:team(), clock:clock, gamecode:gamecode});
+        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-        var team = team();
 		Teams.update({_id: team._id}, {$set:{'gamecode':gamecode}});
         
         var p = Teams.find({'gamecode':gamecode},
@@ -105,17 +105,17 @@ Meteor.methods({
     },
 
     joined_game:function (gamecode) {
-        // move everyone who is ready in the lobby to the game
-        Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
+        Teams.update({_id:Session.get('team_id')},
             {$set:{gamecode:gamecode}},
             {multi:true});
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({gamecode:gamecode},
             {fields:{_id:true, name:true}}).fetch();
-        Games.update({gamecode:gamecode}, {$set:{teams:p}});
+        Games.update({'gamecode':gamecode}, {$set:{teams:p}});
+        var game = Games.findOne({'gamecode':gamecode});
 
-        return 'joined';
+        return game;
     }
 });
 

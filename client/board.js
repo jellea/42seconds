@@ -1,5 +1,5 @@
 Template.gameDice.events({
-    'click #dice':function () {
+    'click input#dice':function () {
         if (!Session.get('gamecode')) {
             console.log("gamecode not set");
             return;
@@ -37,18 +37,18 @@ var game = function () {
 };
 
 Template.lobby.events({
-    'click #newgame':function () {
+    'click input#newgame':function () {
         Meteor.call('newgame', function (error, result) {
             $("body").html(Meteor.render(Template.newgame));
         });
     },
-    'click #joingame':function () {
+    'click input#joingame':function () {
         $("body").html(Meteor.render(Template.join));
     }
 });
 
 Template.newgame.events({
-    'click #startgame':function () {
+    'click input#startgame':function () {
         Meteor.call('start_new_game', function (error, game) {
             Template.showcode.team = game.teams.length;
             Session.set('gamecode', game.gamecode);
@@ -57,7 +57,7 @@ Template.newgame.events({
             $("body").html(fragment);
         });
     },
-    'click #advancedsettings':function () {
+    'click input#advancedsettings':function () {
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
@@ -65,7 +65,7 @@ Template.newgame.events({
 });
 
 Template.advancedsettings.events({
-    'click #startgame':function () {
+    'click input#startgame':function () {
         var rounds = $('input[name="rounds"]').val();
         var category = $('input[name="category"]').val();
         var difficulty = $('input[name="difficulty"]').val();
@@ -84,7 +84,7 @@ Template.advancedsettings.events({
 });
 
 Template.join.events({
-    'click #joingame':function () {
+    'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
         Meteor.call('joined_game', gamecode, function (error, result) {
             if (error) {
