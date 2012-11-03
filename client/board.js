@@ -104,6 +104,8 @@ Template.joined.ready = function () {
     if (game) {
         if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameOpponent));
+        } else {
+        	$("body").html(Meteor.render(Template.gameDice));
         }
     }
 }
@@ -113,6 +115,8 @@ Template.showcode.ready = function () {
     if (game) {
         if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
+        } else {
+        	$("body").html(Meteor.render(Template.gameOpponent));
         }
     }
 }
