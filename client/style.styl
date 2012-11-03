@@ -1,3 +1,63 @@
+color_darkblue = #215e86
+color_orange = #f04e23
+color_green = #70bf00
+color_darkgreen = #4e8500
+color_blue = #4896cb
+
+bluebg()
+  background-image: url('/images/blue-bg.jpg');
+
+html
+  background: black;
+
+body
+  font: 16px Kameron;
+  background: white;
+  width: 320px;
+  height: 440px;
+  margin: 0;
+
+body img.lobby 
+  margin: 40px 0 35px 18px;
+  height: 110px;
+
+body div.lobby.bluebg
+  height: 250px;
+  bluebg()
+
+body div.lobby input:first-child
+  margin-top: 40px;
+
+body input[type="button"]
+  height: 55px;
+  border-radius: 15px;
+  background-color: color_green;
+  border: 5px solid color_darkgreen;
+  font: 26px Kameron;
+  width: 280px;
+  margin: 5px 20px;
+
+body input[type="button"].blue 
+  background-color: color_blue;
+  border-color: color_darkblue;
+
+body p 
+  font-size: 16px;
+  text-align: center;
+
+body p span.bar
+  display: inline-block;
+  -webkit-transform: translateY(-3px)
+  width: 60px;
+  height: 2px;
+  background-color: black;
+
+
+a.button
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+
 // Mixins
 animate(name, time, fillmode)
     animation name time fillmode
@@ -26,17 +86,6 @@ transform(arg)
     100%
         transform(scale(1))
 
-// Styles
-body
-    font 12px Helvetica, Arial, sans-serif
-
 div#wrapper
-    width 100px
     position absolute
     animate(bounceIn, 1s, forwards)
-
-a.button
-    -webkit-border-radius 5px
-    -moz-border-radius 5px
-    border-radius 5px
-

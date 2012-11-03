@@ -1,10 +1,16 @@
 ////////// Server only logic //////////
-function player() {
-    return Players.findOne(Session.get('player_id'));
-}
 
 var game = function () {
     var me = player();
+    return me && me.gamecode && Games.findOne(me.gamecode);
+};
+
+function team() {
+    return Teams.findOne({_id:Session.get('team_id')});
+}
+
+var game = function () {
+    var me = team();
     return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
@@ -21,41 +27,19 @@ function createGamecode() {
     }
     var found = Games.findOne({'gamecode':gamecode});
     if (found) {
-        return createGameCode();
+        return createGamecode();
     }
     return gamecode;
 }
 
-function team() {
-    return Teams.findOne(Session.get('team_id'));
-}
-
-var game = function () {
-    var me = team();
-    return me && me.gamecode && Games.findOne(me.gamecode);
-};
-
-
-        function createGamecode() {
-            var gamecode = '';
-            for (i = 0; i < 3; i++) {
-                if (i == 0) {
-                    // don't allow 0 as first digit
-                    random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-                } else {
-                    random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-                }
-                gamecode += '' + random;
-            }
-            var found = Games.findOne({'gamecode':gamecode});
-            if (found) {
-                return createGamecode();
-            }
-            return gamecode;
-        }
-
 Meteor.methods({
 
+	create_team: function () {
+        var newteam = Teams.insert({'name':'Team'});
+        Session.set('team_id',newteam);
+        return newteam;
+	},
+	
     newgame:function () {
         return 'newgame';
     },
@@ -74,10 +58,13 @@ Meteor.methods({
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-        var p = Teams.find({gamecode:gamecode},
+        var team = team();
+		Teams.update({_id: team._id}, {$set:{'gamecode':gamecode}});
+        
+        var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
-            
-        Games.update({gamecode:gamecode}, {$set:{teams:p}});
+
+        Games.update({'gamecode':gamecode}, {$set:{teams:p}});
 
         // wind down the game clock
         var interval = Meteor.setInterval(function () {
@@ -104,9 +91,14 @@ Meteor.methods({
         }, 1000);
 
         Session.set('gamecode', gamecode);
+        
+        var game = Games.findOne({'gamecode':gamecode});
 
-        return gamecode;
-    }, keepalive:function (team_id) {
+        return game;
+        
+    }, 
+    
+    keepalive: function (team_id) {
         Teams.update({_id:team_id},
             {$set:{last_keepalive:(new Date()).getTime(),
                 idle:false}});
