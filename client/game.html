@@ -1,5 +1,6 @@
 <head>
     <title>42seconds</title>
+    <link href='http://fonts.googleapis.com/css?family=Kameron:400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -7,11 +8,12 @@
 </body>
 
 <template name="lobby">
-    <h1>Logo</h1>
-    {{ test }}
-    <input type="button" class="startgame" value="New game"/>
-    <br />
-    <input type="button" class="joingame" value="Join game"/>
+    <img src="/images/logo.png" class="lobby">
+    <div class="bluebg lobby">
+        <input type="button" class="startgame" value="New game"/>
+        <p><span class="bar"></span> or <span class="bar"></span></p>
+        <input type="button" class="joingame blue" value="Join game"/>
+    </div>
 </template>
 
 <template name="newgame">
