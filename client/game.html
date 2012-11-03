@@ -33,8 +33,23 @@
 
 <template name="advancedsettings">
     <h3>Rounds</h3>
+	<ul>
+		<li><input type="radio" name="rounds" value="3"> 3</li>
+		<li><input type="radio" name="rounds" value="5"> 5</li>
+		<li><input type="radio" name="rounds" value="7"> 7</li>
+	</ul>
     <h3>Category</h3>
+	<ul>
+		<li><input type="radio" name="rounds" value=""> Everything</li>
+		<li><input type="radio" name="rounds" value="people"> People</li>
+		<li><input type="radio" name="rounds" value="disney"> Disney</li>
+	</ul>
     <h3>Difficulty</h3>
+	<ul>
+		<li><input type="radio" name="rounds" value="easy"> Pussy</li>
+		<li><input type="radio" name="rounds" value="medium"> Doable</li>
+		<li><input type="radio" name="rounds" value="hard"> Bring it on!</li>
+	</ul>
     <input type="button" class="joingame" value="Done"/>
 </template>
 
@@ -52,19 +67,62 @@
 </template>
 
 <template name="gameDice">
+	<h3>Round {{roundnumber}}</h3>
+	<p class="shake">Shake!</p>
+	<ul class="dice">
+		<li>0</li>
+		<li>1</li>
+		<li>2</li>
+	</ul>
 </template>
 
 <template name="gameActiveteam">
+    <h3>Round ={{roundnumber}}</h3>
+    <ul>
+        {{#each anwsers}}
+        <li><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{/each}}
+        <li class="handicap"><div>2</div>Handicap</li>
+        <li><div>2</div>Total</li>
+    </ul>
+    <div class="clock">42</div>
 </template>
 
 <template name="gameOpponent">
+    <h3>Round ={{roundnumber}}</h3>
+    <p>Score: {{score}}</p>
+    <ul>
+        {{#each anwsers}}
+        <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{/each}}
+    </ul>
+    <div class="clock">42</div>
 </template>
 
 <template name="gameScorecheck">
+    <h3>Score check</h3>
+    <ul>
+        {{#each anwsers}}
+        <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{anwser}}</li>
+        {{/each}}
+        <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
+        <li class="total"><div>{{total}}</div>Total</li>
+    </ul>
+    <input type="button" class="nextround" value="Done!"/>
 </template>
 
 <template name="gameResults">
+    <h3>Results</h3>
+    <ul>
+        {{#each anwsers}}
+        <li data-questionid="{{id}}" class="inactive">{{anwser}}</li>
+        {{/each}}
+        <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
+        <li class="total"><div>{{total}}</div>Total</li>
+    </ul>
+    <input type="button" class="scoreok" value="Done!"/>
 </template>
 
 <template name="scoreboard">
+    
 </template>
