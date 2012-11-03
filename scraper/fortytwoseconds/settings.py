@@ -11,5 +11,9 @@ BOT_NAME = 'fortytwoseconds'
 SPIDER_MODULES = ['fortytwoseconds.spiders']
 NEWSPIDER_MODULE = 'fortytwoseconds.spiders'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'fortytwoseconds (+http://www.yourdomain.com)'
+ITEM_PIPELINES = [
+    'fortytwoseconds.pipelines.DuplicatesPipeline',
+    ]
+
+#Crawl responsibly by identifying yourself (and your website) on the user-agent
+USER_AGENT = 'Deep thougth\'s answering machine (+http://www.fortytwoapp.com)'

@@ -1,5 +1,6 @@
 <head>
     <title>42seconds</title>
+    <link href='http://fonts.googleapis.com/css?family=Kameron:400,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -7,133 +8,156 @@
 </body>
 
 <template name="lobby">
-    <h1>Logo</h1>
-    {{ test }}
-    <input type="button" class="newgame" value="New game"/>
-    <br />
-    <input type="button" class="joingame" value="Join game"/>
+    <div id="wrapper">
+        <img src="/images/logo.png" class="lobby">
+        <div class="bluebg lobby">
+            <input type="button" id="startgame" class="startgame" value="New game"/>
+            <p><span class="bar"></span> or <span class="bar"></span></p>
+            <input type="button" id="joingame" class="joingame blue" value="Join game"/>
+        </div>
+    </div>
 </template>
 
 <template name="newgame">
-    <p>
-      Five rounds</br>
-      All categories</br>
-      Medium difficulty
-    </p>
+    <div id="wrapper">
+        <p>
+          Five rounds</br>
+          All categories</br>
+          Medium difficulty
+        </p>
 
-    <input type="button" class="startgame" value="Quick match"/>
-    <p>or</p>
-    <input type="button" class="advancedsettings" value="Advanced settings">
-    <p>Choose your options</p>
+        <input type="button" id="startgame" class="startgame" value="Quick match"/>
+        <p>or</p>
+        <input type="button" id="advancedsettings" class="advancedsettings" value="Advanced settings">
+        <p>Choose your options</p>
+    </div>
 </template>
 
 <template name="gamerules">
-    <p>Hello!</p>
+    <div id="wrapper">
+        <p>Hello!</p>
+    </div>
 </template>
 
 <template name="advancedsettings">
-    <h3>Rounds</h3>
-	<ul>
-		<li><input type="radio" name="rounds" id="round_3" value="3"><label for="round_3"> 3</label></li>
-		<li><input type="radio" name="rounds" id="round_5" value="5"><label for="round_5"> 5</label></li>
-		<li><input type="radio" name="rounds" id="round_7" value="7"><label for="round_7"> 7</label></li>
-	</ul>
-    <h3>Category</h3>
-	<ul>
-		<li><input type="radio" name="category" id="category_everything" value=""><label for="category_everything"> Everything</label></li>
-		<li><input type="radio" name="category" id="category_people" value="people"><label for="category_people"> People</label></li>
-		<li><input type="radio" name="category" id="category_disney" value="disney"><label for="category_disney"> Disney</label></li>
-	</ul>
-    <h3>Difficulty</h3>
-	<ul>
-		<li><input type="radio" name="difficulty" id="difficulty_easy" value="easy"><label for="difficulty_easy"> Pussy</label></li>
-		<li><input type="radio" name="difficulty" id="difficulty_medium" value="medium"><label for="difficulty_medium"> Doable</label></li>
-		<li><input type="radio" name="difficulty" id="difficulty_hard" value="hard"><label for="difficulty_hard"> Bring it on!</label></li>
-	</ul>
-    <input type="button" class="startgame" value="Start game!"/>
+    <div id="wrapper">
+        <h3>Rounds</h3>
+            <ul>
+                    <li><input type="radio" name="rounds" id="round_3" value="3"><label for="round_3"> 3</label></li>
+                    <li><input type="radio" name="rounds" id="round_5" value="5"><label for="round_5"> 5</label></li>
+                    <li><input type="radio" name="rounds" id="round_7" value="7"><label for="round_7"> 7</label></li>
+            </ul>
+        <h3>Category</h3>
+            <ul>
+                    <li><input type="radio" name="category" id="category_everything" value=""><label for="category_everything"> Everything</label></li>
+                    <li><input type="radio" name="category" id="category_people" value="people"><label for="category_people"> People</label></li>
+                    <li><input type="radio" name="category" id="category_disney" value="disney"><label for="category_disney"> Disney</label></li>
+            </ul>
+        <h3>Difficulty</h3>
+            <ul>
+                    <li><input type="radio" name="difficulty" id="difficulty_easy" value="easy"><label for="difficulty_easy"> Pussy</label></li>
+                    <li><input type="radio" name="difficulty" id="difficulty_medium" value="medium"><label for="difficulty_medium"> Doable</label></li>
+                    <li><input type="radio" name="difficulty" id="difficulty_hard" value="hard"><label for="difficulty_hard"> Bring it on!</label></li>
+            </ul>
+        <input type="button" class="startgame" value="Start game!"/>
+    </div>
 </template>
 
 <template name="join">
-    <h3>Enter code</h3>
-    <input type="number" id="gamecode">
-    <input type="button" class="joingame" value="Go!"/>
+    <div id="wrapper">
+        <h3>Enter code</h3>
+        <input type="number" id="gamecode">
+        <input type="button" id="joingame" class="joingame" value="Go!"/>
+    </div>
 </template>
 
 <template name="joined">
-    <h3>Joined game</h3>
-    <p>You're in {{ team }}</p>
-    <p>Wait for team 1 to start the game.</p>
-    {{ready}}
+    <div id="wrapper">
+        <h3>Joined game</h3>
+        <p>You're in {{ team }}</p>
+        <p>Wait for team 1 to start the game.</p>
+    </div>
 </template>
 
 <template name="showcode">
-    <h3>Your code</h3>
-    <p>{{ gamecode }}</p>
-    <h3>You're in</h3>
-    <p>{{ team }}</p>
-    {{ready}}
+    <div id="wrapper">
+        <h3>Your code</h3>
+        <p>{{ gamecode }}</p>
+        <h3>You're in</h3>
+        <p>{{ team }}</p>
+    </div>
 </template>
 
 <template name="gameDice">
-    <h3>Round {{roundnumber}}</h3>
-    <p class="shake">Shake!</p>
-    <ul class="dice">
-        <li>0</li>
-        <li>1</li>
-        <li>2</li>
-    </ul>
-    {{#if diceThrow}}
-    Dice: {{diceThrow.throw}}
-    {{else}}
-    <input type="button" class="dice" value="Roll the dice!">
-    {{/if}}
+    <div id="wrapper">
+        <h3>Round {{roundnumber}}</h3>
+        <p class="shake">Shake!</p>
+        <ul class="dice">
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        {{#if diceThrow}}
+        Dice: {{diceThrow.throw}}
+        {{else}}
+        <input type="button" id="dice" class="dice" value="Roll the dice!">
+        {{/if}}
+    </div>
 </template>
 
 <template name="gameActiveteam">
-    <h3>Round = {{roundnumber}}</h3>
-    <ul>
-        {{#each answers}}
-        <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
-        {{/each}}
-        <li class="handicap"><div>2</div>Handicap</li>
-        <li><div>2</div>Total</li>
-    </ul>
-    <div class="clock">42</div>
+    <div id="wrapper">
+        <h3>Round = {{roundnumber}}</h3>
+        <ul>
+            {{#each answers}}
+            <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            {{/each}}
+            <li class="handicap"><div>2</div>Handicap</li>
+            <li><div>2</div>Total</li>
+        </ul>
+        <div class="clock">42</div>
+    </div>
 </template>
 
 <template name="gameOpponent">
-    <h3>Round ={{roundnumber}}</h3>
-    <p>Score: {{score}}</p>
-    <ul>
-        {{#each answers}}
-        <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
-        {{/each}}
-    </ul>
-    <div class="clock">42</div>
+    <div id="wrapper">
+        <h3>Round ={{roundnumber}}</h3>
+        <p>Score: {{score}}</p>
+        <ul>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            {{/each}}
+        </ul>
+        <div class="clock">42</div>
+    </div>
 </template>
 
 <template name="gameScorecheck">
-    <h3>Score check</h3>
-    <ul>
-        {{#each answers}}
-        <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{answer}}</li>
-        {{/each}}
-        <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
-        <li class="total"><div>{{total}}</div>Total</li>
-    </ul>
-    <input type="button" class="nextround" value="Done!"/>
+    <div id="wrapper">
+        <h3>Score check</h3>
+        <ul>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            {{/each}}
+            <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
+            <li class="total"><div>{{total}}</div>Total</li>
+        </ul>
+        <input type="button" id="nextround"  class="nextround" value="Done!"/>
+    </div>
 </template>
 
 <template name="gameResults">
-    <h3>Results</h3>
-    <ul>
-        {{#each answers}}
-        <li data-questionid="{{id}}" class="inactive">{{answer}}</li>
-        {{/each}}
-        <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
-        <li class="total"><div>{{total}}</div>Total</li>
-    </ul>
-    <input type="button" class="scoreok" value="Done!"/>
+    <div id="wrapper">
+        <h3>Results</h3>
+        <ul>
+            {{#each answers}}
+            <li data-questionid="{{id}}" class="inactive">{{answer}}</li>
+            {{/each}}
+            <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
+            <li class="total"><div>{{total}}</div>Total</li>
+        </ul>
+        <input type="button" id="scoreok" class="scoreok" value="Done!"/>
+    </div>
 </template>
 
 <template name="scoreboard">

@@ -14,23 +14,23 @@ var game = function () {
     return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
-        function createGamecode() {
-            var gamecode = '';
-            for (i = 0; i < 3; i++) {
-                if (i == 0) {
-                    // don't allow 0 as first digit
-                    random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-                } else {
-                    random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-                }
-                gamecode += '' + random;
-            }
-            var found = Games.findOne({'gamecode':gamecode});
-            if (found) {
-                return createGamecode();
-            }
-            return gamecode;
+function createGamecode() {
+    var gamecode = '';
+    for (i = 0; i < 3; i++) {
+        if (i == 0) {
+            // don't allow 0 as first digit
+            random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+        } else {
+            random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
         }
+        gamecode += '' + random;
+    }
+    var found = Games.findOne({'gamecode':gamecode});
+    if (found) {
+        return createGamecode();
+    }
+    return gamecode;
+}
 
 Meteor.methods({
 
