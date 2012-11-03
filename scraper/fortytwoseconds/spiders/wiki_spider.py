@@ -84,3 +84,33 @@ class WikiSterrenbeeldenSpider(BaseSpider):
     def parse(self, response):
         xpath = '//td[3]/a'
         return create_items(response, xpath, 'Sterrenbeelden')
+
+
+class WikiTelevisieSpider(BaseSpider):
+    name = 'televisie'
+    allowed_domains = [nl_domain,]
+    start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_televisieprogramma%27s_naar_genre',]
+
+    def parse(self, response):
+        xpath = '//div[@id="mw-content-text"]/ul/li/a'
+        hxs = HtmlXPathSelector(response)
+        language = hxs.select('/html/@lang').extract()[0]
+        answers = hxs.select(xpath)
+        items = []
+        for answer in answers:
+            link = answer.select('@href').extract()[0]
+            if link.endswith('redlink=1'):
+                continue
+            answer_ = answer.select('text()').extract()[0]
+            # exclude a few links
+            if answer_.find(':') != -1 or answer_.isdigit():
+                continue
+            if link.startswith('/'):
+                link = nl_domain + link
+            item = FortyTwoSecondsItem()
+            item['answer'] = answer_
+            item['link'] = link
+            item['language'] = language
+            item['category'] = 'Televisie'
+            items.append(item)
+        return items[:-1] # exclude the last link
