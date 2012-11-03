@@ -122,25 +122,4 @@ Meteor.startup(function () {
             }
         }
     });
-
-    // send keepalives so the server can tell when we go away.
-    //
-    // XXX this is not a great idiom. meteor server does not yet have a
-    // way to expose connection status to user code. Once it does, this
-    // code can go away.
-    Meteor.setInterval(function () {
-        if (Meteor.status().connected)
-            Meteor.call('keepalive', Session.get('team_id'));
-    }, 20 * 1000);
-
-    // this is not a great idiom. REFACTOR PLZ
-    Meteor.setInterval(function () {
-        team = Teams.findOne(Session.get('team_id'));
-        if (typeof team.gamecode != 'undefined' && team.gamecode.length) {
-            game = Games.findOne({gamecode:team.gamecode});
-            console.log('Teams in game; ' + game.teams.length);
-        } else {
-            console.log('Team not yet in game.');
-        }
-    }, 1000);
 });
