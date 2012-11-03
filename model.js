@@ -35,7 +35,7 @@ Players = new Meteor.Collection('players');
 Meteor.methods({
 	
 });
-
+/*
 new_game = function (max_rounds) {
 	var teams = [];
 	var rounds = 0;
@@ -110,3 +110,4 @@ new_team = function () {
 		score: 0
 	}
 }
+*/
