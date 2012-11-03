@@ -90,6 +90,11 @@ Meteor.methods({
         // still show them.
         var p = Teams.find({gamecode:gamecode},
             {fields:{_id:true, name:true}}).fetch();
+        
+        for(i=0;i<p.length;i++) {
+        	console.log('Team member '+i+'; '+p._id);
+        }
+            
         Games.update({gamecode:gamecode}, {$set:{teams:p}});
 
         // wind down the game clock
