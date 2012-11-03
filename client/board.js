@@ -86,13 +86,12 @@ Template.advancedsettings.events({
 Template.join.events({
     'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
-        console.log(gamecode);
+	        Session.set('gamecode',gamecode);
         Meteor.call('joined_game', gamecode, function (error, game) {
             if (error) {
                 console.log(error);
                 return;
             }
-	        Session.set('gamecode',gamecode);
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
@@ -104,8 +103,6 @@ Template.joined.ready = function () {
     if (game) {
         if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameOpponent));
-        } else {
-        	$("body").html(Meteor.render(Template.gameDice));
         }
     }
 }
@@ -115,8 +112,6 @@ Template.showcode.ready = function () {
     if (game) {
         if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
-        } else {
-        	$("body").html(Meteor.render(Template.gameOpponent));
         }
     }
 }

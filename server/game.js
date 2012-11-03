@@ -35,9 +35,9 @@ function createGamecode() {
 Meteor.methods({
 
 	create_team: function () {
-        var newteam = Teams.insert({'name':'Team'});
-        Session.set('team_id',newteam);
-        return newteam;
+        var team_id = Teams.insert({'name':'Team'});
+        Session.set('team_id',team_id);
+        return team_id;
 	},
 	
     newgame:function () {
@@ -59,7 +59,7 @@ Meteor.methods({
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-		Teams.update({_id: team._id}, {$set:{'gamecode':gamecode}});
+		Teams.update({_id: Session.get('team_id')}, {$set:{'gamecode':gamecode}});
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
@@ -105,6 +105,7 @@ Meteor.methods({
     },
 
     joined_game:function (gamecode) {
+    	Session.set('gamecode',gamecode);
         Teams.update({_id:Session.get('team_id')},
             {$set:{'gamecode':gamecode}},
             {multi:true});
