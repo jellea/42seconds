@@ -128,7 +128,7 @@ Meteor.startup(function () {
     });
 
     // subscribe to all the teams and the game i'm in
-    Meteor.autosubscribe(function () {
+    /*Meteor.autosubscribe(function () {
         Meteor.subscribe('teams');
 
         if (Session.get('team_id')) {
@@ -138,7 +138,7 @@ Meteor.startup(function () {
                 Session.set('gamecode', me.gamecode);
             }
         }
-    });
+    });*/
 
     // send keepalives so the server can tell when we go away.
     //
