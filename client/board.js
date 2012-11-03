@@ -93,18 +93,19 @@ Template.join.events({
 });
 
 Template.joined.ready = function () {
-    var game = Games.findOne({'gamecode':Session.get('gameid')});
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
-        if (game.players.length >= 2) {
+        if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
+            console.log("Cool!");
         }
     }
 }
 
 Template.showcode.ready = function () {
-    var game = Games.findOne({'gamecode':Session.get('gameid')});
+    var game = Games.findOne({'gamecode':Session.get('gamecode')});
     if (game) {
-        if (game.players.length >= 2) {
+        if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
         }
     }
@@ -143,16 +144,4 @@ Meteor.startup(function () {
         if (Meteor.status().connected)
             Meteor.call('keepalive', Session.get('team_id'));
     }, 20 * 1000);
-
-    // this is not a great idiom. REFACTOR PLZ
-    Meteor.setInterval(function () {
-        var team = Teams.findOne(Session.get('team_id'));
-        if (typeof team.gamecode != 'undefined' && team.gamecode.length) {
-            var game = Games.findOne({gamecode:team.gamecode});
-            console.log('Teams in game; ' + game.teams.length);
-        } else {
-            console.log('Team not yet in game.');
-        }
-    }, 1000);
-
 });
