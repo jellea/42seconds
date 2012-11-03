@@ -19,7 +19,7 @@ function createGamecode() {
         }
         gamecode += '' + random;
     }
-    found = Games.findOne({'gamecode':gamecode});
+    var found = Games.findOne({'gamecode':gamecode});
     if (found) {
         return createGameCode();
     }
@@ -66,7 +66,11 @@ Meteor.methods({
         return gamecode;
     }
     
-    gamecode = createGamecode();
+    var gamecode = createGamecode();
+
+    if(Games.findOne({'gamecode':gamecode})) {
+    	Games.remove({'gamecode':gamecode});
+    }
 
     // create a new game with the current team in it
     Games.insert({team: team(), clock: clock, gamecode: gamecode});

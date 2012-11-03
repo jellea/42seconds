@@ -53,9 +53,9 @@ Template.newgame.events({
 
 Template.advancedsettings.events({
     'click input.startgame':function () {
-        rounds = $('input[name="rounds"]').val();
-        category = $('input[name="category"]').val();
-        difficulty = $('input[name="difficulty"]').val();
+        var rounds = $('input[name="rounds"]').val();
+        var category = $('input[name="category"]').val();
+        var difficulty = $('input[name="difficulty"]').val();
 
         Meteor.call('start_new_game', rounds, category, difficulty, function (error, gamecode) {
             Template.showcode.rounds = rounds;
@@ -70,7 +70,7 @@ Template.advancedsettings.events({
 
 Template.join.events({
     'click input.joingame':function () {
-        gamecode = $("#gamecode").val();
+        var gamecode = $("#gamecode").val();
         Meteor.call('joined_game', gamecode, function (error, result) {
             if (error) {
                 console.log(error);
@@ -135,9 +135,9 @@ Meteor.startup(function () {
 
     // this is not a great idiom. REFACTOR PLZ
     Meteor.setInterval(function () {
-        team = Teams.findOne(Session.get('team_id'));
+        var team = Teams.findOne(Session.get('team_id'));
         if (typeof team.gamecode != 'undefined' && team.gamecode.length) {
-            game = Games.findOne({gamecode:team.gamecode});
+            var game = Games.findOne({gamecode:team.gamecode});
             console.log('Teams in game; ' + game.teams.length);
         } else {
             console.log('Team not yet in game.');
