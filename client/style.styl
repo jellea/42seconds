@@ -58,3 +58,24 @@ a.button
   -moz-border-radius: 5px;
   border-radius: 5px;
 
+// Mixins
+animate(name, time)
+    animation name time forwards
+    -moz-animation name time forwards
+    -webkit-animation name time forwards
+    -o-animation name time forwards
+    -ms-animation name time forwards
+
+// Keyframes
+@keyframes slideLeft
+    from
+        left 100%
+    to
+        left 0%
+
+@keyframes slideRight
+    from
+        left 0%
+    to
+        left 100%
+
