@@ -3,32 +3,68 @@
 </head>
 
 <body>
-    {{> game}}
+    {{> lobby}}
 </body>
 
-<template name="game">
-    <h1>Hello World!</h1>
-    You threw: {{diceThrow.throw}}
-    <input type="button" class="dice" value="Throw dice"/>
+<template name="lobby">
+    <h1>Logo</h1>
+    {{ test }}
+    <input type="button" class="startgame" value="New game"/>
+    <br />
+    <input type="button" class="joingame" value="Join game"/>
 </template>
 
+<template name="newgame">
+    <p>
+      Five rounds</br>
+      All categories</br>
+      Medium difficulty
+    </p>
 
-<template name="hello2">
-    <h1>Hello World2!</h1>
-    {{greeting}}
-    <input type="button" value="Click"/>
+    <input type="button" class="startgame" value="New game"/>
+    <p>or</p>
+    <input type="button" class="joingame" value="Join game"/>
+    <p>Choose your options</p>
 </template>
 
-<template name="hello3">
-    <h1>Hello World!</h1>
-    {{greeting}}
-    <input type="button" value="Click"/>
+<template name="gamerules">
+    <p>Hello!</p>
 </template>
 
-<template name="hello4">
-    <h1>Hello World!</h1>
-    {{greeting}}
-    <input type="button" value="Click"/>
+<template name="advancedsettings">
+    <h3>Rounds</h3>
+    <h3>Category</h3>
+    <h3>Difficulty</h3>
+    <input type="button" class="joingame" value="Done"/>
 </template>
 
+<template name="join">
+    <h3>Enter code</h3>
+    <input type="number">
+    <input type="button" class="joingame" value="Go!"/>
+</template>
 
+<template name="showcode">
+    <h3>Your code</h3>
+    <p>{{ gamecode }}</p>
+    <h3>You're in</h3>
+    <p>{{ team }}</p>
+</template>
+
+<template name="gameDice">
+</template>
+
+<template name="gameActiveteam">
+</template>
+
+<template name="gameOpponent">
+</template>
+
+<template name="gameScorecheck">
+</template>
+
+<template name="gameResults">
+</template>
+
+<template name="scoreboard">
+</template>
