@@ -1,13 +1,13 @@
 Template.gameDice.events({
     'click input.dice': function () {
-        if(!Session.get('gameid')){
-            console.log("GameID not set");
+        if(!Session.get('gamecode')){
+            console.log("gamecode not set");
             return;
         }
-        if(Dice.findOne({'access_code' : Session.get('gameid')})) {
-            Dice.update({'access_code' : Session.get('gameid')}, {$set: {'throw': Math.floor(Math.random() * 3)}});
+        if(Dice.findOne({'access_code' : Session.get('gamecode')})) {
+            Dice.update({'access_code' : Session.get('gamecode')}, {$set: {'throw': Math.floor(Math.random() * 3)}});
         } else {
-            Dice.insert({'access_code' : Session.get('gameid'), 'throw': Math.floor(Math.random() * 3 )});
+            Dice.insert({'access_code' : Session.get('gamecode'), 'throw': Math.floor(Math.random() * 3 )});
         }
     }
 });
@@ -96,7 +96,7 @@ Meteor.startup(function () {
       var me = team();
       if (me && me.gamecode) {
         Meteor.subscribe('games', me.gamecode);
-        Session.set('gameid', me.gamecode);
+        Session.set('gamecode', me.gamecode);
       }
     }
   });
