@@ -66,14 +66,14 @@ Template.newgame.events({
 
 Template.advancedsettings.events({
     'click input#startgame':function () {
-        var rounds = $('input[name="rounds"]').val();
-        var category = $('input[name="category"]').val();
-        var difficulty = $('input[name="difficulty"]').val();
+        var rounds = $('input[name="rounds"]:checked').val();
+        var category = $('input[name="category"]:checked').val();
+        var difficulty = $('input[name="difficulty"]:checked').val();
 
-        Meteor.call('start_new_game', rounds, category, difficulty, function (error, game) {
+        Meteor.call('start_new_game', Session.get('team_id'), rounds, category, difficulty, function (error, game) {
             Template.showcode.rounds = rounds;
-            Template.showcode.rounds = category;
-            Template.showcode.rounds = difficulty;
+            Template.showcode.category = category;
+            Template.showcode.difficulty = difficulty;
             Template.showcode.gamecode = game.gamecode;
             Template.showcode.team = game.teams.length;
             var fragment = Meteor.render(Template.showcode);
