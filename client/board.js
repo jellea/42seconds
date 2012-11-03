@@ -92,6 +92,7 @@ Template.join.events({
                 console.log(error);
                 return;
             }
+	        Session.set('gamecode',gamecode);
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
@@ -102,9 +103,7 @@ Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
         if (game.teams.length >= 2) {
-        	
-            //$("body").html(Meteor.render(Template.gameDice));
-            console.log("Cool!");
+            $("body").html(Meteor.render(Template.gameOpponent));
         }
     }
 }
