@@ -23,7 +23,7 @@
 
     <input type="button" class="startgame" value="Quick match"/>
     <p>or</p>
-    <input type="button" class="joingame" value="Advanced game"
+    <input type="button" class="joingame" value="Advanced game">
     <p>Choose your options</p>
 </template>
 
@@ -59,6 +59,12 @@
     <input type="button" class="joingame" value="Go!"/>
 </template>
 
+<template name="joined">
+    <h3>Joined game</h3>
+    <p>You're in {{ team }}</p>
+    <p>Wait for team 1 to start the game.</p>
+</template>
+
 <template name="showcode">
     <h3>Your code</h3>
     <p>{{ gamecode }}</p>
@@ -67,13 +73,18 @@
 </template>
 
 <template name="gameDice">
-	<h3>Round {{roundnumber}}</h3>
-	<p class="shake">Shake!</p>
-	<ul class="dice">
-		<li>0</li>
-		<li>1</li>
-		<li>2</li>
-	</ul>
+    <h3>Round {{roundnumber}}</h3>
+    <p class="shake">Shake!</p>
+    <ul class="dice">
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+    </ul>
+    {{#if diceThrow}}
+    Dice: {{diceThrow.throw}}
+    {{else}}
+    <input type="button" class="dice" value="Roll the dice!">
+    {{/if}}
 </template>
 
 <template name="gameActiveteam">
