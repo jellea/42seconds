@@ -86,13 +86,12 @@ Template.advancedsettings.events({
 Template.join.events({
     'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
-        console.log(gamecode);
+	        Session.set('gamecode',gamecode);
         Meteor.call('joined_game', gamecode, function (error, game) {
             if (error) {
                 console.log(error);
                 return;
             }
-	        Session.set('gamecode',gamecode);
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
@@ -129,7 +128,7 @@ Meteor.startup(function () {
     });
 
     // subscribe to all the teams and the game i'm in
-    Meteor.autosubscribe(function () {
+    /*Meteor.autosubscribe(function () {
         Meteor.subscribe('teams');
 
         if (Session.get('team_id')) {
@@ -139,7 +138,7 @@ Meteor.startup(function () {
                 Session.set('gamecode', me.gamecode);
             }
         }
-    });
+    });*/
 
     // send keepalives so the server can tell when we go away.
     //
