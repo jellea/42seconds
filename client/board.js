@@ -16,12 +16,12 @@ Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code' : Session.get('gamecode')});
 }
 
-var player = function () {
-  return Players.findOne(Session.get('player_id'));
+var team = function () {
+  return Teams.findOne(Session.get('team_id'));
 };
 
 var game = function () {
-  var me = player();
+  var me = team();
   return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
@@ -48,22 +48,22 @@ Template.join.events({
 });
 
 Meteor.startup(function () {
-  // Allocate a new player id.
+  // Allocate a new team id.
   //
   // XXX this does not handle hot reload. In the reload case,
-  // Session.get('player_id') will return a real id. We should check for
-  // a pre-existing player, and if it exists, make sure the server still
+  // Session.get('team_id') will return a real id. We should check for
+  // a pre-existing team, and if it exists, make sure the server still
   // knows about us.
-  var player_id = Players.insert({name: '', idle: false});
-  Session.set('player_id', player_id);
+  var team_id = Teams.insert({name: '', idle: false});
+  Session.set('team_id', team_id);
 
-  // subscribe to all the players, the game i'm in, and all
+  // subscribe to all the teams, the game i'm in, and all
   // the words in that game.
   Meteor.autosubscribe(function () {
-    Meteor.subscribe('players');
+    Meteor.subscribe('teams');
 
-    if (Session.get('player_id')) {
-      var me = player();
+    if (Session.get('team_id')) {
+      var me = team();
       if (me && me.gamecode) {
         Meteor.subscribe('games', me.gamecode);
         Session.set('gameid', me.gamecode);
@@ -78,17 +78,17 @@ Meteor.startup(function () {
   // code can go away.
   Meteor.setInterval(function() {
     if (Meteor.status().connected)
-      Meteor.call('keepalive', Session.get('player_id'));
+      Meteor.call('keepalive', Session.get('team_id'));
   }, 20*1000);
   
   // this is not a great idiom. REFACTOR PLZ
   Meteor.setInterval(function() {
-  		player = Players.findOne(Session.get('player_id'));
-  		if(typeof player.gamecode!='undefined' && player.gamecode.length) {
-  			game = Games.findOne({gamecode: player.gamecode});
-			console.log('There are '+game.players.length+' in the game!');
+  		team = Teams.findOne(Session.get('team_id'));
+  		if(typeof team.gamecode!='undefined' && team.gamecode.length) {
+  			game = Games.findOne({gamecode: team.gamecode});
+			console.log('There are '+game.teams.length+' in the game!');
   		} else {
-  			console.log('Player not yet in game.');
+  			console.log('Team not yet in game.');
   		}
   }, 1000);
 });
