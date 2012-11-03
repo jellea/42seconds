@@ -35,18 +35,6 @@ var game = function () {
     return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
-Meteor.methods({
-
-    newgame:function () {
-        return 'newgame';
-    },
-
-    advancedsettings:function () {
-        return 'advancedsettings';
-    },
-
-    start_new_game:function (evt) {
-        var clock = 42;
 
         function createGamecode() {
             var gamecode = '';
@@ -61,25 +49,34 @@ Meteor.methods({
             }
             var found = Games.findOne({'gamecode':gamecode});
             if (found) {
-                return createGameCode();
+                return createGamecode();
             }
             return gamecode;
         }
 
-        var gamecode = createGamecode();
+Meteor.methods({
 
+    newgame:function () {
+        return 'newgame';
+    },
+
+    advancedsettings:function () {
+        return 'advancedsettings';
+    },
+
+    start_new_game:function (evt) {
+        var clock = 42;
+
+        var gamecode = createGamecode();
+		
         // create a new game with the current team in it
         Games.insert({team:team(), clock:clock, gamecode:gamecode});
-
-        // move everyone who is ready in the lobby to the game
-        Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
-            {$set:{gamecode:gamecode}},
-            {multi:true});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({gamecode:gamecode},
             {fields:{_id:true, name:true}}).fetch();
+            
         Games.update({gamecode:gamecode}, {$set:{teams:p}});
 
         // wind down the game clock
