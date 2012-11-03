@@ -18,6 +18,17 @@ Template.gameDice.diceThrow = function () {
 
 var team = function () {
     return Teams.findOne(Session.get('team_id'));
+}
+
+//Session.set('currentanswers', answers.find({},{limit:5}).fetch());
+
+
+Template.gameActiveteam.answers = function() {
+    return Session.get('currentanswers')
+}
+
+var player = function () {
+    return Players.findOne(Session.get('player_id'));
 };
 
 var game = function () {
@@ -53,9 +64,9 @@ Template.newgame.events({
 
 Template.advancedsettings.events({
     'click input.startgame':function () {
-        rounds = $('input[name="rounds"]').val();
-        category = $('input[name="category"]').val();
-        difficulty = $('input[name="difficulty"]').val();
+        var rounds = $('input[name="rounds"]').val();
+        var category = $('input[name="category"]').val();
+        var difficulty = $('input[name="difficulty"]').val();
 
         Meteor.call('start_new_game', rounds, category, difficulty, function (error, gamecode) {
             Template.showcode.rounds = rounds;
@@ -70,7 +81,7 @@ Template.advancedsettings.events({
 
 Template.join.events({
     'click input.joingame':function () {
-        gamecode = $("#gamecode").val();
+        var gamecode = $("#gamecode").val();
         Meteor.call('joined_game', gamecode, function (error, result) {
             if (error) {
                 console.log(error);
@@ -82,18 +93,19 @@ Template.join.events({
 });
 
 Template.joined.ready = function () {
-    var game = Games.findOne({'gamecode':Session.get('gameid')});
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
-        if (game.players.length >= 2) {
+        if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
+            console.log("Cool!");
         }
     }
 }
 
 Template.showcode.ready = function () {
-    var game = Games.findOne({'gamecode':Session.get('gameid')});
+    var game = Games.findOne({'gamecode':Session.get('gamecode')});
     if (game) {
-        if (game.players.length >= 2) {
+        if (game.teams.length >= 2) {
             $("body").html(Meteor.render(Template.gameDice));
         }
     }
@@ -122,4 +134,14 @@ Meteor.startup(function () {
             }
         }
     });
+
+    // send keepalives so the server can tell when we go away.
+    //
+    // XXX this is not a great idiom. meteor server does not yet have a
+    // way to expose connection status to user code. Once it does, this
+    // code can go away.
+    Meteor.setInterval(function () {
+        if (Meteor.status().connected)
+            Meteor.call('keepalive', Session.get('team_id'));
+    }, 20 * 1000);
 });

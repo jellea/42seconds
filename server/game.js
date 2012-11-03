@@ -19,7 +19,7 @@ function createGamecode() {
         }
         gamecode += '' + random;
     }
-    found = Games.findOne({'gamecode':gamecode});
+    var found = Games.findOne({'gamecode':gamecode});
     if (found) {
         return createGameCode();
     }
@@ -35,6 +35,25 @@ var game = function () {
     return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
+
+function createGamecode() {
+    var gamecode = '';
+    for (i = 0; i < 3; i++) {
+        if (i == 0) {
+            // don't allow 0 as first digit
+            random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+        } else {
+            random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+        }
+        gamecode += '' + random;
+    }
+    var found = Games.findOne({'gamecode':gamecode});
+    if (found) {
+        return createGamecode();
+    }
+    return gamecode;
+}
+
 Meteor.methods({
 
     newgame:function () {
@@ -48,38 +67,16 @@ Meteor.methods({
     start_new_game:function (evt) {
         var clock = 42;
 
-        function createGamecode() {
-            var gamecode = '';
-            for (i = 0; i < 3; i++) {
-                if (i == 0) {
-                    // don't allow 0 as first digit
-                    random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-                } else {
-                    random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-                }
-                gamecode += '' + random;
-            }
-            found = Games.findOne({'gamecode':gamecode});
-            if (found) {
-                return createGameCode();
-            }
-            return gamecode;
-        }
-
-        gamecode = createGamecode();
-
+        var gamecode = createGamecode();
+		
         // create a new game with the current team in it
         Games.insert({team:team(), clock:clock, gamecode:gamecode});
-
-        // move everyone who is ready in the lobby to the game
-        Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
-            {$set:{gamecode:gamecode}},
-            {multi:true});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({gamecode:gamecode},
             {fields:{_id:true, name:true}}).fetch();
+            
         Games.update({gamecode:gamecode}, {$set:{teams:p}});
 
         // wind down the game clock
