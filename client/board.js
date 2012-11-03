@@ -1,3 +1,21 @@
+Template.gameDice.events({
+    'click input.dice': function () {
+        if(!Session.get('gameid')){
+            console.log("GameID not set");
+            return;
+        }
+        if(Dice.findOne({'access_code' : Session.get('gameid')})) {
+            Dice.update({'access_code' : Session.get('gameid')}, {$set: {'throw': Math.floor(Math.random() * 3)}});
+        } else {
+            Dice.insert({'access_code' : Session.get('gameid'), 'throw': Math.floor(Math.random() * 3 )});
+        }
+    }
+});
+
+Template.gameDice.diceThrow = function () {
+    return Dice.findOne({'access_code' : Session.get('gameid')});
+}
+
 var player = function () {
   return Players.findOne(Session.get('player_id'));
 };
@@ -47,6 +65,7 @@ Meteor.startup(function () {
       var me = player();
       if (me && me.game_id) {
         Meteor.subscribe('games', me.game_id);
+        Session.set('gameid', me.game_id);
       }
     }
   });
