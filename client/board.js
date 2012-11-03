@@ -16,9 +16,9 @@ Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code':Session.get('gamecode')});
 }
 
-var team = function () {
+/*var team = function () {
     return Teams.findOne(Session.get('team_id'));
-}
+}*/
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
@@ -27,14 +27,14 @@ Template.gameActiveteam.answers = function() {
     return Session.get('currentanswers')
 }
 
-var player = function () {
+/*var player = function () {
     return Players.findOne(Session.get('player_id'));
 };
 
 var game = function () {
     var me = team();
     return me && me.gamecode && Games.findOne(me.gamecode);
-};
+};*/
 
 Template.lobby.events({
     'click input#newgame':function () {
