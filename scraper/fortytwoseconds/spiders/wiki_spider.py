@@ -15,6 +15,8 @@ def create_items(response, xpath, category):
     items = []
     for answer in answers:
         link = answer.select('@href').extract()[0]
+        if link.endswith('redlink=1'):
+            continue
         if link.startswith('/'):
             link = nl_domain + link
         item = FortyTwoSecondsItem()
@@ -64,6 +66,16 @@ class WikiLandenSpider(BaseSpider):
     def parse(self, response):
         xpath ='//tr/td/a[2]'
         return create_items(response, xpath, 'Landen')
+
+
+class WikiSportenSpider(BaseSpider):
+    name = 'sporten'
+    allowed_domains = [nl_domain,]
+    start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_sporten',]
+
+    def parse(self, response):
+        xpath = '//dd/a'
+        return create_items(response, xpath, 'Sporten')
 
 
 class WikiStedenSpider(BaseSpider):
