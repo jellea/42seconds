@@ -13,7 +13,7 @@ Template.gameDice.events({
 });
 
 Template.gameDice.diceThrow = function () {
-    return Dice.findOne({'access_code' : Session.get('gameid')});
+    return Dice.findOne({'access_code' : Session.get('gamecode')});
 }
 
 var player = function () {
@@ -22,7 +22,7 @@ var player = function () {
 
 var game = function () {
   var me = player();
-  return me && me.game_id && Games.findOne(me.game_id);
+  return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
 Template.lobby.events({
@@ -40,7 +40,8 @@ Template.lobby.events({
 
 Template.join.events({
     'click input.joingame': function() {
-      Meteor.call('joined_game', function(error,result) {
+	  gamecode = $("#gamecode").val();
+      Meteor.call('joined_game', gamecode ,function(error,result) {
          $("body").html(Meteor.render(Template.joined));
       });
     }
@@ -63,9 +64,9 @@ Meteor.startup(function () {
 
     if (Session.get('player_id')) {
       var me = player();
-      if (me && me.game_id) {
-        Meteor.subscribe('games', me.game_id);
-        Session.set('gameid', me.game_id);
+      if (me && me.gamecode) {
+        Meteor.subscribe('games', me.gamecode);
+        Session.set('gameid', me.gamecode);
       }
     }
   });
@@ -83,8 +84,8 @@ Meteor.startup(function () {
   // this is not a great idiom. REFACTOR PLZ
   Meteor.setInterval(function() {
   		player = Players.findOne(Session.get('player_id'));
-  		if(typeof player.game_id!='undefined' && player.game_id.length) {
-  			game = Games.findOne(player.game_id);
+  		if(typeof player.gamecode!='undefined' && player.gamecode.length) {
+  			game = Games.findOne({gamecode: player.gamecode});
 			console.log('There are '+game.players.length+' in the game!');
   		} else {
   			console.log('Player not yet in game.');

@@ -5,13 +5,14 @@ function player() {
 
 var game = function () {
   var me = player();
-  return me && me.game_id && Games.findOne(me.game_id);
+  return me && me.gamecode && Games.findOne(me.gamecode);
 };
 
 Meteor.methods({
   start_new_game: function (evt) {
 	var clock = 42;
-	var gamecode = '';
+function createGamecode() {
+    var gamecode = '';
 	for(i=0;i<3;i++) {
 		if(i==0) {
 			 // don't allow 0 as first digit
@@ -21,24 +22,32 @@ Meteor.methods({
 		}
 		gamecode += ''+random;
 	}
+	found = Games.findOne({'gamecode':gamecode});
+	if(found) {
+		return createGameCode();
+	}
+	return gamecode;
+}
+	gamecode = createGamecode();
 
     // create a new game with the current player in it
-    var game_id = Games.insert({player: player(), clock: clock, gamecode: gamecode});
-
+    Games.insert({player: player(), clock: clock, gamecode: gamecode});
+    
     // move everyone who is ready in the lobby to the game
-    Players.update({game_id: null, idle: false, player_id: Session.get('player_id')},
-                   {$set: {game_id: game_id}},
+    Players.update({gamecode: null, idle: false, player_id: Session.get('player_id')},
+                   {$set: {gamecode: gamecode}},
                    {multi: true});
+                   
     // Save a record of who is in the game, so when they leave we can
     // still show them.
-    var p = Players.find({game_id: game_id},
+    var p = Players.find({gamecode: gamecode},
                          {fields: {_id: true, name: true}}).fetch();
-    Games.update({_id: game_id}, {$set: {players: p}});
+    Games.update({gamecode: gamecode}, {$set: {players: p}});
 	
     // wind down the game clock
     var interval = Meteor.setInterval(function () {
       clock -= 1;
-      Games.update(game_id, {$set: {clock: clock}});
+      Games.update({gamecode: gamecode}, {$set: {clock: clock}});
 
       // end of game
       if (clock === 0) {
@@ -54,10 +63,12 @@ Meteor.methods({
           if (score === high_score)
             winners.push(player_id);
         });
-        Games.update(game_id, {$set: {winners: winners}});
+        Games.update({gamecode:gamecode}, {$set: {winners: winners}});
         */
       }
     }, 1000);
+    
+    Session.set('gamecode',gamecode);
 
     return gamecode;
   }, keepalive: function (player_id) {
@@ -66,8 +77,18 @@ Meteor.methods({
                           idle: false}});
   },
 
-  join_game: function (evt) {
-	console.log('join_game');
+  joined_game: function (gamecode) {
+    // move everyone who is ready in the lobby to the game
+    Players.update({gamecode: null, idle: false, player_id: Session.get('player_id')},
+                   {$set: {gamecode: gamecode}},
+                   {multi: true});
+    // Save a record of who is in the game, so when they leave we can
+    // still show them.
+    var p = Players.find({gamecode: gamecode},
+                         {fields: {_id: true, name: true}}).fetch();
+    Games.update({gamecode:gamecode}, {$set: {players: p}});
+    
+    return 'joined';
   }
 });
 
