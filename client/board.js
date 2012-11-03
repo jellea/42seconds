@@ -4,15 +4,15 @@ var player = function () {
 
 Template.lobby.events({
   'click input.startgame': function () {
-	Meteor.call('start_new_game', function(error,gamecode) {
-		Template.showcode.gamecode = gamecode;
-    	var fragment = Meteor.render(Template.showcode);
-	    $("body").html(fragment);
+  Meteor.call('start_new_game', function(error,gamecode) {
+    Template.showcode.gamecode = gamecode;
+      var fragment = Meteor.render(Template.showcode);
+      $("body").html(fragment);
     });
   },
   'click input.joingame': function () {
     Meteor.call('join_game', function(error,result) {
-		$("body").html(Meteor.render(Template.join));
+    $("body").html(Meteor.render(Template.join));
     });
   }
 });
