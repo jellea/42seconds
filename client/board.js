@@ -18,6 +18,14 @@ Template.gameDice.diceThrow = function () {
 
 var team = function () {
     return Teams.findOne(Session.get('team_id'));
+}
+
+Template.gameActiveteam.answers = function() {
+    return [{'answer':'bla','id':'bla'},{'answer':'whoop','id':'bla'}]
+}
+
+var player = function () {
+    return Players.findOne(Session.get('player_id'));
 };
 
 var game = function () {
