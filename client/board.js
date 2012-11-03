@@ -86,11 +86,13 @@ Template.advancedsettings.events({
 Template.join.events({
     'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
-        Meteor.call('joined_game', gamecode, function (error, result) {
+        console.log(gamecode);
+        Meteor.call('joined_game', gamecode, function (error, game) {
             if (error) {
                 console.log(error);
                 return;
             }
+            Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
     }
@@ -100,7 +102,8 @@ Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
         if (game.teams.length >= 2) {
-            $("body").html(Meteor.render(Template.gameDice));
+        	
+            //$("body").html(Meteor.render(Template.gameDice));
             console.log("Cool!");
         }
     }

@@ -106,11 +106,11 @@ Meteor.methods({
 
     joined_game:function (gamecode) {
         Teams.update({_id:Session.get('team_id')},
-            {$set:{gamecode:gamecode}},
+            {$set:{'gamecode':gamecode}},
             {multi:true});
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-        var p = Teams.find({gamecode:gamecode},
+        var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
         Games.update({'gamecode':gamecode}, {$set:{teams:p}});
         var game = Games.findOne({'gamecode':gamecode});
