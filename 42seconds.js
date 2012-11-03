@@ -1,3 +1,5 @@
+Answers = new Meteor.Collection("answers");
+        
 if (Meteor.isClient) {
     Template.hello.greeting = function () {
       return "Welcome to 42seconds.";
@@ -17,9 +19,10 @@ if (Meteor.isClient) {
   }
   
   Template.lobby.retrieveAnswerCount = function() {
-  		answers = Meteor.subscribe('answers');
-  		console.log(answers);
-  		return answers;
+ 		Meteor.subscribe('answers');
+  		console.log(Answers.find());
+
+		return 0;
 	}
   
 }
@@ -30,9 +33,9 @@ if (Meteor.isServer) {
     // code to run on server at startup
     var fs = __meteor_bootstrap__.require('fs');  
     answers = fs.readFileSync('answers/answers.json');
-    var Answers = new Meteor.Collection("answers");
+
     Meteor.publish('answers', function () {
-		returns Answers.find();
+		return Answers.find();
 	});
   });
 }
