@@ -49,7 +49,6 @@ var game = function () {
             }
             var found = Games.findOne({'gamecode':gamecode});
             if (found) {
-            	console.log(gamecode+' was already found.');
                 return createGamecode();
             }
             return gamecode;
@@ -66,34 +65,17 @@ Meteor.methods({
     },
 
     start_new_game:function (evt) {
-    	var gamecodes = Games.find({}).fetch();
-    	var gcstring;
-    	for(i=0;i<gamecodes.length;i++) {
-    		gcstring += gamecodes[i].gamecode+' ';
-    	}
-    	console.log(gcstring);
-    	
         var clock = 42;
 
         var gamecode = createGamecode();
-		console.log('Decided on gamecode '+gamecode);
 		
         // create a new game with the current team in it
         Games.insert({team:team(), clock:clock, gamecode:gamecode});
 
-        // move everyone who is ready in the lobby to the game
-        /*Teams.update({gamecode:null, idle:false, team_id:Session.get('team_id')},
-            {$set:{gamecode:gamecode}},
-            {multi:true});
-*/
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({gamecode:gamecode},
             {fields:{_id:true, name:true}}).fetch();
-        
-        for(i=0;i<p.length;i++) {
-        	console.log('Team member '+i+'; '+p._id);
-        }
             
         Games.update({gamecode:gamecode}, {$set:{teams:p}});
 
