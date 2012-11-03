@@ -5,15 +5,27 @@ Template.gameDice.events({
             return;
         }
         if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':Math.floor(Math.random() * 3)}});
+            var handicap = Math.floor(Math.random() * 3);
+            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         } else {
-            Dice.insert({'access_code':Session.get('gamecode'), 'throw':Math.floor(Math.random() * 3)});
+            var handicap = Math.floor(Math.random() * 3);
+            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         }
+        $("body").html(Meteor.render(Template.gameActiveteam));
     }
 });
 
 Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code':Session.get('gamecode')});
+}
+
+Template.gameDice.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
 }
 
 /*var team = function () {
@@ -24,7 +36,23 @@ Template.gameDice.diceThrow = function () {
 
 
 Template.gameActiveteam.answers = function() {
-    return Session.get('currentanswers')
+    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+}
+
+Template.gameActiveteam.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
+}
+
+Template.gameActiveteam.handicap = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.handicap;
+    }
 }
 
 /*var player = function () {

@@ -41,7 +41,7 @@ Meteor.methods({
 		
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode});
+        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode, 'round' : 0});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
