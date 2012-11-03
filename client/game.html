@@ -22,17 +22,33 @@
     </p>
 
     <input type="button" class="startgame" value="New game"/>
-    <br />
+    <p>or</p>
     <input type="button" class="joingame" value="Join game"/>
+    <p>Choose your options</p>
 </template>
 
 <template name="gamerules">
+    <p>Hello!</p>
 </template>
 
 <template name="advancedsettings">
+    <h3>Rounds</h3>
+    <h3>Category</h3>
+    <h3>Difficulty</h3>
+    <input type="button" class="joingame" value="Done"/>
 </template>
 
 <template name="join">
+    <h3>Enter code</h3>
+    <input type="number">
+    <input type="button" class="joingame" value="Go!"/>
+</template>
+
+<template name="showcode">
+    <h3>Your code</h3>
+    <p>{{ gamecode }}</p>
+    <h3>You're in</h3>
+    <p>{{ team }}</p>
 </template>
 
 <template name="game-dice">
