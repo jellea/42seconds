@@ -1,5 +1,6 @@
 ////////// Server only logic //////////
 
+var defaultAnswers = 5;
 var defaultRounds = 5;
 var defaultCategory = 'all';
 var defaultDifficulty = 'medium';
@@ -69,6 +70,32 @@ Meteor.methods({
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
+
+        // Get answers from the database, if we have any.
+        var count = Answers.find({'language':'nl'}).count();
+        var answers = new Array();
+        var usedb = false;
+        if (usedb && count >= defaultAnswers) {
+            // fetch unique random answers
+            var ids = new Array();
+            while (ids.length < defaultAnswers) {
+                var skip = Math.floor(Math.random() * count);
+                var exists = false;
+                for(var i = 0; i < ids.length; i++) {
+                    if(ids[i] == skip) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists) {
+                    ids.push(skip);
+                    answer = Answers.findOne({'language':'nl'}, {'skip':skip});
+                    answers.push(answer);
+                }
+            }
+        }
+        // fall back to some hardcoded data if we have nothing in the database.
+        else {
             
         /*var answers = [
             {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
@@ -87,8 +114,7 @@ Meteor.methods({
         	var word = data[random];
         	answers.push({"answer":word});
         }
-        console.log(answers);
-        
+        }
         Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
 
         return Games.findOne({'gamecode':gamecode});
