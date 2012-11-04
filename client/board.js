@@ -1,6 +1,5 @@
 Template.gameDice.events({
     'click input#dice':function () {
-<<<<<<< HEAD
         var number_of_dices = $('#dices').children().length;
         var current_dice_index = 0;
         // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
@@ -9,8 +8,10 @@ Template.gameDice.events({
             if (current_dice_index == number_of_dices) {
                 current_dice_index = 0;
             }
-            $('#dices div:visible').hide();
-            $($('#dices').children().get(current_dice_index)).show();
+            Meteor.setTimeout(function() {
+                $('#dices div:visible').hide();
+                $($('#dices').children().get(current_dice_index)).show();
+            }, i * 1000);
         }
         
         
@@ -40,27 +41,16 @@ Template.gameDice.events({
 //            return;
 //        }
 //        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-//            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':Math.floor(Math.random() * 3)}});
+//            var handicap = Math.floor(Math.random() * 3);
+//            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+//            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
 //        } else {
-//            Dice.insert({'access_code':Session.get('gamecode'), 'throw':Math.floor(Math.random() * 3)});
+//            var handicap = Math.floor(Math.random() * 3);
+//            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+//            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
 //        }
-=======
-        if (!Session.get('gamecode')) {
-            console.log("gamecode not set");
-            return;
-        }
-        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            var handicap = Math.floor(Math.random() * 3);
-            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        } else {
-            var handicap = Math.floor(Math.random() * 3);
-            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        }
-        $("body").html(Meteor.render(Template.gameActiveteam));
-        Meteor.call('startClock', Session.get('gamecode'));
->>>>>>> b0f6a2c49730c738c4798c62ffbec1cd91b5e47a
+//        $("body").html(Meteor.render(Template.gameActiveteam));
+//        Meteor.call('startClock', Session.get('gamecode'));
     }
 });
 
