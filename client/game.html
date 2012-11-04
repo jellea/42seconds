@@ -146,6 +146,7 @@
         </header>
         <div class="game bluebg">
         <h3>Round {{roundnumber}}</h3>
+        <div class="score">Score -{{handicap}}</div>
         <ul class="answers">
             {{#each answers}}
             {{#if this.checkedOff}}
@@ -154,8 +155,6 @@
             <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
             {{/if}}
             {{/each}}
-            <li class="handicap"><div>{{handicap}}</div>Handicap</li>
-            <li><div>2</div>Total</li>
         </ul>
         <div class="clock">{{time}}</div>
         <div class="countdown">
