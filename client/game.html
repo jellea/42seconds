@@ -155,7 +155,6 @@
             {{/each}}
             
         </ul>
-        <div class="clock">{{time}}</div>
         {{#constant}}
         <div class="countdown">
           <img src="images/wijzerplaat.png">
@@ -176,6 +175,7 @@
         {{/constant}}
         </div>
     </div>
+	{{ready}}
 </template>
 
 <template name="gameOpponent">
@@ -210,6 +210,7 @@
           </div>
         </div>
     </div>
+    {{ready}}
 </template>
 
 <template name="gameScorecheck">

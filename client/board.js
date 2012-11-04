@@ -98,13 +98,11 @@ Template.gameActiveteam.handicap = function () {
     }
 }
 
-Template.gameActiveteam.time = function () {
+Template.gameActiveteam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
             $("body").html(Template.gameScorecheckWait);
-        } else {
-            return game.clock;
         }
     }
 }
@@ -145,14 +143,11 @@ Template.gameOpponent.handicap = function () {
     }
 }
 
-Template.gameOpponent.time = function () {
+Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
             $("body").html(Template.gameScorecheck);
-        } else {
-            $("div.clock")
-            return game.clock;
         }
     }
 }
