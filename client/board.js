@@ -16,8 +16,7 @@ var set_handicap = function(handicap) {
         Meteor.call('startClock', Session.get('gamecode'), function () {
                 console.log("Game started!");
         });
-    }, 1500);           
-}
+    }, 1500);}
 
 Template.gameDice.events({
     'click input#dice':function () {
@@ -200,6 +199,10 @@ Template.newgame.events({
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
+    },
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -234,6 +237,10 @@ Template.join.events({
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
+    },
+    'click img.backbutton':function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -272,6 +279,12 @@ Template.showcode.ready = function () {
     }
 }
 
+Template.showcode.events({
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
+    }
+});
 
 Template.gameScorecheckWait.wait = function () {
     Meteor.subscribe()
