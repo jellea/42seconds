@@ -36,7 +36,6 @@ function loadAnswers(gamecode) {
     for(var i=0;i<defaultNumberOfAnswers;i++) {
         random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
         var word = data[random];
-        answers.push({"answer":word});
         if(checkDuplicates.indexOf(word)==-1) {
             checkDuplicates.push(word);
             answers.push({"answer":word});
