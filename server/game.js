@@ -105,15 +105,20 @@ Meteor.methods({
             {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
         ];*/
         var answers = new Array();
+        var checkDuplicates = new Array();
         var fs = __meteor_bootstrap__.require('fs');   
         var data = fs.readFileSync('answers/answers.txt');
         data = data.toString().split("\n");
-        console.log('data');
-        console.log(data);
-        for(i=0;i<defaultNumberOfAnswers;i++) {
+        
+        for(var i=0;i<defaultNumberOfAnswers;i++) {
         	random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
         	var word = data[random];
-        	answers.push({"answer":word});
+        	if(checkDuplicates.indexOf(word)==-1) {
+        	    checkDuplicates.push(word);
+        	    answers.push({"answer":word});
+        	} else {
+        		i=i-1;
+        	}
         }
         }
         Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
