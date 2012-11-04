@@ -159,7 +159,7 @@ Meteor.methods({
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
                     }
                 }
-                loadAnswers(gamecode);
+                //loadAnswers(gamecode);
                 if(game.round>=game.rounds) {
                 	// game ENDS!
                     // declare zero or more winners
