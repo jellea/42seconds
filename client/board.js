@@ -1,49 +1,42 @@
-Template.gameDice.events({
-    'click input#dice':function () {
-        var number_of_dices = $('#dices').children().length;
-        var current_dice_index = 0;
-        // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
-        for(var i = 0; i < 10; i++) {
-            Meteor.setTimeout(function() {
-                current_dice_index = (current_dice_index + 1) % number_of_dices;
-                $('#dices div:visible').hide();
-                $($('#dices').children().get(current_dice_index)).show();
-            }, i * 1000);
-        }
-        if (!Session.get('gamecode')) {
-            console.log("gamecode not set");
-            return;
-        }
-        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            var handicap = Math.floor(Math.random() * 3);
-            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        } else {
-            var handicap = Math.floor(Math.random() * 3);
-            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        }
+var set_handicap = function(handicap) {
+    if (!Session.get('gamecode')) {
+        console.log("gamecode not set");
+        return;
+    }
+    if (Dice.findOne({'access_code':Session.get('gamecode')})) {
+
+        Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+        Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+    } else {
+        Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+        Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+    }
+    Meteor.setTimeout(function() {
         $("body").html(Meteor.render(Template.gameActiveteam));
         Meteor.call('startClock', Session.get('gamecode'), function () {
-        	console.log("Game started!");
+                console.log("Game started!");
         });
+    }, 1500);           
+}
 
-//        for(var i = 0; i <= 10; i++) {
-//            $.each($('#dices').children(), function(index, value) {
-////                $('#dices div:visible').delay(1000).hide();
-////                $(this).show();
-////                
-//                
-//                k=0;
-//                Meteor.setTimeout(function () {
-//                    $('#dices div:visible').hide();
-//                    diceKids = $('#dices').children();
-//                    $(diceKids[k]).show();
-//                    k++;
-//                    if(k>=3) k=0;
-//                }, i*1000);
-//            });
-//        };
+Template.gameDice.events({
+    'click input#dice':function () {
+        $('input#dice').attr('disabled', 'disabled');
+        var number_of_dices = $('#dices').children().length;
+        var max_animations = 50;
+        var lastindex = max_animations;
+        var handicap = 0;
+        for(var i = 0; i < max_animations; i++) {
+            Meteor.setTimeout(function() {
+                $('#dices div:visible').hide();
+                handicap = (handicap + Math.floor(Math.random() * (number_of_dices - 1)) + 1) % number_of_dices;
+                $($('#dices').children().get(handicap)).show();
+                lastindex--;
+                if(lastindex == 0) {
+                    set_handicap(handicap);
+                }
+            }, i * 50);
+        }
     }
 });
 
