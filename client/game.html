@@ -143,7 +143,7 @@
         <h3>Round = {{roundnumber}}</h3>
         <ul>
             {{#each answers}}
-            <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            <li><input type="checkbox" class="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>{{handicap}}</div>Handicap</li>
             <li><div>2</div>Total</li>
@@ -173,8 +173,8 @@
         <h3>Round ={{roundnumber}}</h3>
         <p>Score: {{score}}</p>
         <ul>
-            {{#each answers}}
-            <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            {{#each checkedOff}}
+            	<li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{checkedOff}}</li>
             {{/each}}
         </ul>
         <div class="clock">{{time}}</div>

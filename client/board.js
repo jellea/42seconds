@@ -37,12 +37,49 @@ Template.gameDice.events({
                 }
             }, i * 50);
         }
+        if (!Session.get('gamecode')) {
+            console.log("gamecode not set");
+            return;
+        }
+
+        var handicap;
+
+        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
+            handicap = Math.floor(Math.random() * 3);
+            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+        } else {
+            handicap = Math.floor(Math.random() * 3);
+            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+        }
+        $("body").html(Meteor.render(Template.gameActiveteam));
+        Meteor.call('startClock', Session.get('gamecode'), function () {
+        	console.log("Game started!");
+        });
+
+//        for(var i = 0; i <= 10; i++) {
+//            $.each($('#dices').children(), function(index, value) {
+////                $('#dices div:visible').delay(1000).hide();
+////                $(this).show();
+////                
+//                
+//                k=0;
+//                Meteor.setTimeout(function () {
+//                    $('#dices div:visible').hide();
+//                    diceKids = $('#dices').children();
+//                    $(diceKids[k]).show();
+//                    k++;
+//                    if(k>=3) k=0;
+//                }, i*1000);
+//            });
+//        };
     }
 });
 
 Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code':Session.get('gamecode')});
-}
+};
 
 Template.gameDice.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
@@ -59,9 +96,13 @@ Template.gameDice.roundnumber = function () {
 
 
 Template.gameActiveteam.answers = function() {
-    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+    return [
+        {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
+        {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
         {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
+        {"answer": "Gert Verhulst", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+        ];
 }
 
 Template.gameActiveteam.roundnumber = function () {
@@ -96,10 +137,20 @@ Template.gameActiveteam.score = function () {
     }
 }
 
-Template.gameOpponent.answers = function() {
-    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+Template.gameActiveteam.events({
+    'click input.checkbox':function (elmnt) {
+        $(elmnt).css('text-decoration', 'line-through');
+        
+    }
+});
+
+Template.gameOpponent.checkedOff = function() {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    return game.checkedOff;
+    /*return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
         {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
         {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        */
 }
 
 Template.gameOpponent.roundnumber = function () {
@@ -122,6 +173,7 @@ Template.gameOpponent.time = function () {
         if(game.clock === 0) {
             $("body").html(Template.gameActiveteam);
         } else {
+            $("div.clock")
             return game.clock;
         }
     }
@@ -133,15 +185,6 @@ Template.gameOpponent.score = function () {
         return game.score;
     }
 }
-
-/*var player = function () {
-    return Players.findOne(Session.get('player_id'));
-};
-
-var game = function () {
-    var me = team();
-    return me && me.gamecode && Games.findOne(me.gamecode);
-};*/
 
 Template.lobby.events({
     'click input#newgame':function () {
@@ -206,12 +249,6 @@ Template.join.events({
     }
 });
 
-Template.rules.events = ({
-	'click input#closeRules': function () {
-        $("body").html(Meteor.render(Template.lobby));
-	}
-});
-
 Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
@@ -220,6 +257,12 @@ Template.joined.ready = function () {
         }
     }
 }
+
+Template.rules.events = ({
+	'click input#closeRules': function () {
+        $("body").html(Meteor.render(Template.lobby));
+	}
+});
 
 Template.showcode.ready = function () {
     var game = Games.findOne({'gamecode':Session.get('gamecode')});
