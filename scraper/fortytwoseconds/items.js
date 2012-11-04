@@ -1,3 +1,4 @@
+testdata = 
 [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
 {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
 {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
@@ -930,4 +931,15 @@
 {"answer": "Kopspijkers", "category": "Televisie", "link": "http://nl.wikipedia.org/wiki/Kopspijkers", "language": "nl"},
 {"answer": "Reckless", "category": "Televisie", "link": "http://nl.wikipedia.org/wiki/Reckless_(1935)", "language": "nl"},
 {"answer": "Tanja", "category": "Televisie", "link": "http://nl.wikipedia.org/wiki/Tanja", "language": "nl"},
-{"answer": "Waar kan ik je 's nachts voor wakker maken?", "category": "Televisie", "link": "http://nl.wikipedia.org/wiki/Waar_kan_ik_je_%27s_nachts_voor_wakker_maken%3F", "language": "nl"}]
+{"answer": "Waar kan ik je 's nachts voor wakker maken?", "category": "Televisie", "link": "http://nl.wikipedia.org/wiki/Waar_kan_ik_je_%27s_nachts_voor_wakker_maken%3F", "language": "nl"}];
+
+for (i in testdata){
+    answers.insert({
+        answer: testdata[i]["answer"],
+        link: testdata[i]["link"],
+        language: testdata[i]["language"],
+        category: testdata[i]["category"],
+        answered_correctly: 0,
+        played: 0
+    });
+};

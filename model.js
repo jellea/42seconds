@@ -15,9 +15,11 @@ Devices = new Meteor.Collection('devices');
 answers = new Meteor.Collection('answers');
 // {
 //	answer: 'string in here', 
+//	link: 'url in here',
 //	language: 'en',
+//	category: 'string in here',
 //	played: 0, 
-//	answerd_correct: 0 
+//	answered_correctly: 0 
 // }
 
 Dice = new Meteor.Collection('dice');
