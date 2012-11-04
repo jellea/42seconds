@@ -6,17 +6,17 @@ color_blue = #4896cb
 color_darkorange = #f04e23
 
 bluebg()
-  background-image: url('/images/blue-bg.jpg');
+  background-image: url('/images/blue-bg.jpg')
 
 html
-  background: black;
+  background: black
 
 body
-  font: 16px Kameron;
-  background: white;
-  width: 320px;
-  height: 440px;
-  margin: 0;
+  font: 16px Kameron
+  background: white
+  width: 320px
+  height: 440px
+  margin: 0
 
 body h3 
   font-size: 27px
@@ -27,69 +27,66 @@ body h3.blue
   color: color_darkblue
 
 body header 
-  height: 48px;
-  width: 320px;
+  height: 48px
+  width: 320px
   text-align: center
   position: relative
 
 body header img
   margin-top: 8px
-  height: 27px;
+  height: 27px
 
 body header img:first-child
-  height: 23px;
+  height: 23px
   position: absolute
-  left: 11px;
-  top: 11px;
+  left: 11px
+  top: 11px
   margin-top: 0
 
 body img.lobby 
-  margin: 40px 0 35px 18px;
-  height: 110px;
+  margin: 40px 0 35px 18px
+  height: 110px
 
 body div.lobby.bluebg
-  height: 250px;
+  height: 250px
   bluebg()
 
 body div.lobby input:first-child
-  margin-top: 40px;
+  margin-top: 40px
 
 body input[type="button"]
-  height: 55px;
-  border-radius: 15px;
-  background-color: color_green;
-  border: 5px solid color_darkgreen;
-  font: 26px Kameron;
-  width: 280px;
-  margin: 5px 20px;
-  -webkit-appearance:none;
+  height: 55px
+  border-radius: 15px
+  background-color: color_green
+  border: 5px solid color_darkgreen
+  font: 26px Kameron
+  width: 280px
+  margin: 5px 20px
+  -webkit-appearance:none
 
 body input[type="button"].blue 
-  background-color: color_blue;
-  border-color: color_darkblue;
+  background-color: color_blue
+  border-color: color_darkblue
 
 body p 
-  font-size: 16px;
-  text-align: center;
+  font-size: 16px
+  text-align: center
 
 body p span.bar
-  display: inline-block;
+  display: inline-block
   -webkit-transform: translateY(-3px)
-  width: 60px;
-  height: 2px;
-  background-color: black;
-
-
-
+  width: 60px
+  height: 2px
+  background-color: black
 
 body div.newgame.bluebg
-  padding: 20px 0 0 0;
-  height: 392px;
-  width: 320px;
+  padding: 20px 0 0 0
+  height: 392px
+  width: 320px
   bluebg()
 
 body div.newgame ul 
-  width: 300px;
+  width: 300px
   list-style-type: none
   padding: 0
 
@@ -99,33 +96,34 @@ body div.newgame ul li
   width: 100px
 
 body div.join.bluebg 
-  padding: 20px 0 0 0;
-  height: 392px;
-  width: 320px;
+  padding: 20px 0 0 0
+  height: 392px
+  width: 320px
   bluebg()
 
 body div.join.bluebg input[type="text"]
-  width: 240px;
-  margin-left: 60px;
-  height: 94px;
-  padding: 0;
+  width: 240px
+  margin-left: 60px
+  height: 94px
+  padding: 0
   background: url('/images/code-background.png') transparent
   border: none
-  background-size: 200px 94px;
-  background-repeat: no-repeat;
+  background-size: 200px 94px
+  background-repeat: no-repeat
   font-size: 90px
   font-family: "Courier New", "Courier"
   letter-spacing: 15px
-  -webkit-appearance: none;
+  -webkit-appearance: none
   outline: 0
 
 body div.join.bluebg img 
+
 body div.showcode.bluebg img 
-  width: 37px;
+  width: 37px
 
 body div.join.bluebg h3.blue 
   margin-left: 0
-  text-align: center;
+  text-align: center
 
 body div.showcode.bluebg 
   padding: 20px 0 0 0;
@@ -152,9 +150,9 @@ body div.showcode.bluebg h3.red
   color: color_darkorange
 
 a.button
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  border-radius: 5px
 
 // Mixins
 animate(name, time, fillmode)
@@ -187,3 +185,28 @@ transform(arg)
 div#wrapper
     position absolute
     //animate(bounceIn, 1s, forwards)
+#dices
+    text-align center
+
+.dice
+    border-top 1px solid #f1f1f1
+    width 80px
+    height 80px
+    border-radius 10px
+    position relative
+    margin 10px
+    font-size 6px
+    display inline-block
+    box-shadow 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999
+    background-image linear-gradient(top, #fefefe, #f1f1f1 80%)
+
+.dot
+    width 60%
+    height 60%
+    left 30%
+    top 35%
+    margin -10%
+    border-radius 50%
+    display block
+    position absolute
+    font-size 36px

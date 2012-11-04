@@ -1,0 +1,142 @@
+/*Animated Clock*/
+.countdown > img
+  position: absolute
+  top: -43px
+  right: -27px
+  width: 210px
+
+.pointer > img
+  height: 85px
+  z-index: 10
+
+
+.pointer
+  position: absolute
+  top: 36px
+  right: 64px
+  padding: 0
+
+@-webkit-keyframes clock-running-right
+  100%
+    -webkit-transform: rotate(180deg)
+    -moz-transform: rotate(180deg)
+    transform: rotate(180deg)
+
+  23%
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  0%
+    -webkit-transform: rotate(0deg)
+    -moz-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+@-webkit-keyframes clock-running-left
+  100%
+    -webkit-transform: rotate(-180deg)
+    -moz-transform: rotate(-180deg)
+    transform: rotate(-180deg)
+
+  23%
+    -webkit-transform: rotate(-180deg)
+    -moz-transform: rotate(-180deg)
+    transform: rotate(-180deg)
+
+  0%
+    -webkit-transform: rotate(-126deg)
+    -moz-transform: rotate(-126deg)
+    transform: rotate(-126deg)
+
+@-webkit-keyframes clock-pointer
+  100%
+    -webkit-transform: rotate(-360deg)
+    -moz-transform: rotate(-360deg)
+    transform: rotate(-360deg)
+
+  0%
+    -webkit-transform: rotate(-126deg)
+    -moz-transform: rotate(-126deg)
+    transform: rotate(-126deg)
+
+.pointer
+  -webkit-animation-name: clock-pointer
+  -moz-animation-name: clock-pointer
+  animation-name: clock-pointer
+  -webkit-animation-duration: 42s
+  -moz-animation-duration: 42s
+  animation-duration: 42s
+  -webkit-animation-timing-function: linear
+  -moz-animation-timing-function: linear
+  animation-timing-function: linear
+  -webkit-animation-iteration-count: 1
+  -moz-animation-iteration-count: 1
+  animation-iteration-count: 1
+  z-index: 100
+
+div.countdown
+  position: absolute
+  right: -167px
+  bottom: -123px
+  z-index: 100
+  /* -webkit-transform-origin: 100% 100% */
+  -webkit-transition: all .5s
+  -moz-transition: all .5s
+  transition: all .5s
+
+div.countdown.out
+  /* -webkit-transform: rotateY( 90deg )
+  opacity: 0.5 */
+  right: -10em
+
+div.countdown div.clock
+  position: absolute
+  top: 0
+  right: 0
+  height: 10em
+  width: 10em
+  z-index: -100
+
+div.countdown div.clock div.clock-left,
+div.countdown div.clock div.clock-right
+  position: absolute
+  width: 50%
+  left: 0
+  top: 0
+  bottom: 0
+  overflow: hidden
+
+div.countdown div.clock div.clock-right
+  -webkit-transform: scaleX(-1)
+
+div.countdown div.clock div.half-circle
+  position: absolute
+  width: 100%
+  height: 100%
+  background-color: #F04E23
+  border-radius: 10em 0 0 10em
+  -webkit-transform-origin: 100% 50%
+  -moz-transform-origin: 100% 50%
+  transform-origin: 100% 50%
+  -webkit-animation-duration: 42s
+  -moz-animation-duration: 42s
+  animation-duration: 42s
+  -webkit-animation-timing-function: linear
+  -moz-animation-timing-function: linear
+  animation-timing-function: linear
+  -webkit-animation-iteration-count: 1
+  -moz-animation-iteration-count: 1
+  animation-iteration-count: 1
+
+div.countdown div.clock.run div.clock-right div.half-circle
+  -webkit-animation-name: clock-running-right
+  -moz-animation-name: clock-running-right
+  animation-name: clock-running-right
+
+div.countdown div.clock.run div.clock-left div.half-circle
+  -webkit-animation-name: clock-running-left
+  -moz-animation-name: clock-running-left
+  animation-name: clock-running-left
+
+div.countdown div.clock div.clock-right
+  left: 50%
