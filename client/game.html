@@ -195,7 +195,7 @@
             
             {{#each answers}}
             {{#if this.checkedOff}}
-            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+            <li><input type="checkbox" class="checkbox" style="text-decoration:line-through" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
             {{else}}
             <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
             {{/if}}
@@ -272,7 +272,7 @@
 
                 {{#each answers}}
                 {{#if this.checkedOff}}
-                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+                <li><input type="checkbox" style="text-decoration:line-through" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
                 {{else}}
                 <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
                 {{/if}}
