@@ -194,7 +194,6 @@
             {{/each}}
             
         </ul>
-        <div class="clock">{{time}}</div>
         {{#constant}}
         <div class="countdown">
           <img src="images/wijzerplaat.png">
@@ -215,6 +214,7 @@
         {{/constant}}
         </div>
     </div>
+	{{ready}}
 </template>
 
 <template name="gameOpponent">
@@ -231,7 +231,7 @@
             <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> <label for="answer-{{id}}">{{this.answer}}</label></li>
             {{/each}}
         </ul>
-        <div class="clock">{{time}}</div>
+        <div class="clock"></div>
         <div class="countdown">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
@@ -249,6 +249,7 @@
           </div>
         </div>
     </div>
+    {{ready}}
 </template>
 
 <template name="gameScorecheck">

@@ -67,7 +67,6 @@ Template.gameActiveteam.roundnumber = function () {
 Template.gameActiveteam.answers = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        console.log(game.answers);
         return game.answers;
     }
 }
@@ -79,13 +78,11 @@ Template.gameActiveteam.handicap = function () {
     }
 }
 
-Template.gameActiveteam.time = function () {
+Template.gameActiveteam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
             $("body").html(Template.gameScorecheckWait);
-        } else {
-            return game.clock;
         }
     }
 }
@@ -99,7 +96,6 @@ Template.gameActiveteam.score = function () {
 
 Template.gameActiveteam.events({
     'click input': function () {
-        console.log("Bla");
         $("input[id='" + this.answer + "']").parent().css('text-decoration','line-through');
         var game = Games.findOne({'gamecode' : Session.get('gamecode')});
         var answers = game.answers;
@@ -118,7 +114,6 @@ Template.gameActiveteam.events({
             }
         }
         Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
-        console.log(this.answer + ' checked off!');
     }
 });
 
@@ -130,7 +125,6 @@ Template.gameOpponent.checkedOff = function() {
             answers.push(game.answers[i]);
         }
     }
-    console.log(answers);
     return answers;
 }
 
@@ -148,14 +142,11 @@ Template.gameOpponent.handicap = function () {
     }
 }
 
-Template.gameOpponent.time = function () {
+Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
             $("body").html(Template.gameScorecheck);
-        } else {
-            $("div.clock")
-            return game.clock;
         }
     }
 }
