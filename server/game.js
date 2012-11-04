@@ -70,12 +70,25 @@ Meteor.methods({
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
             
-        var answers = [
+        /*var answers = [
             {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
             {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
             {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
             {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
-        ];
+        ];*/
+        var answers = new Array();
+        var fs = __meteor_bootstrap__.require('fs');   
+        var data = fs.readFileSync('answers/answers.txt');
+        data = data.toString().split("\n");
+        console.log('data');
+        console.log(data);
+        for(i=0;i<7;i++) {
+        	random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
+        	var word = data[random];
+        	answers.push({"answer":word});
+        }
+        console.log(answers);
+        
         Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
 
         return Games.findOne({'gamecode':gamecode});
