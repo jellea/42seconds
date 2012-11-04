@@ -12,7 +12,7 @@ Teams = new Meteor.Collection('teams');
 Devices = new Meteor.Collection('devices');
 // { game: game_id }
 
-answers = new Meteor.Collection('answers');
+Answers = new Meteor.Collection('answers');
 // {
 //	answer: 'string in here', 
 //	link: 'url in here',

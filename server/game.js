@@ -1,5 +1,6 @@
 ////////// Server only logic //////////
 
+var defaultAnswers = 5;
 var defaultRounds = 5;
 var defaultCategory = 'all';
 var defaultDifficulty = 'medium';
@@ -69,13 +70,38 @@ Meteor.methods({
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
-            
-        var answers = [
-            {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
-            {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
-            {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-            {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
-        ];
+
+        // Get answers from the database, if we have any.
+        var count = Answers.find({'language':'nl'}).count();
+        var answers = new Array();
+        if (count >= defaultAnswers) {
+            // fetch unique random answers
+            var ids = new Array();
+            while (ids.length < defaultAnswers) {
+                var skip = Math.floor(Math.random() * count);
+                var exists = false;
+                for(var i = 0; i < ids.length; i++) {
+                    if(ids[i] == skip) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists) {
+                    ids.push(skip);
+                    answer = Answers.findOne({'language':'nl'}, {'skip':skip});
+                    answers.push(answer);
+                }
+            }
+        }
+        // fall back to some hardcoded data if we have nothing in the database.
+        else {
+            answers = [
+                {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
+                {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+                {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+                {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+            ];
+        }
         Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
 
         return Games.findOne({'gamecode':gamecode});
