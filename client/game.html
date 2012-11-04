@@ -102,27 +102,38 @@
 
 <template name="showcode">
     <div id="wrapper">
-        <h3>Your code</h3>
-        <p>{{ gamecode }}</p>
-        <h3>You're in</h3>
-        <p>{{ team }}</p>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="showcode bluebg">
+            <h3>Your code</h3>
+            <div class="your-code">{{ gamecode }}</div>
+            <p>You're in</p>
+            <h3 class="red"><img src="/images/team-red-icon.png" align="ABSMIDDLE"> TEAM RED</h3>
+            <p>Waiting for other party to join</p>
+        </div>
     </div>
     {{ ready }}
 </template>
 
 <template name="gameDice">
     <div id="wrapper">
-        <h3>Round {{roundnumber}}</h3>
-        <p class="shake">Shake!</p>
+         <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="dice bluebg">
+        <h3>Shake it baby!</h3>
         <div id="dices">
-            <div class="dice zero"><span class="dot">0</span></div>
-            <div class="dice one" style="display:none;">  <span class="dot">1</span></div>
+            <div class="diceface zero"><span class="dot">0</span></div>
+            <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
             <div class="dice two" style="display:none;">  <span class="dot">2</span></div>
         </div>
         {{#if diceThrow}}
         Dice: {{diceThrow.throw}}
         {{else}}
-        <input type="button" id="dice" class="dice" value="Roll the dice!">
+        <input type="button" id="dice" class="" value="Roll the dice!">
         {{/if}}
     </div>
 </template>
@@ -132,7 +143,7 @@
         <h3>Round = {{roundnumber}}</h3>
         <ul>
             {{#each answers}}
-            <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            <li><input type="checkbox" class="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>{{handicap}}</div>Handicap</li>
             <li><div>2</div>Total</li>
@@ -162,8 +173,8 @@
         <h3>Round ={{roundnumber}}</h3>
         <p>Score: {{score}}</p>
         <ul>
-            {{#each answers}}
-            <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            {{#each checkedOff}}
+            	<li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{checkedOff}}</li>
             {{/each}}
         </ul>
         <div class="clock">{{time}}</div>

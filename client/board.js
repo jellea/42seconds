@@ -1,14 +1,41 @@
+var set_handicap = function(handicap) {
+    if (!Session.get('gamecode')) {
+        console.log("gamecode not set");
+        return;
+    }
+    if (Dice.findOne({'access_code':Session.get('gamecode')})) {
+
+        Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+        Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+    } else {
+        Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+        Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+    }
+    Meteor.setTimeout(function() {
+        $("body").html(Meteor.render(Template.gameActiveteam));
+        Meteor.call('startClock', Session.get('gamecode'), function () {
+                console.log("Game started!");
+        });
+    }, 1500);           
+}
+
 Template.gameDice.events({
     'click input#dice':function () {
+        $('input#dice').attr('disabled', 'disabled');
         var number_of_dices = $('#dices').children().length;
-        var current_dice_index = 0;
-        // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
-        for(var i = 0; i < 10; i++) {
+        var max_animations = 50;
+        var lastindex = max_animations;
+        var handicap = 0;
+        for(var i = 0; i < max_animations; i++) {
             Meteor.setTimeout(function() {
-                current_dice_index = (current_dice_index + 1) % number_of_dices;
                 $('#dices div:visible').hide();
-                $($('#dices').children().get(current_dice_index)).show();
-            }, i * 1000);
+                handicap = (handicap + Math.floor(Math.random() * (number_of_dices - 1)) + 1) % number_of_dices;
+                $($('#dices').children().get(handicap)).show();
+                lastindex--;
+                if(lastindex == 0) {
+                    set_handicap(handicap);
+                }
+            }, i * 50);
         }
         if (!Session.get('gamecode')) {
             console.log("gamecode not set");
@@ -69,9 +96,13 @@ Template.gameDice.roundnumber = function () {
 
 
 Template.gameActiveteam.answers = function() {
-    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+    return [
+        {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+        {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
         {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+        {"answer": "Gert Verhulst", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+        ];
 }
 
 Template.gameActiveteam.roundnumber = function () {
@@ -106,10 +137,20 @@ Template.gameActiveteam.score = function () {
     }
 }
 
-Template.gameOpponent.answers = function() {
-    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+Template.gameActiveteam.events({
+    'click input.checkbox':function (elmnt) {
+        $(elmnt).css('text-decoration', 'line-through');
+        
+    }
+});
+
+Template.gameOpponent.checkedOff = function() {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    return game.checkedOff;
+    /*return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
         {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
         {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        */
 }
 
 Template.gameOpponent.roundnumber = function () {
@@ -208,12 +249,6 @@ Template.join.events({
     }
 });
 
-Template.rules.events = ({
-	'click input#closeRules': function () {
-        $("body").html(Meteor.render(Template.lobby));
-	}
-});
-
 Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
@@ -222,6 +257,12 @@ Template.joined.ready = function () {
         }
     }
 }
+
+Template.rules.events = ({
+	'click input#closeRules': function () {
+        $("body").html(Meteor.render(Template.lobby));
+	}
+});
 
 Template.showcode.ready = function () {
     var game = Games.findOne({'gamecode':Session.get('gamecode')});

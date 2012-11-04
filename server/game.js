@@ -114,10 +114,12 @@ Meteor.methods({
 				var game = Games.findOne({'gamecode':gamecode});
 				var teams = game.teams;
 				var highest = 0;
+				var winner = 'tie';
 				for(i=0;i<teams.length;i++) {
 					if(teams[i].score>highest) {
-						console.log(teams[i].score);
 						winner = teams[i].name;
+					} else if(teams[i].score==highest) {
+						winner = 'tie';
 					}
 				}
 				Games.update({'gamecode':gamecode},{$set: {'winner':winner}});
