@@ -27,57 +27,24 @@ function createGamecode() {
 }
 
 function loadAnswers(gamecode) {
+    var answers = new Array();
+    var checkDuplicates = new Array();
+    var fs = __meteor_bootstrap__.require('fs');
+    var data = fs.readFileSync('answers/answers.txt');
+    data = data.toString().split("\n");
 
-        // Get answers from the database, if we have any.
-        var count = Answers.find({'language':'nl'}).count();
-        var answers = new Array();
-        var usedb = false;
-        if (usedb && count >= defaultNumberOfAnswers) {
-            // fetch unique random answers
-            var ids = new Array();
-            while (ids.length < defaultNumberOfAnswers) {
-                var skip = Math.floor(Math.random() * count);
-                var exists = false;
-                for(var i = 0; i < ids.length; i++) {
-                    if(ids[i] == skip) {
-                        exists = true;
-                        break;
-                    }
-                }
-                if(!exists) {
-                    ids.push(skip);
-                    answer = Answers.findOne({'language':'nl'}, {'skip':skip});
-                    answers.push(answer);
-                }
-            }
+    for(var i=0;i<defaultNumberOfAnswers;i++) {
+        random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
+        var word = data[random];
+        answers.push({"answer":word});
+        if(checkDuplicates.indexOf(word)==-1) {
+            checkDuplicates.push(word);
+            answers.push({"answer":word});
+        } else {
+            i=i-1;
         }
-        // fall back to some hardcoded data if we have nothing in the database.
-        else {
-            
-        /*var answers = [
-            {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
-            {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
-            {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-            {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
-        ];*/
-        var answers = new Array();
-        var checkDuplicates = new Array();
-        var fs = __meteor_bootstrap__.require('fs');
-        var data = fs.readFileSync('answers/answers.txt');
-        data = data.toString().split("\n");
-
-        for(var i=0;i<defaultNumberOfAnswers;i++) {
-        	random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
-        	var word = data[random];
-        	if(checkDuplicates.indexOf(word)==-1) {
-        	    checkDuplicates.push(word);
-        	    answers.push({"answer":word});
-        	} else {
-        		i=i-1;
-        	}
-        }
-        }
-        Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
+    }
+    Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
 }
 
 Meteor.methods({
