@@ -5,6 +5,21 @@ color_darkgreen = #4e8500
 color_blue = #4896cb
 color_darkorange = #f04e23
 
+// Mixins
+animate(name, time, fillmode)
+    animation name time fillmode
+    -moz-animation name time fillmode
+    -webkit-animation name time fillmode
+    -o-animation name time fillmode
+    -ms-animation name time fillmode
+
+transform(arg)
+    transform arg
+    -moz-transform arg
+    -webkit-transform arg
+    -o-transform arg
+    -ms-transform arg
+
 bluebg()
   background-image: url('/images/blue-bg.jpg')
 
@@ -184,25 +199,54 @@ body div.dice.bluebg #dices .dot
 body div.dice.bluebg input[type="button"]
   margin-top: 100px
 
+body div.game.bluebg 
+  padding: 20px 0 0 0;
+  height: 375px;
+  bluebg()
+
+body div.game.bluebg div.score
+  position: absolute
+  top: (20+48)px;
+  right: 20px;
+  background-color: color_darkorange
+  padding: 5px 15px
+  border-radius 15px
+  color: white
+
+body div.game.bluebg ul.answers 
+  margin: 0 20px
+  list-style-type: none
+  padding: 0
+
+body div.game.bluebg ul.answers li 
+  color: white;
+  font-weight: bold;
+  font-size 24px
+
+body div.game.bluebg ul.answers li input
+  width 25px
+  height 25px
+  border-radius 12px
+  -webkit-appearance: none
+  background-color white
+  transform(translateY(8px))
+
+body div.game.bluebg ul.answers li input[disabled="disabled"]
+  background-color color_blue
+
+body div.game.bluebg ul.answers li input[disabled="disabled"]+label
+  color: color_blue
+
+body div.game.bluebg ul.answers li input:checked
+  background-color color_green
+
+body div.game.bluebg ul.answers li input:checked+label 
+  color: color_green
+
 a.button
   -webkit-border-radius: 5px
   -moz-border-radius: 5px
   border-radius: 5px
-
-// Mixins
-animate(name, time, fillmode)
-    animation name time fillmode
-    -moz-animation name time fillmode
-    -webkit-animation name time fillmode
-    -o-animation name time fillmode
-    -ms-animation name time fillmode
-
-transform(arg)
-    transform arg
-    -moz-transform arg
-    -webkit-transform arg
-    -o-transform arg
-    -ms-transform arg
 
 // Keyframes
 @keyframes bounceIn
