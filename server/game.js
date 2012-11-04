@@ -158,20 +158,10 @@ Meteor.methods({
         }, 1000);
     },
     
-    declareWinner: function (gamecode) {
-
-    }
-    
     gameResults: function(gamecode) {
-        // add up score in team object
-        
         // show scores and winner
         
         // reset scores, winner, scoreConfirmed, handicap, ?
-
-        // up round by 1 if current team = 1
-        
-        // if currentRound > rounds { end game } else { start next round }
         
     }
 });
