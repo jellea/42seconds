@@ -115,6 +115,7 @@ Meteor.methods({
 
             // end of game
             if (clock === 0) {
+                Games.update({gamecode:gamecode}, {$set:{clock:0}});
                 // stop the clock
                 Meteor.clearInterval(interval);
                 // declare zero or more winners

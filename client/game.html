@@ -17,6 +17,7 @@
             <p><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="joingame" class="joingame blue" value="Join game"/>
         </div>
+        <a href="#" id="ruleslink">rules</a>
     </div>
 </template>
 
@@ -156,6 +157,7 @@
             
         </ul>
         <div class="clock">{{time}}</div>
+        {{#constant}}
         <div class="countdown">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
@@ -172,7 +174,7 @@
             </div>
           </div>
         </div>
-        
+        {{/constant}}
         </div>
     </div>
 </template>
@@ -228,6 +230,13 @@
         </ul>
         <input type="button" id="nextround"  class="nextround" value="Done!"/>
         </div>
+    </div>
+</template>
+
+<template name="gameScorecheckWait">
+    <div id="wrapper">
+        <h3>Waiting</h3>
+        Waiting for the other team to confirm your answers!
     </div>
 </template>
 
