@@ -149,6 +149,41 @@ body div.showcode.bluebg h3.red
   text-align: center;
   color: color_darkorange
 
+body div.dice.bluebg 
+  padding: 20px 0 0 0;
+  height: 375px;
+  bluebg()
+
+body div.dice.bluebg #dices
+    margin-top  50px
+    text-align center
+
+body div.dice.bluebg #dices .diceface
+    border-top 1px solid #f1f1f1
+    width 80px
+    height 80px
+    border-radius 10px
+    position relative
+    margin 10px
+    font-size 6px
+    display inline-block
+    box-shadow 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999
+    background-image -webkit-linear-gradient(top, #fefefe, #f1f1f1 80%)
+
+body div.dice.bluebg #dices .dot
+    width 60%
+    height 60%
+    left 30%
+    top 35%
+    margin -10%
+    border-radius 50%
+    display block
+    position absolute
+    font-size 36px
+
+body div.dice.bluebg input[type="button"]
+  margin-top: 100px
+
 a.button
   -webkit-border-radius: 5px
   -moz-border-radius: 5px
@@ -185,28 +220,3 @@ transform(arg)
 div#wrapper
     position absolute
     //animate(bounceIn, 1s, forwards)
-#dices
-    text-align center
-
-.dice
-    border-top 1px solid #f1f1f1
-    width 80px
-    height 80px
-    border-radius 10px
-    position relative
-    margin 10px
-    font-size 6px
-    display inline-block
-    box-shadow 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999
-    background-image linear-gradient(top, #fefefe, #f1f1f1 80%)
-
-.dot
-    width 60%
-    height 60%
-    left 30%
-    top 35%
-    margin -10%
-    border-radius 50%
-    display block
-    position absolute
-    font-size 36px

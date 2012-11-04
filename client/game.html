@@ -119,17 +119,21 @@
 
 <template name="gameDice">
     <div id="wrapper">
-        <h3>Round {{roundnumber}}</h3>
-        <p class="shake">Shake!</p>
+         <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="dice bluebg">
+        <h3>Shake it baby!</h3>
         <div id="dices">
-            <div class="dice zero"><span class="dot">0</span></div>
-            <div class="dice one" style="display:none;">  <span class="dot">1</span></div>
+            <div class="diceface zero"><span class="dot">0</span></div>
+            <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
             <div class="dice two" style="display:none;">  <span class="dot">2</span></div>
         </div>
         {{#if diceThrow}}
         Dice: {{diceThrow.throw}}
         {{else}}
-        <input type="button" id="dice" class="dice" value="Roll the dice!">
+        <input type="button" id="dice" class="" value="Roll the dice!">
         {{/if}}
     </div>
 </template>
