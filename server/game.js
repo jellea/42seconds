@@ -26,8 +26,7 @@ function createGamecode() {
 Meteor.methods({
 
 	create_team: function () {
-        var team_id = Teams.insert({'name':'Team'});
-        //Session.set('team_id',team_id);
+        var team_id = Teams.insert({'name':'Team','score':0});
         return team_id;
 	},
 	
@@ -65,7 +64,7 @@ Meteor.methods({
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-		Teams.update({_id: team_id}, {$set:{'gamecode':gamecode}});
+		Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
@@ -85,14 +84,15 @@ Meteor.methods({
     },
 
     joined_game:function (gamecode,team_id) {
-    	//Session.set('gamecode',gamecode);
+        var game = Games.findOne({'gamecode':gamecode});
+        var teamNumber = (game.teams.length*1)+1;
         Teams.update({_id:team_id},
-            {$set:{'gamecode':gamecode}},
+            {$set:{'gamecode':gamecode,'name':'Team '+teamNumber}},
             {multi:true});
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         var p = Teams.find({'gamecode':gamecode},
-            {fields:{_id:true, name:true}}).fetch();
+            {fields:{_id:true, name:true, score:true}}).fetch();
         Games.update({'gamecode':gamecode}, {$set:{teams:p}});
         var game = Games.findOne({'gamecode':gamecode});
 
@@ -114,17 +114,16 @@ Meteor.methods({
                 // stop the clock
                 Meteor.clearInterval(interval);
                 // declare zero or more winners
-                var scores = {};
-
-                /*
-                 var high_score = _.max(scores);
-                 var winners = [];
-                 _.each(scores, function (score, team_id) {
-                 if (score === high_score)
-                 winners.push(team_id);
-                 });
-                 Games.update({gamecode:gamecode}, {$set: {winners: winners}});
-                 */
+				var game = Games.findOne({'gamecode':gamecode});
+				var teams = game.teams;
+				var highest = 0;
+				for(i=0;i<teams.length;i++) {
+					if(teams[i].score>highest) {
+						console.log(teams[i].score);
+						winner = teams[i].name;
+					}
+				}
+				Games.update({'gamecode':gamecode},{$set: {'winner':winner}});
             }
         }, 1000);
     }
