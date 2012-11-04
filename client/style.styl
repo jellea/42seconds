@@ -13,6 +13,11 @@ animate(name, time, fillmode)
     -o-animation name time fillmode
     -ms-animation name time fillmode
 
+ box-shadow(args...)
+   -webkit-box-shadow args
+   -moz-box-shadow args
+   box-shadow args
+
 transform(arg)
     transform arg
     -moz-transform arg
@@ -79,6 +84,7 @@ body h3
 
 body h3.blue
     color: color_darkblue
+    font-size 34px
 
 body header 
     height: 48px
@@ -123,7 +129,7 @@ body input[type="button"].blue
     border-color: color_darkblue
 
 body p 
-    font-size: 16px
+    font-size: 20px
     text-align: center
 
 body p span.bar
@@ -199,6 +205,7 @@ body div.showcode.bluebg h3.red
     margin-left: 0
     text-align: center;
     color: color_darkorange
+    font-size: 34px;
 
 body div.dice.bluebg 
     padding: 20px 0 0 0;
@@ -249,6 +256,9 @@ body div.game.bluebg div.score
   border-radius 15px
   color: white
 
+div.score
+    box-shadow 2px 2px 1px 0px #555
+
 body div.game.bluebg ul.answers 
   margin: 0 20px
   list-style-type: none
@@ -287,3 +297,15 @@ a.button
 div#wrapper
     position absolute
     //animate(bounceIn, 1s, forwards)
+
+.text_shadow_white_small
+    text-shadow #fff 1px 1px 1px
+
+.text_shadow_white_big
+    text-shadow #fff 2px 2px 1px
+
+.text_shadow_black_small
+    text-shadow #000 1px 1px 1px
+
+.text_shadow_black_big
+    text-shadow #000 2px 2px 1px
