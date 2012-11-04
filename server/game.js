@@ -118,14 +118,14 @@ Meteor.methods({
                 // stop the clock
                 Meteor.clearInterval(interval);
 		        var game = Games.findOne({'gamecode':gamecode});
-                var points = 0;
+                var score = 0;
 		        for(i=0;i<game.answers;i++) {
 		        	if(answers[i].checkedOff) {
-		        		points = (points*1)+1;
+		        		score = (score*1)+1;
 		        	}
 		        }
-		        if(game.handicap>=points) {
-		        	points = 0;
+		        if(game.handicap>=score) {
+		        	score = 0;
 		        }
 		        team = game.team;
                 var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
@@ -134,9 +134,9 @@ Meteor.methods({
                         // set the other team as current team for the new game
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
                     } else {
-                    	// update the team object with the new points
-                        newPoints = (team.points*1)+points;
-                    	Teams.update({'_id':team._id},{$set:{'points':newPoints}});
+                    	// update the team object with the new score
+                        newScore = (team.score*1)+score;
+                    	Teams.update({'_id':team._id},{$set:{'score':newScore}});
                     }
                 }
                 if(game.round>=game.rounds) {
@@ -158,11 +158,9 @@ Meteor.methods({
         }, 1000);
     },
     
-    gameResults: function(gamecode) {
-        // show scores and winner
-        
-        // reset scores, winner, scoreConfirmed, handicap, ?
-        
+    scoreboard: function(gamecode) {
+        // reset scoreConfirmed, winner & handicap
+        Games.update({'gamecode':gamecode},{$set:{'winner':null,'handicap':null,'scoreConfirmed':false}});
     }
 });
 

@@ -57,6 +57,18 @@ Template.gameDice.roundnumber = function () {
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
+Template.scoreboard.scores = function() {
+    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+    return scores;
+}
+
+Template.scoreboard.winner = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.winner;
+    }
+}
+
 Template.gameActiveteam.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {

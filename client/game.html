@@ -294,5 +294,7 @@
 </template>
 
 <template name="scoreboard">
-    
+    {{#each teams}}
+		{{name}}: {{score}}
+    {{/each}}
 </template>
