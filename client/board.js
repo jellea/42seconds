@@ -345,7 +345,7 @@ Template.gameScorecheck.events({
 });
 
 Template.gameResults.teams = function () {
-    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+    var teams = Teams.find({'gamecode':Session.get('gamecode')},{fields:{_id:true, name:true, score:true}}).fetch();
     return teams;
 }
 

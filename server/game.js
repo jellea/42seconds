@@ -133,25 +133,12 @@ Meteor.methods({
                 // stop the clock
                 Meteor.clearInterval(interval);
 		        var game = Games.findOne({'gamecode':gamecode});
-                var score = 0;
-		        for(i=0;i<game.answers;i++) {
-		        	if(answers[i].checkedOff) {
-		        		score = (score*1)+1;
-		        	}
-		        }
-		        if(game.handicap>=score) {
-		        	score = 0;
-		        }
 		        team = game.team;
                 var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
                 for(i=0;i<teams.length;i++) {
                     if(teams[i]._id!=team._id) {
                         // set the other team as current team for the new game
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
-                    } else {
-                    	// update the team object with the new score
-                        newScore = (team.score*1)+score;
-                    	Teams.update({'_id':team._id},{$set:{'score':newScore}});
                     }
                 }
                 if(game.round>=game.rounds) {
