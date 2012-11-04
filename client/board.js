@@ -262,15 +262,11 @@ Template.showcode.ready = function () {
 }
 
 
-Template.gameScorecheckWait.wait = function () {
-    Meteor.subscribe()
-    var game = Games.find({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        if(game.scoreConfirmed === true) {
+Template.gameScorecheckWait.ready = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if (game) {
+        if (game.scoreConfirmed) {
             $("body").html(Meteor.render(Template.gameResults));
-        } else {
-            console.log("Waiting for score confirmation.");
-            return false;
         }
     }
 };

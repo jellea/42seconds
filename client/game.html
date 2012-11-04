@@ -277,11 +277,17 @@
 </template>
 
 <template name="gameScorecheckWait">
-    {{wait}}
     <div id="wrapper">
-        <h3>Waiting</h3>
-        Waiting for the other team to confirm your answers!
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game bluebg">
+            <h3>Waiting</h3>
+            Waiting for score confirmation.
+        </div>
     </div>
+    {{ready}}
 </template>
 
 <template name="gameResults">
