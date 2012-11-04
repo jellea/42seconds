@@ -37,43 +37,6 @@ Template.gameDice.events({
                 }
             }, i * 50);
         }
-        if (!Session.get('gamecode')) {
-            console.log("gamecode not set");
-            return;
-        }
-
-        var handicap;
-
-        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            handicap = Math.floor(Math.random() * 3);
-            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        } else {
-            handicap = Math.floor(Math.random() * 3);
-            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
-            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
-        }
-        $("body").html(Meteor.render(Template.gameActiveteam));
-        Meteor.call('startClock', Session.get('gamecode'), function () {
-        	console.log("Game started!");
-        });
-
-//        for(var i = 0; i <= 10; i++) {
-//            $.each($('#dices').children(), function(index, value) {
-////                $('#dices div:visible').delay(1000).hide();
-////                $(this).show();
-////                
-//                
-//                k=0;
-//                Meteor.setTimeout(function () {
-//                    $('#dices div:visible').hide();
-//                    diceKids = $('#dices').children();
-//                    $(diceKids[k]).show();
-//                    k++;
-//                    if(k>=3) k=0;
-//                }, i*1000);
-//            });
-//        };
     }
 });
 
