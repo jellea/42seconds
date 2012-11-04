@@ -1,14 +1,48 @@
 Template.gameDice.events({
     'click input#dice':function () {
-        if (!Session.get('gamecode')) {
-            console.log("gamecode not set");
-            return;
+        var number_of_dices = $('#dices').children().length;
+        var current_dice_index = 0;
+        // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
+        for(var i = 0; i < 10; i++) {
+            current_dice_index++;
+            if (current_dice_index == number_of_dices) {
+                current_dice_index = 0;
+            }
+            $('#dices div:visible').hide();
+            $($('#dices').children().get(current_dice_index)).show();
         }
-        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':Math.floor(Math.random() * 3)}});
-        } else {
-            Dice.insert({'access_code':Session.get('gamecode'), 'throw':Math.floor(Math.random() * 3)});
-        }
+        
+        
+        
+        
+//        for(var i = 0; i <= 10; i++) {
+//            $.each($('#dices').children(), function(index, value) {
+////                $('#dices div:visible').delay(1000).hide();
+////                $(this).show();
+////                
+//                
+//                k=0;
+//                Meteor.setTimeout(function () {
+//                    $('#dices div:visible').hide();
+//                    diceKids = $('#dices').children();
+//                    $(diceKids[k]).show();
+//                    k++;
+//                    if(k>=3) k=0;
+//                }, i*1000);
+//            });
+//        };
+        
+        
+        
+//        if (!Session.get('gamecode')) {
+//            console.log("gamecode not set");
+//            return;
+//        }
+//        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
+//            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':Math.floor(Math.random() * 3)}});
+//        } else {
+//            Dice.insert({'access_code':Session.get('gamecode'), 'throw':Math.floor(Math.random() * 3)});
+//        }
     }
 });
 
