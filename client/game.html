@@ -285,15 +285,10 @@
 </template>
 
 <template name="gameScorecheckWait">
-    <div id="wrapper">
-        <header>
-            <img src="/images/back-button.png">
-            <img src="/images/logo-small.png">
-        </header>
-        <div class="game bluebg">
-            <h3>Waiting</h3>
-            Waiting for score confirmation.
-        </div>
+    <div id="wrapper" class="wait">
+          <img src="/images/ajax-loader.gif">
+          <h3>Waiting</h3>
+          <p>Waiting for score confirmation.</p>
     </div>
     {{ready}}
 </template>
