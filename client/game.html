@@ -300,15 +300,21 @@
 
 <template name="gameResults">
     <div id="wrapper">
-        <h3>Results</h3>
-        <ul>
-            {{#each teams}}
+         <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game-results bluebg">
+            <h3>Results</h3>
+            <ul>
+                {{#each teams}}
 				<li>{{name}}: {{score}}</li>
-            {{/each}}
-            <li>&nbsp;</li>
-            <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
-            <li class="total"><div>{{total}}</div>Total</li>
-        </ul>
+                {{/each}}
+              <li>&nbsp;</li>
+              <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
+              <li class="total"><div>{{total}}</div>Total</li>
+            </ul>
+        </div>
         <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>
 </template>
