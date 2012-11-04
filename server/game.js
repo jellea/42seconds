@@ -62,7 +62,7 @@ Meteor.methods({
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
         Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':1, 'scoreConfirmed':false});
-        
+
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});

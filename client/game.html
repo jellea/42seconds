@@ -14,17 +14,20 @@
         <img src="/images/logo.png" class="lobby">
         <div class="bluebg lobby">
             <input type="button" id="newgame" class="startgame" value="New game"/>
-            <p><span class="bar"></span> or <span class="bar"></span></p>
+            <p class="lobby_or"><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="joingame" class="joingame blue" value="Join game"/>
+            <div id="ruleslink" class="lobby_rules">
+                <img src="/images/whistle.png">
+                <div>fortytwo what?<br/>show me the rules!</div>
+            </div>
         </div>
-        <a href="#" id="ruleslink">rules</a>
     </div>
 </template>
 
 <template name="newgame">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
+            <img class="backbutton" src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="newgame bluebg">
@@ -46,7 +49,7 @@
 <template name="rules">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
+            <img class="backbutton" src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="rules bluebg">
@@ -61,14 +64,14 @@
             <div class="rule">
                 <br>
                 <p class="rulecard"><strong>What you may do:</strong><br />
-+ The word describe \ singing \ humming or depict<br />
-+ Using determiners in words<br /><br />
++ Describing / singing / humming or depicting the word<br />
++ You have to say 'the' if its in the word<br /><br />
 <strong>What you may not do:</strong><br />
 - Say the words on the card<br />
 - Words who are derived of the words on card<br />
 - "Sounds like" or "rhymes" tactics<br />
 - Refer to a letter or letters in the alphabet<br />
-- Indicate to something</p>
+- Point at something</p>
             </div>
             <div class="rule">
                 <img src="images/ico_r4.png">
@@ -122,7 +125,7 @@
 <template name="join">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
+            <img class="backbutton" src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="join bluebg">
@@ -149,7 +152,7 @@
 <template name="showcode">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
+            <img class="backbutton" src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="showcode bluebg">
@@ -166,7 +169,6 @@
 <template name="gameDice">
     <div id="wrapper">
          <header>
-            <img src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="dice bluebg">
@@ -184,7 +186,6 @@
 <template name="gameActiveteam">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
@@ -202,10 +203,10 @@
             
         </ul>
         {{#constant}}
-        <div class="countdown">
+        <div class="countdown run">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
-            <div class="pointer">
+            <div class="pointer run">
               <img src="images/wijzer.png">
             </div>
             <div class="clock-left">
@@ -227,7 +228,6 @@
 <template name="gameOpponent">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
@@ -238,6 +238,7 @@
             <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}" checked="checked"> <label for="answer-{{id}}">{{this.answer}}</label></li>
             {{/each}}
         </ul>
+        {{#constant}}
         <div class="clock"></div>
         <div class="countdown">
           <img src="images/wijzerplaat.png">
@@ -255,6 +256,7 @@
             </div>
           </div>
         </div>
+        {{/constant}}
     </div>
     {{ready}}
 </template>
@@ -262,7 +264,6 @@
 <template name="gameScorecheck">
     <div id="wrapper">
         <header>
-            <img src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
@@ -284,11 +285,17 @@
 </template>
 
 <template name="gameScorecheckWait">
-    {{wait}}
     <div id="wrapper">
-        <h3>Waiting</h3>
-        Waiting for the other team to confirm your answers!
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game bluebg">
+            <h3>Waiting</h3>
+            Waiting for score confirmation.
+        </div>
     </div>
+    {{ready}}
 </template>
 
 <template name="gameResults">

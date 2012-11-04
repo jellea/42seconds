@@ -1,48 +1,40 @@
 42seconds
 =========
 
-Game!
-
 Build during Startup Weekend Groningen 2012 with a team of 7(!) developers.
-
-Meteor-based mobile web app based on the popular 30 seconds game.
+Meteor-based mobile web app based on the popular [30 Seconds
+game](http://en.wikipedia.org/wiki/30_Seconds_%28game%29).
 
 Content is scraped from wikipedia.
 
+# Rules
+Shake ya phone, roll the dice. The dice determines your disability. The lower your handicap, the more points you can get.
 
-##Temporary dutch scraps:
-42 Seconds HTML5 app
+Player one defines to player two from his/her team the words. Player two has to guess the words.
 
-Node.js voor onderlinge communicatie
-MySQL voor opslag lopende games & de te raden items
+What you may do:
++ The word describe \ singing \ humming or depict
++ Using determiners in words
+What you may not do:
+- Say the words on the card
+- Words who are derived of the words on card
+- "Sounds like" or "rhymes" tactics
+- Refer to a letter or letters in the alphabet
+- Indicate to something
 
-Game set up voor 4 (of 6) man
-Minimaal 500 personen, plaatsen, landen, voorwerpen, gebeurtenissen, etc
+When the 42 seconds are up, the other team has to check the answers.
 
-Eerste scherm; New game / Join game
-New game: unieke viercijferige code (gameroom number)
-Join game vraagt om die code
+The score of the team is the number of correctly guessed words minus handicap. If the score is less than 0, the score is 0.
 
-Spelverloop:
-Bij binnenkomst team (kleur) kiezen en naam invoeren
-Computer kiest random startspeler; deze moet hints geven
-Tijdens het raden laten de schermen van de tegenstanders een timer zien
-Het scherm vd rader heeft ook een timer in beeld
-Het scherm van de speler heeft 5 willekeurig gekozen items op het scherm
-Bij het goed raden van een item kan de speler hem wegstrepen waardoor het item zichtbaar wordt bij de andere spelers (ook ter verificatie door de tegenstander)
-Na afloop vd ronde wordt het aantal goed geraden items weergegeven waarna die punten bij de totaalscore worden opgeteld
+The team who achieved to most points after playing all rounds wins!
 
-Spectatormode; een speloptie om bijvoorbeeld open te zetten op een pc of iPad waarop de stand te zien is en wie er aan de beurt is, alsmede de timer als het spel gaande is. Misschien een bord a la ganzenbord maken om het puntenverloop te visualiseren?
-
-Coole features;
-Crowdsourcen van nieuwe items (modereren?)
-Bijhouden hoe vaak een item wel danwel niet is geraden
-Door het bijhouden van die statistieken is het mogelijk om games op Random, Easy, Medium, Hard, Extreme te spelen
-Facebook & twitter integratie voor bijhouden en doorposten van scores
-Geraden woorden bijhouden per team én per speler
-
-Nodig; een designer voor een HTML5 mobile responsive design
-Node.js dev
-PHP/MySQL dev
-Vragenbedenkers
-Testers
+# Credits
+* [Martijn van der Weide](http://m.vdwei.de/) - Designer
+* [Pascal Touset](https://github.com/ptouset) - Developer
+* [Allard Stijnman](https://github.com/snoepkast) - Developer
+* [Suzanne Smit](http://twitter.com/suzannesmit) - Designer
+* [Joshua Peper](https://github.com/zout) - Developer
+* [Joris Overzet](https://github.com/jorisoverzet) - Developer
+* [Ruben Homs](https://github.com/RubenHoms) - Developer
+* [Peter Jaap Blaakmeer](https://github.com/peterjaap) - Developer
+* [Jelle Akkerman](https://github.com/jellea) - Developer

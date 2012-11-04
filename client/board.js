@@ -16,8 +16,7 @@ var set_handicap = function(handicap) {
         Meteor.call('startClock', Session.get('gamecode'), function () {
                 console.log("Game started!");
         });
-    }, 1500);           
-}
+    }, 1500);}
 
 Template.gameDice.events({
     'click input#dice':function () {
@@ -160,6 +159,12 @@ Template.gameOpponent.ready = function () {
         if(game.clock === 0) {
             $("body").html(Meteor.render(Template.gameScorecheck));
         }
+        
+        if(game.handicap != null && !$('div.countdown.run')) {
+        	// run the CSS timer animation
+            $('.pointer').addClass('run');
+            $('div.countdown').addClass('run');
+        }
     }
 }
 
@@ -179,7 +184,7 @@ Template.lobby.events({
     'click input#joingame':function () {
         $("body").html(Meteor.render(Template.join));
     },
-    'click a#ruleslink':function () {
+    'click #ruleslink':function () {
         $("body").html(Meteor.render(Template.rules));  
         return false;
     }
@@ -200,6 +205,10 @@ Template.newgame.events({
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
+    },
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -234,6 +243,10 @@ Template.join.events({
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
+    },
+    'click img.backbutton':function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -272,16 +285,18 @@ Template.showcode.ready = function () {
     }
 }
 
+Template.showcode.events({
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
+    }
+});
 
-Template.gameScorecheckWait.wait = function () {
-    Meteor.subscribe()
-    var game = Games.find({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        if(game.scoreConfirmed === true) {
+Template.gameScorecheckWait.ready = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if (game) {
+        if (game.scoreConfirmed) {
             $("body").html(Meteor.render(Template.gameResults));
-        } else {
-            console.log("Waiting for score confirmation.");
-            return false;
         }
     }
 };
@@ -328,7 +343,11 @@ Template.gameScorecheck.events({
         Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
 
     }
-})
+});
+
+Template.gameResults.answers = function () {
+	
+}
 
 Meteor.startup(function () {
     // Allocate a new team id.
