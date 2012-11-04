@@ -108,7 +108,7 @@ Template.gameActiveteam.time = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameActiveteam);
+            $("body").html(Template.gameScorecheckWait);
         } else {
             return game.clock;
         }
@@ -158,7 +158,7 @@ Template.gameOpponent.time = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameActiveteam);
+            $("body").html(Template.gameScorecheck);
         } else {
             $("div.clock")
             return game.clock;
