@@ -14,12 +14,15 @@ Template.gameDice.events({
             console.log("gamecode not set");
             return;
         }
+
+        var handicap;
+
         if (Dice.findOne({'access_code':Session.get('gamecode')})) {
-            var handicap = Math.floor(Math.random() * 3);
+            handicap = Math.floor(Math.random() * 3);
             Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
             Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         } else {
-            var handicap = Math.floor(Math.random() * 3);
+            handicap = Math.floor(Math.random() * 3);
             Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
             Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         }
@@ -49,7 +52,7 @@ Template.gameDice.events({
 
 Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code':Session.get('gamecode')});
-}
+};
 
 Template.gameDice.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
@@ -129,6 +132,7 @@ Template.gameOpponent.time = function () {
         if(game.clock === 0) {
             $("body").html(Template.gameActiveteam);
         } else {
+            $("div.clock")
             return game.clock;
         }
     }
@@ -140,15 +144,6 @@ Template.gameOpponent.score = function () {
         return game.score;
     }
 }
-
-/*var player = function () {
-    return Players.findOne(Session.get('player_id'));
-};
-
-var game = function () {
-    var me = team();
-    return me && me.gamecode && Games.findOne(me.gamecode);
-};*/
 
 Template.lobby.events({
     'click input#newgame':function () {
