@@ -148,7 +148,11 @@
         <h3>Round {{roundnumber}}</h3>
         <ul class="answers">
             {{#each answers}}
-            <li><input type="checkbox" class="checkbox" id="{{answer}}" name="{{answer}}"> {{answer}}</li>
+            {{#if this.checkedOff}}
+            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+            {{else}}
+            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
+            {{/if}}
             {{/each}}
             <li class="handicap"><div>{{handicap}}</div>Handicap</li>
             <li><div>2</div>Total</li>

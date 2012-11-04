@@ -67,6 +67,7 @@ Template.gameActiveteam.roundnumber = function () {
 Template.gameActiveteam.answers = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
+        console.log(game.answers);
         return game.answers;
     }
 }
@@ -77,10 +78,12 @@ Template.gameActiveteam.events({
     	var game = Games.findOne({'gamecode' : Session.get('gamecode')});
 		var answers = game.answers;
 		for(i=0;i<answers.length;i++) {
-			if(answers[i].answer === this.answer) {
-				answers[i].checkedOff = 1;
-			} else {
-                answers[i].checkedOff = 0;
+			if(answers[i].answer === this.answer && answers[i].checkedOff) {
+				answers[i].checkedOff = false;
+                continue;
+			}
+            if(answers[i].answer == this.answer) {
+                answers[i].checkedOff = true;
             }
 		}
 		Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
@@ -117,10 +120,6 @@ Template.gameActiveteam.events({
     'click input.checkbox':function (elmnt) {
         $(elmnt).css('text-decoration', 'line-through');  
     }
-});
-
-Template.gameActiveteam.preserve({
-    'input[id]': function (node) { return node.id; }
 });
 
 Template.gameOpponent.checkedOff = function() {
