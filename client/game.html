@@ -128,7 +128,7 @@
         <div id="dices">
             <div class="diceface zero"><span class="dot">0</span></div>
             <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
-            <div class="dice two" style="display:none;">  <span class="dot">2</span></div>
+            <div class="diceface two" style="display:none;">  <span class="dot">2</span></div>
         </div>
         {{#if diceThrow}}
         Dice: {{diceThrow.throw}}
@@ -148,7 +148,7 @@
         <h3>Round {{roundnumber}}</h3>
         <ul class="answers">
             {{#each answers}}
-            <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            <li><input type="checkbox" class="checkbox" id="{{answer}}" name="{{answer}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>{{handicap}}</div>Handicap</li>
             <li><div>2</div>Total</li>
@@ -184,8 +184,8 @@
         <h3>Round {{roundnumber}}</h3>
         <div class="score">Score {{score}}</div>
         <ul class="answers">
-            {{#each answers}}
-            <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> <label for="answer-{{id}}">{{answer}}</label></li>
+            {{#each checkedOff}}
+            <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> <label for="answer-{{id}}">{{checkedOff}}</label></li>
             {{/each}}
         </ul>
         <div class="clock">{{time}}</div>

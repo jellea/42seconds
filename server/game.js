@@ -7,6 +7,7 @@ var defaultClock = 42;
 
 function createGamecode() {
     var gamecode = '';
+    var random;
     for (i = 0; i < 3; i++) {
         if (i == 0) {
             // don't allow 0 as first digit
@@ -26,8 +27,7 @@ function createGamecode() {
 Meteor.methods({
 
 	create_team: function () {
-        var team_id = Teams.insert({'name':'Team','score':0});
-        return team_id;
+        return Teams.insert({'name':'Team','score':0});
 	},
 	
     newgame:function () {
@@ -43,17 +43,18 @@ Meteor.methods({
     },
 
     start_new_game:function (team_id, rounds, category, difficulty) {
-    	if(typeof rounds=='undefined') {
-    		var rounds = defaultRounds;
+    	var clock;
+        if(typeof rounds=='undefined') {
+    		rounds = defaultRounds;
     	}
     	if(typeof category=='undefined') {
-    		var category = defaultCategory;
+    		category = defaultCategory;
     	}
     	if(typeof difficulty=='undefined') {
-    		var difficulty = defaultDifficulty;
+    		difficulty = defaultDifficulty;
     	}
     	if(typeof clock=='undefined') {
-        	var clock = defaultClock;
+        	clock = defaultClock;
         }
 
         var gamecode = createGamecode();
@@ -68,13 +69,17 @@ Meteor.methods({
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
+            
+        var answers = [
+            {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
+            {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+            {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+            {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
+            {"answer": "Gert Verhulst", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
+        ];
+        Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
 
-        Games.update({'gamecode':gamecode}, {$set:{teams:p}});
-
-        var game = Games.findOne({'gamecode':gamecode});
-
-        return game;
-        
+        return Games.findOne({'gamecode':gamecode});
     }, 
     
     keepalive: function (team_id) {
@@ -94,15 +99,14 @@ Meteor.methods({
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true, score:true}}).fetch();
         Games.update({'gamecode':gamecode}, {$set:{teams:p}});
-        var game = Games.findOne({'gamecode':gamecode});
-
-        return game;
+        return Games.findOne({'gamecode':gamecode});
     },
 
     startClock: function(gamecode) {
         // Set the clock to the default clock
         Games.update({gamecode:gamecode}, {$set:{clock:defaultClock}});
         var clock = defaultClock;
+        var winner;
 
         // wind down the game clock
         var interval = Meteor.setInterval(function () {
@@ -117,10 +121,12 @@ Meteor.methods({
 				var game = Games.findOne({'gamecode':gamecode});
 				var teams = game.teams;
 				var highest = 0;
+				var winner = 'tie';
 				for(i=0;i<teams.length;i++) {
 					if(teams[i].score>highest) {
-						console.log(teams[i].score);
 						winner = teams[i].name;
+					} else if(teams[i].score==highest) {
+						winner = 'tie';
 					}
 				}
 				Games.update({'gamecode':gamecode},{$set: {'winner':winner}});
