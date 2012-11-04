@@ -1,5 +1,6 @@
 Template.gameDice.events({
     'click input#dice':function () {
+<<<<<<< HEAD
         var number_of_dices = $('#dices').children().length;
         var current_dice_index = 0;
         // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
@@ -43,6 +44,23 @@ Template.gameDice.events({
 //        } else {
 //            Dice.insert({'access_code':Session.get('gamecode'), 'throw':Math.floor(Math.random() * 3)});
 //        }
+=======
+        if (!Session.get('gamecode')) {
+            console.log("gamecode not set");
+            return;
+        }
+        if (Dice.findOne({'access_code':Session.get('gamecode')})) {
+            var handicap = Math.floor(Math.random() * 3);
+            Dice.update({'access_code':Session.get('gamecode')}, {$set:{'throw':handicap}});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+        } else {
+            var handicap = Math.floor(Math.random() * 3);
+            Dice.insert({'access_code':Session.get('gamecode'), 'throw':handicap});
+            Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
+        }
+        $("body").html(Meteor.render(Template.gameActiveteam));
+        Meteor.call('startClock', Session.get('gamecode'));
+>>>>>>> b0f6a2c49730c738c4798c62ffbec1cd91b5e47a
     }
 });
 
@@ -50,25 +68,82 @@ Template.gameDice.diceThrow = function () {
     return Dice.findOne({'access_code':Session.get('gamecode')});
 }
 
-var team = function () {
-    return Teams.findOne(Session.get('team_id'));
+Template.gameDice.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
 }
+
+/*var team = function () {
+    return Teams.findOne(Session.get('team_id'));
+}*/
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
 
 Template.gameActiveteam.answers = function() {
-    return Session.get('currentanswers')
+    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
 }
 
-var player = function () {
+Template.gameActiveteam.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
+}
+
+Template.gameActiveteam.handicap = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.handicap;
+    }
+}
+
+Template.gameActiveteam.time = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.clock;
+    }
+}
+
+Template.gameOpponent.answers = function() {
+    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+}
+
+Template.gameOpponent.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
+}
+
+Template.gameOpponent.handicap = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.handicap;
+    }
+}
+
+Template.gameOpponent.time = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.clock;
+    }
+}
+
+/*var player = function () {
     return Players.findOne(Session.get('player_id'));
 };
 
 var game = function () {
     var me = team();
     return me && me.gamecode && Games.findOne(me.gamecode);
-};
+};*/
 
 Template.lobby.events({
     'click input#newgame':function () {
@@ -85,6 +160,7 @@ Template.newgame.events({
     'click input#startgame':function () {
         Meteor.call('start_new_game', Session.get('team_id'), function (error, game) {
             Template.showcode.team = game.teams.length;
+            Session.set('teamNumber',game.teams.length);
             Session.set('gamecode', game.gamecode);
             Template.showcode.gamecode = game.gamecode;
             var fragment = Meteor.render(Template.showcode);
@@ -100,17 +176,17 @@ Template.newgame.events({
 
 Template.advancedsettings.events({
     'click input#startgame':function () {
-        var rounds = $('input[name="rounds"]').val();
-        var category = $('input[name="category"]').val();
-        var difficulty = $('input[name="difficulty"]').val();
+        var rounds = $('input[name="rounds"]:checked').val();
+        var category = $('input[name="category"]:checked').val();
+        var difficulty = $('input[name="difficulty"]:checked').val();
 
-        Meteor.call('start_new_game', rounds, category, difficulty, function (error, game) {
+        Meteor.call('start_new_game', Session.get('team_id'), rounds, category, difficulty, function (error, game) {
             Template.showcode.rounds = rounds;
-            Template.showcode.rounds = category;
-            Template.showcode.rounds = difficulty;
+            Template.showcode.category = category;
+            Template.showcode.difficulty = difficulty;
             Template.showcode.gamecode = game.gamecode;
-            var game = Games.findOne({'gamecode':game.gamecode});
             Template.showcode.team = game.teams.length;
+            Session.set('teamNumber',game.teams.length);
             var fragment = Meteor.render(Template.showcode);
             $("body").html(fragment);
         });
@@ -130,6 +206,12 @@ Template.join.events({
             $("body").html(Meteor.render(Template.joined));
         });
     }
+});
+
+Template.rules.events = ({
+	'click input#closeRules': function () {
+        $("body").html(Meteor.render(Template.lobby));
+	}
 });
 
 Template.joined.ready = function () {

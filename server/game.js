@@ -1,5 +1,10 @@
 ////////// Server only logic //////////
 
+var defaultRounds = 5;
+var defaultCategory = 'all';
+var defaultDifficulty = 'medium';
+var defaultClock = 42;
+
 function createGamecode() {
     var gamecode = '';
     for (i = 0; i < 3; i++) {
@@ -33,15 +38,30 @@ Meteor.methods({
     advancedsettings:function () {
         return 'advancedsettings';
     },
+    
+    rules:function () {
+    	return 'rules';
+    },
 
-    start_new_game:function (team_id) {
-        var clock = 42;
+    start_new_game:function (team_id, rounds, category, difficulty) {
+    	if(typeof rounds=='undefined') {
+    		var rounds = defaultRounds;
+    	}
+    	if(typeof category=='undefined') {
+    		var category = defaultCategory;
+    	}
+    	if(typeof difficulty=='undefined') {
+    		var difficulty = defaultDifficulty;
+    	}
+    	if(typeof clock=='undefined') {
+        	var clock = defaultClock;
+        }
 
         var gamecode = createGamecode();
 		
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'gamecode':gamecode});
+        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':0});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
@@ -52,32 +72,6 @@ Meteor.methods({
 
         Games.update({'gamecode':gamecode}, {$set:{teams:p}});
 
-        // wind down the game clock
-        var interval = Meteor.setInterval(function () {
-            clock -= 1;
-            Games.update({gamecode:gamecode}, {$set:{clock:clock}});
-
-            // end of game
-            if (clock === 0) {
-                // stop the clock
-                Meteor.clearInterval(interval);
-                // declare zero or more winners
-                var scores = {};
-
-                /*
-                 var high_score = _.max(scores);
-                 var winners = [];
-                 _.each(scores, function (score, team_id) {
-                 if (score === high_score)
-                 winners.push(team_id);
-                 });
-                 Games.update({gamecode:gamecode}, {$set: {winners: winners}});
-                 */
-            }
-        }, 1000);
-
-        //Session.set('gamecode', gamecode);
-        
         var game = Games.findOne({'gamecode':gamecode});
 
         return game;
@@ -103,6 +97,36 @@ Meteor.methods({
         var game = Games.findOne({'gamecode':gamecode});
 
         return game;
+    },
+
+    startClock: function(gamecode) {
+        // Set the clock to the default clock
+        Games.update({gamecode:gamecode}, {$set:{clock:defaultClock}});
+        var clock = defaultClock;
+
+        // wind down the game clock
+        var interval = Meteor.setInterval(function () {
+            clock -= 1;
+            Games.update({gamecode:gamecode}, {$set:{clock:clock}});
+
+            // end of game
+            if (clock === 0) {
+                // stop the clock
+                Meteor.clearInterval(interval);
+                // declare zero or more winners
+                var scores = {};
+
+                /*
+                 var high_score = _.max(scores);
+                 var winners = [];
+                 _.each(scores, function (score, team_id) {
+                 if (score === high_score)
+                 winners.push(team_id);
+                 });
+                 Games.update({gamecode:gamecode}, {$set: {winners: winners}});
+                 */
+            }
+        }, 1000);
     }
 });
 

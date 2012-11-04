@@ -42,9 +42,10 @@
     </div>
 </template>
 
-<template name="gamerules">
+<template name="rules">
     <div id="wrapper">
-        <p>Hello!</p>
+        <p>Rules</p>
+        <input type="button" id="closeRules" class="closeRules" value="Close"/>
     </div>
 </template>
 
@@ -53,30 +54,40 @@
         <h3>Rounds</h3>
             <ul>
                     <li><input type="radio" name="rounds" id="round_3" value="3"><label for="round_3"> 3</label></li>
-                    <li><input type="radio" name="rounds" id="round_5" value="5"><label for="round_5"> 5</label></li>
+                    <li><input type="radio" checked="checked" name="rounds" id="round_5" value="5"><label for="round_5"> 5</label></li>
                     <li><input type="radio" name="rounds" id="round_7" value="7"><label for="round_7"> 7</label></li>
             </ul>
         <h3>Category</h3>
             <ul>
-                    <li><input type="radio" name="category" id="category_everything" value=""><label for="category_everything"> Everything</label></li>
+                    <li><input type="radio" checked="checked" name="category" id="category_all" value="all"><label for="category_everything"> All</label></li>
                     <li><input type="radio" name="category" id="category_people" value="people"><label for="category_people"> People</label></li>
                     <li><input type="radio" name="category" id="category_disney" value="disney"><label for="category_disney"> Disney</label></li>
             </ul>
         <h3>Difficulty</h3>
             <ul>
                     <li><input type="radio" name="difficulty" id="difficulty_easy" value="easy"><label for="difficulty_easy"> Pussy</label></li>
-                    <li><input type="radio" name="difficulty" id="difficulty_medium" value="medium"><label for="difficulty_medium"> Doable</label></li>
+                    <li><input type="radio" checked="checked" name="difficulty" id="difficulty_medium" value="medium"><label for="difficulty_medium"> Doable</label></li>
                     <li><input type="radio" name="difficulty" id="difficulty_hard" value="hard"><label for="difficulty_hard"> Bring it on!</label></li>
             </ul>
-        <input type="button" class="startgame" value="Start game!"/>
+        <input type="button" id="startgame" class="startgame" value="Start game!"/>
     </div>
 </template>
 
 <template name="join">
     <div id="wrapper">
-        <h3>Enter code</h3>
-        <input type="number" id="gamecode">
-        <input type="button" id="joingame" class="joingame" value="Go!"/>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="join bluebg">
+            <h3>Your code:</h3>
+            <input type="text" pattern="[0-9]*" id="gamecode" class="gamecode">
+            <p>You are in:</p>
+            <h3 class="blue"><img src="/images/team-blue-icon.png" align="ABSMIDDLE"> TEAM BLUE</h3>
+            <br>
+            <br>
+            <input type="button" id="joingame" class="joingame" value="Go!"/>
+        </div>
     </div>
 </template>
 
@@ -123,10 +134,26 @@
             {{#each answers}}
             <li><input type="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
-            <li class="handicap"><div>2</div>Handicap</li>
+            <li class="handicap"><div>{{handicap}}</div>Handicap</li>
             <li><div>2</div>Total</li>
         </ul>
-        <div class="clock">42</div>
+        <div class="clock">{{time}}</div>
+        <div class="countdown">
+          <img src="images/wijzerplaat.png">
+          <div class="clock run">
+            <div class="pointer">
+              <img src="images/wijzer.png">
+            </div>
+            <div class="clock-left">
+              <div class="half-circle">
+              </div>
+            </div>
+            <div class="clock-right">
+              <div class="half-circle">
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -139,7 +166,23 @@
             <li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{answer}}</li>
             {{/each}}
         </ul>
-        <div class="clock">42</div>
+        <div class="clock">{{time}}</div>
+        <div class="countdown">
+          <img src="images/wijzerplaat.png">
+          <div class="clock run">
+            <div class="pointer">
+              <img src="images/wijzer.png">
+            </div>
+            <div class="clock-left">
+              <div class="half-circle">
+              </div>
+            </div>
+            <div class="clock-right">
+              <div class="half-circle">
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
