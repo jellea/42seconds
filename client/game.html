@@ -305,15 +305,18 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game-results bluebg">
-            <h3>Results</h3>
+            <h3>Score check</h3>
             <ul>
-                {{#each teams}}
-				<li>{{name}}: {{score}}</li>
+                {{#each answers}}
+                {{#if this.checkedOff}}
+                <li><input type="checkbox" style="text-decoration:line-through" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+                {{else}}
+                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
+                {{/if}}
                 {{/each}}
-              <li>&nbsp;</li>
-              <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
-              <li class="total"><div>{{total}}</div>Total</li>
             </ul>
+            <p>Handicap is <strong>-{{handicap}}</strong>, 
+            total score: <span class="score">{{total}}</span></p>
         </div>
         <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>
