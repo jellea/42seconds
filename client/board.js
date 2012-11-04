@@ -91,7 +91,18 @@ Template.gameActiveteam.handicap = function () {
 Template.gameActiveteam.time = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        return game.clock;
+        if(game.clock === 0) {
+            $("body").html(Template.gameActiveteam);
+        } else {
+            return game.clock;
+        }
+    }
+}
+
+Template.gameActiveteam.score = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.score;
     }
 }
 
@@ -118,7 +129,18 @@ Template.gameOpponent.handicap = function () {
 Template.gameOpponent.time = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        return game.clock;
+        if(game.clock === 0) {
+            $("body").html(Template.gameActiveteam);
+        } else {
+            return game.clock;
+        }
+    }
+}
+
+Template.gameOpponent.score = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.score;
     }
 }
 
