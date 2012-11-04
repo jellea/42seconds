@@ -318,8 +318,8 @@ Template.gameScorecheck.events({
             }
         }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
-        var score = (answers.length - handicap) < 0 ? 0 : answers.length;
-        Teams.update({'team_id': Session.get('team_id')}, {'$set': {'score' : answers.length}});
+        var score = (answers.length - handicap) < 0 ? 0 : answers.length - handicap;
+        Teams.update(Session.get('team_id'), {'$set': {'score' : score}});
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
         $("body").html(Meteor.render(Template.gameResults));
     },
@@ -350,6 +350,25 @@ Template.gameResults.teams = function () {
     var teams = Teams.find({'gamecode':Session.get('gamecode')},{fields:{_id:true, name:true, score:true}}).fetch();
     return teams;
 }
+
+Template.gameResults.events({
+    'click .scoreok': function () {
+        console.log("Starting new round");
+        var game = Games.findOne({'gamecode': Session.get('gamecode')});
+        if(game.team._id === Session.get('team_id')) {
+            $("body").html(Meteor.render(Template.gameDice));
+        } else {
+            $("body").html(Meteor.render(Template.gameOpponent));
+        }
+    }
+});
+
+Template.gameResults.answers = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.answers;
+    }
+};
 
 Meteor.startup(function () {
     // Allocate a new team id.

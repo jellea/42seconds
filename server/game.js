@@ -1,9 +1,11 @@
 ////////// Server only logic //////////
 
+var defaultAnswers = 5;
 var defaultRounds = 5;
 var defaultCategory = 'all';
 var defaultDifficulty = 'medium';
 var defaultClock = 42;
+var defaultNumberOfAnswers = 5;
 
 function createGamecode() {
     var gamecode = '';
@@ -22,6 +24,26 @@ function createGamecode() {
         return createGamecode();
     }
     return gamecode;
+}
+
+function loadAnswers(gamecode) {
+    var answers = new Array();
+    var checkDuplicates = new Array();
+    var fs = __meteor_bootstrap__.require('fs');
+    var data = fs.readFileSync('answers/answers.txt');
+    data = data.toString().split("\n");
+
+    for(var i=0;i<defaultNumberOfAnswers;i++) {
+        random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
+        var word = data[random];
+        if(checkDuplicates.indexOf(word)==-1) {
+            checkDuplicates.push(word);
+            answers.push({"answer":word});
+        } else {
+            i=i-1;
+        }
+    }
+    Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
 }
 
 Meteor.methods({
@@ -69,14 +91,10 @@ Meteor.methods({
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
-            
-        var answers = [
-            {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
-            {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
-            {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-            {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
-        ];
-        Games.update({'gamecode':gamecode}, {$set:{'teams':p,'answers':answers}});
+		
+		loadAnswers(gamecode);
+		
+        Games.update({'gamecode':gamecode}, {$set:{'teams':p}});
 
         return Games.findOne({'gamecode':gamecode});
     }, 
@@ -141,6 +159,7 @@ Meteor.methods({
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
                     }
                 }
+                loadAnswers(gamecode);
                 if(game.round>=game.rounds) {
                 	// game ENDS!
                     // declare zero or more winners

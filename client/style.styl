@@ -69,6 +69,7 @@ transform(arg)
 
 html
     background: black
+    background-image url('/images/blue-bg.jpg')
 
 body
     font: 16px Kameron
@@ -364,6 +365,15 @@ body div.rules.bluebg ul.page-indicator li input[type="button"]
 body div.rules.bluebg ul.page-indicator li input[type="button"].active
   background-color color_darkblue
 
+body div.game-results.bluebg 
+  bluebg()
+  padding: 20px 0
+  height: 375px;
+
+body div.game-results.bluebg span.score
+  font-size: 24px
+  color: white
+
 a.button
   -webkit-border-radius: 5px
   -moz-border-radius: 5px
@@ -408,3 +418,28 @@ p.subtitle
 .option
     width 100%
     height 100%
+
+div.wait
+  background: #222
+  color:      #fff
+  position: absolute
+  top: 0
+  left: 0
+  height:     440px
+  width:      320px
+
+  img
+    position: absolute
+    top: 90px
+    left: 150px
+
+  h3
+    top: 125px
+    left: 83px
+    position: absolute
+
+  p
+    top: 149px
+    font-size: 15px
+    left: 52px
+    position: absolute
