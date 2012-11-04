@@ -4,11 +4,8 @@ Template.gameDice.events({
         var current_dice_index = 0;
         // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
         for(var i = 0; i < 10; i++) {
-            current_dice_index++;
-            if (current_dice_index == number_of_dices) {
-                current_dice_index = 0;
-            }
             Meteor.setTimeout(function() {
+                current_dice_index = (current_dice_index + 1) % number_of_dices;
                 $('#dices div:visible').hide();
                 $($('#dices').children().get(current_dice_index)).show();
             }, i * 1000);
