@@ -14,7 +14,9 @@ Template.gameDice.events({
             Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         }
         $("body").html(Meteor.render(Template.gameActiveteam));
-        Meteor.call('startClock', Session.get('gamecode'));
+        Meteor.call('startClock', Session.get('gamecode'), function () {
+        	console.log("Game started!");
+        });
     }
 });
 
