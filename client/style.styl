@@ -5,189 +5,23 @@ color_darkgreen = #4e8500
 color_blue = #4896cb
 color_darkorange = #f04e23
 
+// Mixins
+animate(name, time, fillmode)
+    animation name time fillmode
+    -moz-animation name time fillmode
+    -webkit-animation name time fillmode
+    -o-animation name time fillmode
+    -ms-animation name time fillmode
+
+transform(arg)
+    transform arg
+    -moz-transform arg
+    -webkit-transform arg
+    -o-transform arg
+    -ms-transform arg
+
 bluebg()
-  background-image: url('/images/blue-bg.jpg')
-
-html
-  background: black
-
-body
-  font: 16px Kameron
-  background: white
-  width: 320px
-  height: 440px
-  margin: 0
-
-body h3 
-  font-size: 27px
-  margin: auto 20px
-  text-align: left
-
-body h3.blue
-  color: color_darkblue
-
-body header 
-  height: 48px
-  width: 320px
-  text-align: center
-  position: relative
-
-body header img
-  margin-top: 8px
-  height: 27px
-
-body header img:first-child
-  height: 23px
-  position: absolute
-  left: 11px
-  top: 11px
-  margin-top: 0
-
-body img.lobby 
-  margin: 40px 0 35px 18px
-  height: 110px
-
-body div.lobby.bluebg
-  height: 250px
-  bluebg()
-
-body div.lobby input:first-child
-  margin-top: 40px
-
-body input[type="button"]
-  height: 55px
-  border-radius: 15px
-  background-color: color_green
-  border: 5px solid color_darkgreen
-  font: 26px Kameron
-  width: 280px
-  margin: 5px 20px
-  -webkit-appearance:none
-
-body input[type="button"].blue 
-  background-color: color_blue
-  border-color: color_darkblue
-
-body p 
-  font-size: 16px
-  text-align: center
-
-body p span.bar
-  display: inline-block
-  -webkit-transform: translateY(-3px)
-  width: 60px
-  height: 2px
-  background-color: black
-
-body div.newgame.bluebg
-  padding: 20px 0 0 0
-  height: 392px
-  width: 320px
-  bluebg()
-
-body div.newgame ul 
-  width: 300px
-  list-style-type: none
-  padding: 0
-
-body div.newgame ul li
-  text-align: center
-  float: left
-  width: 100px
-
-body div.join.bluebg 
-  padding: 20px 0 0 0
-  height: 392px
-  width: 320px
-  bluebg()
-
-body div.join.bluebg input[type="text"]
-  width: 240px
-  margin-left: 60px
-  height: 94px
-  padding: 0
-  background: url('/images/code-background.png') transparent
-  border: none
-  background-size: 200px 94px
-  background-repeat: no-repeat
-  font-size: 90px
-  font-family: "Courier New", "Courier"
-  letter-spacing: 15px
-  -webkit-appearance: none
-  outline: 0
-
-body div.join.bluebg img 
-
-body div.showcode.bluebg img 
-  width: 37px
-
-body div.join.bluebg h3.blue 
-  margin-left: 0
-  text-align: center
-
-body div.showcode.bluebg 
-  padding: 20px 0 0 0;
-  height: 375px;
-  bluebg()
-
-
-body div.showcode.bluebg  div.your-code
-  font-size: 57px
-  font-weight: bold
-  background-image: url('/images/your-code-background.png')
-  background-size: 286px 97px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  text-align: center;
-  line-height: 94px;
-  color: white;
-  height: 97px;
-  margin: 30px; 0;
-
-body div.showcode.bluebg h3.red 
-  margin-left: 0
-  text-align: center;
-  color: color_darkorange
-
-body div.dice.bluebg 
-  padding: 20px 0 0 0;
-  height: 375px;
-  bluebg()
-
-body div.dice.bluebg #dices
-    margin-top  50px
-    text-align center
-
-body div.dice.bluebg #dices .diceface
-    border-top 1px solid #f1f1f1
-    width 80px
-    height 80px
-    border-radius 10px
-    position relative
-    margin 10px
-    font-size 6px
-    display inline-block
-    box-shadow 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999
-    background-image -webkit-linear-gradient(top, #fefefe, #f1f1f1 80%)
-
-body div.dice.bluebg #dices .dot
-    width 60%
-    height 60%
-    left 30%
-    top 35%
-    margin -10%
-    border-radius 50%
-    display block
-    position absolute
-    font-size 36px
-
-body div.dice.bluebg input[type="button"]
-  margin-top: 100px
-
-a.button
-  -webkit-border-radius: 5px
-  -moz-border-radius: 5px
-  border-radius: 5px
+    background-image: url('/images/blue-bg.jpg')
 
 // Mixins
 animate(name, time, fillmode)
@@ -196,6 +30,17 @@ animate(name, time, fillmode)
     -webkit-animation name time fillmode
     -o-animation name time fillmode
     -ms-animation name time fillmode
+
+gradient(start, color1, color2)
+   background-image: -webkit-linear-gradient(start, color1, color2); 
+   background-image: -moz-linear-gradient(start, color1, color2);
+   background-image: -ms-linear-gradient(start, color1, color2);
+   background-image: -o-linear-gradient(start, color1, color2);
+
+appearance(arg)
+    appearance arg
+    -moz-appearance arg
+    -webkit-appearance arg
 
 transform(arg)
     transform arg
@@ -216,6 +61,228 @@ transform(arg)
         transform(scale(.9))
     100%
         transform(scale(1))
+
+html
+    background: black
+
+body
+    font: 16px Kameron
+    background: white
+    width: 320px
+    height: 440px
+    margin: 0
+
+body h3 
+    font-size: 27px
+    margin: auto 20px
+    text-align: left
+
+body h3.blue
+    color: color_darkblue
+
+body header 
+    height: 48px
+    width: 320px
+    text-align: center
+    position: relative
+
+body header img
+    margin-top: 8px
+    height: 27px
+
+body header img:first-child
+    height: 23px
+    position: absolute
+    left: 11px
+    top: 11px
+    margin-top: 0
+
+body img.lobby 
+    margin: 40px 0 35px 18px
+    height: 110px
+
+body div.lobby.bluebg
+    height: 250px
+    bluebg()
+
+body div.lobby input:first-child
+    margin-top: 40px
+
+body input[type="button"]
+    height: 55px
+    border-radius: 15px
+    background-color: color_green
+    border: 5px solid color_darkgreen
+    font: 26px Kameron
+    width: 280px
+    margin: 5px 20px
+    appearance(none)
+
+body input[type="button"].blue 
+    background-color: color_blue
+    border-color: color_darkblue
+
+body p 
+    font-size: 16px
+    text-align: center
+
+body p span.bar
+    display: inline-block
+    width: 60px
+    height: 2px
+    background-color: black
+    transform(translateY(-3px))
+
+body div.newgame.bluebg
+    padding: 20px 0 0 0
+    height: 392px
+    width: 320px
+    bluebg()
+
+body div.newgame ul 
+    width: 300px
+    list-style-type: none
+    padding: 0
+
+body div.newgame ul li
+    text-align: center
+    float: left
+    width: 100px
+
+body div.join.bluebg 
+    padding: 20px 0 0 0
+    height: 392px
+    width: 320px
+    bluebg()
+
+body div.join.bluebg input[type="text"]
+    width: 240px
+    margin-left: 60px
+    height: 94px
+    padding: 0
+    background: url('/images/code-background.png') transparent
+    border: none
+    background-size: 200px 94px
+    background-repeat: no-repeat
+    font-size: 90px
+    font-family: "Courier New", "Courier"
+    letter-spacing: 15px
+    outline: 0
+    appearance(none)
+
+body div.showcode.bluebg img 
+      width: 37px
+
+body div.join.bluebg h3.blue 
+    margin-left: 0
+    text-align: center
+
+body div.showcode.bluebg 
+    padding: 20px 0 0 0;
+    height: 375px;
+    bluebg()
+
+body div.showcode.bluebg  div.your-code
+    font-size: 57px
+    font-weight: bold
+    background-image: url('/images/your-code-background.png')
+    background-size: 286px 97px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-align: center;
+    line-height: 94px;
+    color: white;
+    height: 97px;
+    margin: 30px; 0;
+
+body div.showcode.bluebg h3.red 
+    margin-left: 0
+    text-align: center;
+    color: color_darkorange
+
+body div.dice.bluebg 
+    padding: 20px 0 0 0;
+    height: 375px;
+    bluebg()
+
+body div.dice.bluebg #dices
+    margin-top  50px
+    text-align center
+
+body div.dice.bluebg #dices .diceface
+    border-top 1px solid #f1f1f1
+    width 80px
+    height 80px
+    border-radius 10px
+    position relative
+    margin 10px
+    font-size 6px
+    display inline-block
+    box-shadow 0px 5px 0 #CCC, 0 6px 3px #444, 0 10px 5px #999
+    gradient(top, #fefefe, #f1f1f1)
+
+body div.dice.bluebg #dices .dot
+    width 60%
+    height 60%
+    left 30%
+    top 35%
+    margin -10%
+    border-radius 50%
+    display block
+    position absolute
+    font-size 36px
+
+body div.dice.bluebg input[type="button"]
+  margin-top: 100px
+
+body div.game.bluebg 
+  padding: 20px 0 0 0;
+  height: 375px;
+  bluebg()
+
+body div.game.bluebg div.score
+  position: absolute
+  top: (20+48)px;
+  right: 20px;
+  background-color: color_darkorange
+  padding: 5px 15px
+  border-radius 15px
+  color: white
+
+body div.game.bluebg ul.answers 
+  margin: 0 20px
+  list-style-type: none
+  padding: 0
+
+body div.game.bluebg ul.answers li 
+  color: white;
+  font-weight: bold;
+  font-size 24px
+
+body div.game.bluebg ul.answers li input
+  width 25px
+  height 25px
+  border-radius 12px
+  -webkit-appearance: none
+  background-color white
+  transform(translateY(8px))
+
+body div.game.bluebg ul.answers li input[disabled="disabled"]
+  background-color color_blue
+
+body div.game.bluebg ul.answers li input[disabled="disabled"]+label
+  color: color_blue
+
+body div.game.bluebg ul.answers li input:checked
+  background-color color_green
+
+body div.game.bluebg ul.answers li input:checked+label 
+  color: color_green
+
+a.button
+  -webkit-border-radius: 5px
+  -moz-border-radius: 5px
+  border-radius: 5px
 
 div#wrapper
     position absolute

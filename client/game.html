@@ -140,8 +140,13 @@
 
 <template name="gameActiveteam">
     <div id="wrapper">
-        <h3>Round = {{roundnumber}}</h3>
-        <ul>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game bluebg">
+        <h3>Round {{roundnumber}}</h3>
+        <ul class="answers">
             {{#each answers}}
             <li><input type="checkbox" class="checkbox" id="{{answer}}" name="{{answer}}"> {{answer}}</li>
             {{/each}}
@@ -165,16 +170,22 @@
             </div>
           </div>
         </div>
+        </div>
     </div>
 </template>
 
 <template name="gameOpponent">
     <div id="wrapper">
-        <h3>Round ={{roundnumber}}</h3>
-        <p>Score: {{score}}</p>
-        <ul>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game bluebg">
+        <h3>Round {{roundnumber}}</h3>
+        <div class="score">Score {{score}}</div>
+        <ul class="answers">
             {{#each checkedOff}}
-            	<li data-questionid="{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> {{checkedOff}}</li>
+            <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> <label for="answer-{{id}}">{{checkedOff}}</label></li>
             {{/each}}
         </ul>
         <div class="clock">{{time}}</div>
@@ -199,6 +210,11 @@
 
 <template name="gameScorecheck">
     <div id="wrapper">
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game bluebg">
         <h3>Score check</h3>
         <ul>
             {{#each answers}}
@@ -208,6 +224,7 @@
             <li class="total"><div>{{total}}</div>Total</li>
         </ul>
         <input type="button" id="nextround"  class="nextround" value="Done!"/>
+        </div>
     </div>
 </template>
 
