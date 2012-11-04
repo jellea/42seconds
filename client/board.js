@@ -103,10 +103,13 @@ Template.gameActiveteam.score = function () {
     }
 }
 
-Template.gameOpponent.answers = function() {
-    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+Template.gameOpponent.checkedOff = function() {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    return game.checkedOff;
+    /*return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
         {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
         {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        */
 }
 
 Template.gameOpponent.roundnumber = function () {
@@ -213,12 +216,6 @@ Template.join.events({
     }
 });
 
-Template.rules.events = ({
-	'click input#closeRules': function () {
-        $("body").html(Meteor.render(Template.lobby));
-	}
-});
-
 Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
@@ -227,6 +224,12 @@ Template.joined.ready = function () {
         }
     }
 }
+
+Template.rules.events = ({
+	'click input#closeRules': function () {
+        $("body").html(Meteor.render(Template.lobby));
+	}
+});
 
 Template.showcode.ready = function () {
     var game = Games.findOne({'gamecode':Session.get('gamecode')});
