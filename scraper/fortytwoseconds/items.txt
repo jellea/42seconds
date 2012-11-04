@@ -942,4 +942,4 @@ for (i in testdata){
         answered_correctly: 0,
         played: 0
     });
-};
+}

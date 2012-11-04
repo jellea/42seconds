@@ -6,8 +6,8 @@ for spider in $spiders ; do
 done
 sed -i "s/\]\[/,/g" items.json
 
-echo 'testdata = ' > items.js
-cat items.json >> items.js
+echo 'testdata = ' > items.txt
+cat items.json >> items.txt
 echo ';
 
 for (i in testdata){
@@ -19,4 +19,4 @@ for (i in testdata){
         answered_correctly: 0,
         played: 0
     });
-}' >> items.js
+}' >> items.txt
