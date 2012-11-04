@@ -145,9 +145,11 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
+        {{#isolate}}
         <h3>Round {{roundnumber}}</h3>
         <div class="score">Score -{{handicap}}</div>
         <ul class="answers">
+            
             {{#each answers}}
             {{#if this.checkedOff}}
             <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
@@ -155,8 +157,10 @@
             <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
             {{/if}}
             {{/each}}
+            
         </ul>
         <div class="clock">{{time}}</div>
+        {{/isolate}}
         <div class="countdown">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
@@ -173,6 +177,7 @@
             </div>
           </div>
         </div>
+        
         </div>
     </div>
 </template>
