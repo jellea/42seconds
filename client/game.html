@@ -202,7 +202,7 @@
         <h3>Score check</h3>
         <ul>
             {{#each answers}}
-            <li data-questionid="{{id}}" class="ok"><input type="checkbox" name="{{id}}"> {{answer}}</li>
+            <li data-questionid="{{id}}" class="ok"><input type="checkbox" id="{{answer}}" name="{{id}}"> {{answer}}</li>
             {{/each}}
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
