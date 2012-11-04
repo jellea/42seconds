@@ -2,7 +2,7 @@ from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector
 from fortytwoseconds.items import FortyTwoSecondsItem
 
-nl_domain = 'http://nl.wikipedia.org'
+WIKI_NL_DOMAIN = 'http://nl.wikipedia.org'
 
 
 def create_items(response, xpath, category):
@@ -18,7 +18,7 @@ def create_items(response, xpath, category):
         if link.endswith('redlink=1'):
             continue
         if link.startswith('/'):
-            link = nl_domain + link
+            link = WIKI_NL_DOMAIN + link
         item = FortyTwoSecondsItem()
         item['answer'] = answer.select('text()').extract()[0]
         item['link'] = link
@@ -30,7 +30,7 @@ def create_items(response, xpath, category):
 
 class WikiApparatuurSpider(BaseSpider):
     name = 'apparatuur'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_huishoudelijke_apparatuur',]
 
     def parse(self, response):
@@ -40,7 +40,7 @@ class WikiApparatuurSpider(BaseSpider):
 
 class WikiAttractieparkenSpider(BaseSpider):
     name = 'attractieparken'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_attractieparken_in_Nederland',]
 
     def parse(self, response):
@@ -50,7 +50,7 @@ class WikiAttractieparkenSpider(BaseSpider):
 
 class WikiHeelalSpider(BaseSpider):
     name = 'heelal'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Zonnestelsel',]
 
     def parse(self, response):
@@ -60,7 +60,7 @@ class WikiHeelalSpider(BaseSpider):
 
 class WikiLandenSpider(BaseSpider):
     name = 'landen'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_Europese_landen',]
 
     def parse(self, response):
@@ -70,7 +70,7 @@ class WikiLandenSpider(BaseSpider):
 
 class WikiSportenSpider(BaseSpider):
     name = 'sporten'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_sporten',]
 
     def parse(self, response):
@@ -80,7 +80,7 @@ class WikiSportenSpider(BaseSpider):
 
 class WikiStedenSpider(BaseSpider):
     name = 'steden'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_grote_Nederlandse_steden',]
 
     def parse(self, response):
@@ -90,7 +90,7 @@ class WikiStedenSpider(BaseSpider):
 
 class WikiSterrenbeeldenSpider(BaseSpider):
     name = 'sterrenbeelden'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Dierenriem',]
 
     def parse(self, response):
@@ -100,7 +100,7 @@ class WikiSterrenbeeldenSpider(BaseSpider):
 
 class WikiTelevisieSpider(BaseSpider):
     name = 'televisie'
-    allowed_domains = [nl_domain,]
+    allowed_domains = [WIKI_NL_DOMAIN,]
     start_urls = ['http://nl.wikipedia.org/wiki/Lijst_van_televisieprogramma%27s_naar_genre',]
 
     def parse(self, response):
@@ -118,7 +118,7 @@ class WikiTelevisieSpider(BaseSpider):
             if answer_.find(':') != -1 or answer_.isdigit():
                 continue
             if link.startswith('/'):
-                link = nl_domain + link
+                link = WIKI_NL_DOMAIN + link
             item = FortyTwoSecondsItem()
             item['answer'] = answer_
             item['link'] = link
