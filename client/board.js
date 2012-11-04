@@ -57,23 +57,34 @@ Template.gameDice.roundnumber = function () {
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
-
-Template.gameActiveteam.answers = function() {
-    return [
-        {"answer": "Josje Huisman", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
-        {"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
-        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"},
-        {"answer": "Gert Verhulst", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}
-        ];
-}
-
 Template.gameActiveteam.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         return game.round;
     }
 }
+
+Template.gameActiveteam.answers = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.answers;
+    }
+}
+
+Template.gameActiveteam.events({
+	'click input': function (elmnt) {
+		$(elmnt).css('text-decoration','line-through');
+    	var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+		var answers = game.answers;
+		for(i=0;i<answers.length;i++) {
+			if(answers[i].answer==elmnt.id) {
+				answers[i].checkedOff = 1;
+			}
+		}
+		Games.update({'gamecode':gamecode},{$set:{'answers':answers}});
+		console.log(elmnt.id+' checked off!');
+	},
+});
 
 Template.gameActiveteam.handicap = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
@@ -102,9 +113,12 @@ Template.gameActiveteam.score = function () {
 
 Template.gameActiveteam.events({
     'click input.checkbox':function (elmnt) {
-        $(elmnt).css('text-decoration', 'line-through');
-        
+        $(elmnt).css('text-decoration', 'line-through');  
     }
+});
+
+Template.gameActiveteam.preserve({
+    'input[id]': function (node) { return node.id; }
 });
 
 Template.gameOpponent.checkedOff = function() {
