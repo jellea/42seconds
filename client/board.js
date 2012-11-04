@@ -130,8 +130,7 @@ Template.gameActiveteam.events({
 
 Template.gameOpponent.checkedOff = function() {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    console.log(game);
-    var answers;
+    var answers = new Array();
     for(var i=0; i<game.answers.length; i++) {
         if(game.answers[i].checkedOff) {
             answers.push(game.answers[i]);
