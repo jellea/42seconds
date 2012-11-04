@@ -112,20 +112,35 @@ Meteor.methods({
             clock -= 1;
             Games.update({gamecode:gamecode}, {$set:{clock:clock}});
 
+            if((clock % 5)==0) {
+                // check every 5 seconds for an idle player
+                var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+		        for(i=0;i<teams.length;i++) {
+		            if(teams[i].idle) {
+		            	if(i==0) {
+		            		winner = teams[1];
+		            	} else if(i==1) {
+		            	    winner = teams[0];
+		            	}
+		                // Team IDLE! == forfeit
+		                Games.update({'gamecode':gamecode},{$set:{'forfeited':true,'winner':winner}});
+		            }
+		        }
+            }
             // end of game
             if (clock === 0) {
                 Games.update({gamecode:gamecode}, {$set:{clock:0}});
                 // stop the clock
                 Meteor.clearInterval(interval);
 		        var game = Games.findOne({'gamecode':gamecode});
-                var points = 0;
+                var score = 0;
 		        for(i=0;i<game.answers;i++) {
 		        	if(answers[i].checkedOff) {
-		        		points = (points*1)+1;
+		        		score = (score*1)+1;
 		        	}
 		        }
-		        if(game.handicap>=points) {
-		        	points = 0;
+		        if(game.handicap>=score) {
+		        	score = 0;
 		        }
 		        team = game.team;
                 var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
@@ -134,9 +149,9 @@ Meteor.methods({
                         // set the other team as current team for the new game
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
                     } else {
-                    	// update the team object with the new points
-                        newPoints = (team.points*1)+points;
-                    	Teams.update({'_id':team._id},{$set:{'points':newPoints}});
+                    	// update the team object with the new score
+                        newScore = (team.score*1)+score;
+                    	Teams.update({'_id':team._id},{$set:{'score':newScore}});
                     }
                 }
                 if(game.round>=game.rounds) {
@@ -158,11 +173,9 @@ Meteor.methods({
         }, 1000);
     },
     
-    gameResults: function(gamecode) {
-        // show scores and winner
-        
-        // reset scores, winner, scoreConfirmed, handicap, ?
-        
+    scoreboard: function(gamecode) {
+        // reset scoreConfirmed, winner & handicap
+        Games.update({'gamecode':gamecode},{$set:{'winner':null,'handicap':null,'scoreConfirmed':false}});
     }
 });
 

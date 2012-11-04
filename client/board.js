@@ -16,8 +16,7 @@ var set_handicap = function(handicap) {
         Meteor.call('startClock', Session.get('gamecode'), function () {
                 console.log("Game started!");
         });
-    }, 1500);           
-}
+    }, 1500);}
 
 Template.gameDice.events({
     'click input#dice':function () {
@@ -57,6 +56,18 @@ Template.gameDice.roundnumber = function () {
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
+Template.scoreboard.scores = function() {
+    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+    return scores;
+}
+
+Template.scoreboard.winner = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.winner;
+    }
+}
+
 Template.gameActiveteam.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
@@ -82,15 +93,15 @@ Template.gameActiveteam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameScorecheckWait);
+            $("body").html(Meteor.render(Template.gameScorecheckWait));
         }
     }
 }
 
 Template.gameActiveteam.score = function () {
-    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        return game.score;
+    var team = Teams.findOne(Session.get('team_id'));
+    if(team) {
+        return team.score;
     }
 }
 
@@ -146,15 +157,21 @@ Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameScorecheck);
+            $("body").html(Meteor.render(Template.gameScorecheck));
+        }
+        
+        if(game.handicap != null && !$('div.countdown.run')) {
+        	// run the CSS timer animation
+            $('.pointer').addClass('run');
+            $('div.countdown').addClass('run');
         }
     }
 }
 
 Template.gameOpponent.score = function () {
-    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        return game.score;
+    var team = Teams.findOne(Session.get('team_id'));
+    if(team) {
+        return team.score;
     }
 }
 
@@ -188,6 +205,10 @@ Template.newgame.events({
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
+    },
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -222,6 +243,10 @@ Template.join.events({
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
+    },
+    'click img.backbutton':function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -237,7 +262,18 @@ Template.joined.ready = function () {
 Template.rules.events = ({
 	'click input#closeRules': function () {
         $("body").html(Meteor.render(Template.lobby));
-	}
+	},
+    'click div.rule': function () {
+        if ($('div.rule.active').next().is('div')) {
+            $('div.rule.active').removeClass('active').next().addClass('active');
+            $('ul.page-indicator input.active').removeClass('active').parent().next().find('input').addClass('active');
+        } else {
+            $('div.rule.active').removeClass('active');
+            $('ul.page-indicator input.active').removeClass('active');
+            $('div.rule').eq(0).addClass('active');
+            $('ul.page-indicator input').eq(0).addClass('active');
+        }
+    }
 });
 
 Template.showcode.ready = function () {
@@ -247,6 +283,70 @@ Template.showcode.ready = function () {
             $("body").html(Meteor.render(Template.gameDice));
         }
     }
+}
+
+Template.showcode.events({
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
+    }
+});
+
+Template.gameScorecheckWait.ready = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if (game) {
+        if (game.scoreConfirmed) {
+            $("body").html(Meteor.render(Template.gameResults));
+        }
+    }
+};
+
+Template.gameScorecheck.answers = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.answers;
+    }
+}
+
+Template.gameScorecheck.events({
+    'click input.nextround': function () {
+        console.log("Scores confirmed");
+        var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var answers = new Array();
+        for(var i=0; i<game.answers.length; i++) {
+            if(game.answers[i].checkedOff) {
+                answers.push(game.answers[i]);
+            }
+        }
+        Teams.update({'team_id': Session.get('team_id')}, {'$set': {'score' : answers.length}});
+        Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
+        $("body").html(Meteor.render(Template.gameResults));
+    },
+    'click input.checkbox': function () {
+        console.log("Input ok click");
+        var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var answers = game.answers;
+        for(i=0;i<answers.length;i++) {
+            if(answers[i].answer === this.answer && answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+            if(answers[i].answer == this.answer) {
+                answers[i].checkedOff = true;
+                continue;
+            }
+            if(!answers[i].answer == this.answer && !answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+        }
+        Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
+
+    }
+});
+
+Template.gameResults.answers = function () {
+	
 }
 
 Meteor.startup(function () {
