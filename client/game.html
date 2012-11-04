@@ -302,9 +302,10 @@
     <div id="wrapper">
         <h3>Results</h3>
         <ul>
-            {{#each answers}}
-            <li data-questionid="{{id}}" class="inactive">{{answer}}</li>
+            {{#each teams}}
+				<li>{{name}}: {{score}}</li>
             {{/each}}
+            <li>&nbsp;</li>
             <li class="handicap"><div>-{{handicap}}</div>Handicap</li>
             <li class="total"><div>{{total}}</div>Total</li>
         </ul>

@@ -159,8 +159,7 @@ Template.gameOpponent.ready = function () {
         if(game.clock === 0) {
             $("body").html(Meteor.render(Template.gameScorecheck));
         }
-        
-        if(game.handicap != null && !$('div.countdown.run')) {
+        if(game.handicap != null && $('div.countdown.run').length==0) {
         	// run the CSS timer animation
             $('.pointer').addClass('run');
             $('div.countdown').addClass('run');
@@ -345,8 +344,9 @@ Template.gameScorecheck.events({
     }
 });
 
-Template.gameResults.answers = function () {
-	
+Template.gameResults.teams = function () {
+    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+    return teams;
 }
 
 Meteor.startup(function () {
