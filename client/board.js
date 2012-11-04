@@ -67,29 +67,9 @@ Template.gameActiveteam.roundnumber = function () {
 Template.gameActiveteam.answers = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        console.log(game.answers);
         return game.answers;
     }
 }
-
-Template.gameActiveteam.events({
-	'click input': function () {
-		$("input[id='" + this.answer + "']").parent().css('text-decoration','line-through');
-    	var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-		var answers = game.answers;
-		for(i=0;i<answers.length;i++) {
-			if(answers[i].answer === this.answer && answers[i].checkedOff) {
-				answers[i].checkedOff = false;
-                continue;
-			}
-            if(answers[i].answer == this.answer) {
-                answers[i].checkedOff = true;
-            }
-		}
-		Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
-		console.log(this.answer + ' checked off!');
-	}
-});
 
 Template.gameActiveteam.handicap = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
@@ -115,18 +95,37 @@ Template.gameActiveteam.score = function () {
 }
 
 Template.gameActiveteam.events({
-    'click input.checkbox':function (elmnt) {
-        $(elmnt).css('text-decoration', 'line-through');  
+    'click input': function () {
+        $("input[id='" + this.answer + "']").parent().css('text-decoration','line-through');
+        var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var answers = game.answers;
+        for(i=0;i<answers.length;i++) {
+            if(answers[i].answer === this.answer && answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+            if(answers[i].answer == this.answer) {
+                answers[i].checkedOff = true;
+                continue;
+            }
+            if(!answers[i].answer == this.answer && !answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+        }
+        Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
     }
 });
 
 Template.gameOpponent.checkedOff = function() {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    return game.checkedOff;
-    /*return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
-        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
-        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
-        */
+    var answers = new Array();
+    for(var i=0; i<game.answers.length; i++) {
+        if(game.answers[i].checkedOff) {
+            answers.push(game.answers[i]);
+        }
+    }
+    return answers;
 }
 
 Template.gameOpponent.roundnumber = function () {
@@ -167,6 +166,10 @@ Template.lobby.events({
     },
     'click input#joingame':function () {
         $("body").html(Meteor.render(Template.join));
+    },
+    'click a#ruleslink':function () {
+        $("body").html(Meteor.render(Template.rules));  
+        return false;
     }
 });
 

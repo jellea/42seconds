@@ -17,6 +17,7 @@
             <p><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="joingame" class="joingame blue" value="Join game"/>
         </div>
+        <a href="#" id="ruleslink">rules</a>
     </div>
 </template>
 
@@ -27,8 +28,8 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="newgame bluebg">
-            <h3>Eya! Choose your gametype here..</h3>
-            <ul class="newgame">
+            <h3 class="text_shadow_white_big">Eya! Choose your gametype here..</h3>
+            <ul class="newgame text_shadow_white_small">
               <li>Rounds<br><strong>5</strong></li>
               <li>Category<br><strong>All</strong></li>
               <li>Difficulty<br><strong>Medium</strong></li>
@@ -80,10 +81,10 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="join bluebg">
-            <h3>Your code:</h3>
+            <h3 class="text_shadow_white_big">Your code:</h3>
             <input type="text" pattern="[0-9]*" id="gamecode" class="gamecode">
-            <p>You are in:</p>
-            <h3 class="blue"><img src="/images/team-blue-icon.png" align="ABSMIDDLE"> TEAM BLUE</h3>
+            <p class="text_shadow_white_small">You are in:</p>
+            <h3 class="blue text_shadow_black_big"><img src="/images/team-blue-icon.png" align="ABSMIDDLE"> TEAM BLUE</h3>
             <br>
             <br>
             <input type="button" id="joingame" class="joingame" value="Go!"/>
@@ -107,11 +108,11 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="showcode bluebg">
-            <h3>Your code</h3>
-            <div class="your-code">{{ gamecode }}</div>
-            <p>You're in</p>
-            <h3 class="red"><img src="/images/team-red-icon.png" align="ABSMIDDLE"> TEAM RED</h3>
-            <p>Waiting for other party to join</p>
+            <h3 class="text_shadow_white_big">Your code:</h3>
+            <div class="your-code text_shadow_black_big">{{ gamecode }}</div>
+            <p class="text_shadow_white_small">You are in:</p>
+            <h3 class="red text_shadow_black_big"><img src="/images/team-red-icon.png" align="ABSMIDDLE"> TEAM RED</h3>
+            <p class="text_shadow_white_small">Waiting for other party to join</p>
         </div>
     </div>
     {{ ready }}
@@ -124,7 +125,7 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="dice bluebg">
-            <h3>Shake it baby!</h3>
+            <h3 class="text_shadow_white_big">Shake it baby!</h3>
             <div id="dices">
                 <div class="diceface zero"><span class="dot">0</span></div>
                 <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
@@ -142,9 +143,9 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        <h3>Round {{roundnumber}}</h3>
-        <div class="score">Score -{{handicap}}</div>
-        <ul class="answers">
+        <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
+        <div class="score text_shadow_black_small">Score -{{handicap}}</div>
+        <ul class="answers text_shadow_black_small">
             
             {{#each answers}}
             {{#if this.checkedOff}}
@@ -185,14 +186,14 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        <h3>Round {{roundnumber}}</h3>
+        <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
         <div class="score">Score {{score}}</div>
-        <ul class="answers">
+        <ul class="answers text_shadow_black_big">
             {{#each checkedOff}}
             <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}"> <label for="answer-{{id}}">{{this.answer}}</label></li>
             {{/each}}
         </ul>
-        <div class="clock">{{time}}</div>
+        <div class="clock"></div>
         <div class="countdown">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
