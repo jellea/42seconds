@@ -142,7 +142,6 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        {{#isolate}}
         <h3>Round {{roundnumber}}</h3>
         <div class="score">Score -{{handicap}}</div>
         <ul class="answers">
@@ -157,7 +156,7 @@
             
         </ul>
         <div class="clock">{{time}}</div>
-        {{/isolate}}
+        {{#constant}}
         <div class="countdown">
           <img src="images/wijzerplaat.png">
           <div class="clock run">
@@ -174,6 +173,7 @@
             </div>
           </div>
         </div>
+        {{/constant}}
         
         </div>
     </div>
