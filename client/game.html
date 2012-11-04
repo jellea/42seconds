@@ -102,10 +102,17 @@
 
 <template name="showcode">
     <div id="wrapper">
-        <h3>Your code</h3>
-        <p>{{ gamecode }}</p>
-        <h3>You're in</h3>
-        <p>{{ team }}</p>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="showcode bluebg">
+            <h3>Your code</h3>
+            <div class="your-code">{{ gamecode }}</div>
+            <p>You're in</p>
+            <h3 class="red"><img src="/images/team-red-icon.png" align="ABSMIDDLE"> TEAM RED</h3>
+            <p>Waiting for other party to join</p>
+        </div>
     </div>
     {{ ready }}
 </template>

@@ -3,6 +3,7 @@ color_orange = #f04e23
 color_green = #70bf00
 color_darkgreen = #4e8500
 color_blue = #4896cb
+color_darkorange = #f04e23
 
 bluebg()
   background-image: url('/images/blue-bg.jpg');
@@ -119,11 +120,36 @@ body div.join.bluebg input[type="text"]
   outline: 0
 
 body div.join.bluebg img 
+body div.showcode.bluebg img 
   width: 37px;
 
 body div.join.bluebg h3.blue 
   margin-left: 0
   text-align: center;
+
+body div.showcode.bluebg 
+  padding: 20px 0 0 0;
+  height: 375px;
+  bluebg()
+
+
+body div.showcode.bluebg  div.your-code
+  font-size: 57px
+  font-weight: bold
+  background-image: url('/images/your-code-background.png')
+  background-size: 286px 97px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  text-align: center;
+  line-height: 94px;
+  color: white;
+  height: 97px;
+  margin: 30px; 0;
+
+body div.showcode.bluebg h3.red 
+  margin-left: 0
+  text-align: center;
+  color: color_darkorange
 
 a.button
   -webkit-border-radius: 5px;
