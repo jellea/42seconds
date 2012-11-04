@@ -5,6 +5,7 @@ var defaultRounds = 5;
 var defaultCategory = 'all';
 var defaultDifficulty = 'medium';
 var defaultClock = 42;
+var defaultNumberOfAnswers = 5;
 
 function createGamecode() {
     var gamecode = '';
@@ -109,7 +110,7 @@ Meteor.methods({
         data = data.toString().split("\n");
         console.log('data');
         console.log(data);
-        for(i=0;i<7;i++) {
+        for(i=0;i<defaultNumberOfAnswers;i++) {
         	random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
         	var word = data[random];
         	answers.push({"answer":word});
