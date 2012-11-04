@@ -160,6 +160,12 @@ Template.gameOpponent.ready = function () {
         if(game.clock === 0) {
             $("body").html(Meteor.render(Template.gameScorecheck));
         }
+        
+        if(game.handicap != null && !$('div.countdown.run')) {
+        	// run the CSS timer animation
+            $('.pointer').addClass('run');
+            $('div.countdown').addClass('run');
+        }
     }
 }
 
@@ -317,7 +323,11 @@ Template.gameScorecheck.events({
         Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
 
     }
-})
+});
+
+Template.gameResults.answers = function () {
+	
+}
 
 Meteor.startup(function () {
     // Allocate a new team id.
