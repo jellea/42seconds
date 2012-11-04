@@ -192,7 +192,6 @@ Template.lobby.events({
 Template.newgame.events({
     'click input#startgame':function () {
         Meteor.call('start_new_game', Session.get('team_id'), function (error, game) {
-            var game = Games.findOne({'gamecode':Session.get('gamecode')});
             Template.showcode.team = game.teams.length;
             Session.set('teamNumber',game.teams.length);
             Session.set('gamecode', game.gamecode);

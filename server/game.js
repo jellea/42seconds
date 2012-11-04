@@ -26,7 +26,7 @@ function createGamecode() {
     return gamecode;
 }
 
-function loadAnswers() {
+function loadAnswers(gamecode) {
 
         // Get answers from the database, if we have any.
         var count = Answers.find({'language':'nl'}).count();
@@ -62,10 +62,10 @@ function loadAnswers() {
         ];*/
         var answers = new Array();
         var checkDuplicates = new Array();
-        var fs = __meteor_bootstrap__.require('fs');   
+        var fs = __meteor_bootstrap__.require('fs');
         var data = fs.readFileSync('answers/answers.txt');
         data = data.toString().split("\n");
-        
+
         for(var i=0;i<defaultNumberOfAnswers;i++) {
         	random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
         	var word = data[random];
@@ -126,7 +126,7 @@ Meteor.methods({
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
 		
-		loadAnswers();
+		loadAnswers(gamecode);
 		
         Games.update({'gamecode':gamecode}, {$set:{'teams':p}});
 
