@@ -16,8 +16,7 @@ var set_handicap = function(handicap) {
         Meteor.call('startClock', Session.get('gamecode'), function () {
                 console.log("Game started!");
         });
-    }, 1500);           
-}
+    }, 1500);}
 
 Template.gameDice.events({
     'click input#dice':function () {
@@ -200,6 +199,10 @@ Template.newgame.events({
         Meteor.call('advancedsettings', function (error, gamecode) {
             $("body").html(Meteor.render(Template.advancedsettings));
         });
+    },
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -234,6 +237,10 @@ Template.join.events({
             Template.joined.team = game.teams.length;
             $("body").html(Meteor.render(Template.joined));
         });
+    },
+    'click img.backbutton':function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
     }
 });
 
@@ -249,7 +256,18 @@ Template.joined.ready = function () {
 Template.rules.events = ({
 	'click input#closeRules': function () {
         $("body").html(Meteor.render(Template.lobby));
-	}
+	},
+    'click div.rule': function () {
+        if ($('div.rule.active').next().is('div')) {
+            $('div.rule.active').removeClass('active').next().addClass('active');
+            $('ul.page-indicator input.active').removeClass('active').parent().next().find('input').addClass('active');
+        } else {
+            $('div.rule.active').removeClass('active');
+            $('ul.page-indicator input.active').removeClass('active');
+            $('div.rule').eq(0).addClass('active');
+            $('ul.page-indicator input').eq(0).addClass('active');
+        }
+    }
 });
 
 Template.showcode.ready = function () {
@@ -261,6 +279,12 @@ Template.showcode.ready = function () {
     }
 }
 
+Template.showcode.events({
+    'click img.backbutton' : function () {
+         var fragment = Meteor.render(Template.lobby);
+         $("body").html(fragment);
+    }
+});
 
 Template.gameScorecheckWait.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});

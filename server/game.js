@@ -112,6 +112,21 @@ Meteor.methods({
             clock -= 1;
             Games.update({gamecode:gamecode}, {$set:{clock:clock}});
 
+            if((clock % 5)==0) {
+                // check every 5 seconds for an idle player
+                var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+		        for(i=0;i<teams.length;i++) {
+		            if(teams[i].idle) {
+		            	if(i==0) {
+		            		winner = teams[1];
+		            	} else if(i==1) {
+		            	    winner = teams[0];
+		            	}
+		                // Team IDLE! == forfeit
+		                Games.update({'gamecode':gamecode},{$set:{'forfeited':true,'winner':winner}});
+		            }
+		        }
+            }
             // end of game
             if (clock === 0) {
                 Games.update({gamecode:gamecode}, {$set:{clock:0}});
