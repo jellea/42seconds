@@ -11,7 +11,7 @@ cat items.json >> items.txt
 echo ';
 
 for (i in testdata){
-    answers.insert({
+    Answers.insert({
         answer: testdata[i]["answer"],
         link: testdata[i]["link"],
         language: testdata[i]["language"],
