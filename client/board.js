@@ -14,6 +14,7 @@ Template.gameDice.events({
             Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
         }
         $("body").html(Meteor.render(Template.gameActiveteam));
+        Meteor.call('startClock', Session.get('gamecode'));
     }
 });
 
@@ -52,6 +53,40 @@ Template.gameActiveteam.handicap = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         return game.handicap;
+    }
+}
+
+Template.gameActiveteam.time = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.clock;
+    }
+}
+
+Template.gameOpponent.answers = function() {
+    return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+}
+
+Template.gameOpponent.roundnumber = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
+}
+
+Template.gameOpponent.handicap = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.handicap;
+    }
+}
+
+Template.gameOpponent.time = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.clock;
     }
 }
 
