@@ -1,5 +1,16 @@
 Template.gameDice.events({
     'click input#dice':function () {
+        var number_of_dices = $('#dices').children().length;
+        var current_dice_index = 0;
+        // Voor bepaalde tijd/aantal iteraties door de drie beschikbare dices loopen.
+        for(var i = 0; i < 10; i++) {
+            current_dice_index++;
+            if (current_dice_index == number_of_dices) {
+                current_dice_index = 0;
+            }
+            $('#dices div:visible').hide();
+            $($('#dices').children().get(current_dice_index)).show();
+        }
         if (!Session.get('gamecode')) {
             console.log("gamecode not set");
             return;
