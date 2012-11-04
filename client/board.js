@@ -100,6 +100,13 @@ Template.gameActiveteam.score = function () {
     }
 }
 
+Template.gameActiveteam.events({
+    'click input.checkbox':function (elmnt) {
+        $(elmnt).css('text-decoration', 'line-through');
+        
+    }
+});
+
 Template.gameOpponent.checkedOff = function() {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     return game.checkedOff;
