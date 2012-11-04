@@ -72,18 +72,20 @@ Template.gameActiveteam.answers = function () {
 }
 
 Template.gameActiveteam.events({
-	'click input': function (elmnt) {
-		$(elmnt).css('text-decoration','line-through');
+	'click input': function () {
+		$("input[id='" + this.answer + "']").parent().css('text-decoration','line-through');
     	var game = Games.findOne({'gamecode' : Session.get('gamecode')});
 		var answers = game.answers;
 		for(i=0;i<answers.length;i++) {
-			if(answers[i].answer==elmnt.id) {
+			if(answers[i].answer === this.answer) {
 				answers[i].checkedOff = 1;
-			}
+			} else {
+                answers[i].checkedOff = 0;
+            }
 		}
-		Games.update({'gamecode':gamecode},{$set:{'answers':answers}});
-		console.log(elmnt.id+' checked off!');
-	},
+		Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
+		console.log(this.answer + ' checked off!');
+	}
 });
 
 Template.gameActiveteam.handicap = function () {
