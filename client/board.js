@@ -317,6 +317,8 @@ Template.gameScorecheck.events({
                 answers.push(game.answers[i]);
             }
         }
+        var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
+        var score = (answers.length - handicap) < 0 ? 0 : answers.length;
         Teams.update({'team_id': Session.get('team_id')}, {'$set': {'score' : answers.length}});
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
         $("body").html(Meteor.render(Template.gameResults));
