@@ -237,7 +237,18 @@ Template.joined.ready = function () {
 Template.rules.events = ({
 	'click input#closeRules': function () {
         $("body").html(Meteor.render(Template.lobby));
-	}
+	},
+    'click div.rule': function () {
+        if ($('div.rule.active').next().is('div')) {
+            $('div.rule.active').removeClass('active').next().addClass('active');
+            $('ul.page-indicator input.active').removeClass('active').parent().next().find('input').addClass('active');
+        } else {
+            $('div.rule.active').removeClass('active');
+            $('ul.page-indicator input.active').removeClass('active');
+            $('div.rule').eq(0).addClass('active');
+            $('ul.page-indicator input').eq(0).addClass('active');
+        }
+    }
 });
 
 Template.showcode.ready = function () {
