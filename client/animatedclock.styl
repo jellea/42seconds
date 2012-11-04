@@ -1,8 +1,8 @@
 /*Animated Clock*/
 .countdown > img
   position: absolute
-  top: -43px
-  right: -27px
+  top: 0
+  left: 0
   width: 210px
 
 .pointer > img
@@ -66,13 +66,16 @@ transform(arg)
 
 div.countdown
   position: absolute
-  right: -167px
-  bottom: -123px
+  right: 0
+  bottom: 0
   z-index: 100
   /* -webkit-transform-origin: 100% 100% */
   -webkit-transition: all .5s
   -moz-transition: all .5s
   transition: all .5s
+  height 163px
+  width 177px
+  overflow hidden
 
 div.countdown.out
   /* -webkit-transform: rotateY( 90deg )
@@ -81,8 +84,8 @@ div.countdown.out
 
 div.countdown div.clock
   position: absolute
-  top: 0
-  right: 0
+  top: 45px;
+  left: 24px
   height: 10em
   width: 10em
   z-index: -100

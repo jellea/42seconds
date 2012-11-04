@@ -84,13 +84,7 @@ Template.gameActiveteam.events({
 			}
             if(answers[i].answer == this.answer) {
                 answers[i].checkedOff = true;
-                continue;
             }
-            if(!answers[i].answer == this.answer && !answers[i].checkedOff) {
-                answers[i].checkedOff = false;
-                continue;
-            }
-
 		}
 		Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
 		console.log(this.answer + ' checked off!');
@@ -130,14 +124,11 @@ Template.gameActiveteam.events({
 
 Template.gameOpponent.checkedOff = function() {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    var answers = new Array();
-    for(var i=0; i<game.answers.length; i++) {
-        if(game.answers[i].checkedOff) {
-            answers.push(game.answers[i]);
-        }
-    }
-    console.log(answers);
-    return answers;
+    return game.checkedOff;
+    /*return [{"answer": "Johnny Depp", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000136", "language": "nl"},
+        {"answer": "Kristen Stewart", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0829576", "language": "nl"},
+        {"answer": "Robert Pattinson", "category": "Acteurs", "link": "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm1500155", "language": "nl"}];
+        */
 }
 
 Template.gameOpponent.roundnumber = function () {
