@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    {{> lobby}}
+    {{> gameActiveteam}}
 </body>
 
 <template name="lobby">
@@ -138,6 +138,22 @@
             <li><div>2</div>Total</li>
         </ul>
         <div class="clock">{{time}}</div>
+        <div class="countdown">
+          <img src="images/wijzerplaat.png">
+          <div class="clock run">
+            <div class="pointer">
+              <img src="images/wijzer.png">
+            </div>
+            <div class="clock-left">
+              <div class="half-circle">
+              </div>
+            </div>
+            <div class="clock-right">
+              <div class="half-circle">
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -151,6 +167,22 @@
             {{/each}}
         </ul>
         <div class="clock">{{time}}</div>
+        <div class="countdown">
+          <img src="images/wijzerplaat.png">
+          <div class="clock run">
+            <div class="pointer">
+              <img src="images/wijzer.png">
+            </div>
+            <div class="clock-left">
+              <div class="half-circle">
+              </div>
+            </div>
+            <div class="clock-right">
+              <div class="half-circle">
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
