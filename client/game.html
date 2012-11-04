@@ -45,8 +45,46 @@
 
 <template name="rules">
     <div id="wrapper">
-        <p>Rules</p>
-        <input type="button" id="closeRules" class="closeRules" value="Close"/>
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="rules bluebg">
+            <h3>Rules of the game</h3>
+            <div class="rule active">
+                <img src="images/ico_r1.png">
+                <p></p>
+            </div>
+            <div class="rule">
+                <img src="images/ico_r2.png">
+                <p></p>
+            </div>
+            <div class="rule">
+                <img src="images/ico_r3.png">
+                <p></p>
+            </div>
+            <div class="rule">
+                <img src="images/ico_r4.png">
+                <p></p>
+            </div>
+            <div class="rule">
+                <img src="images/ico_r5.png">
+                <p></p>
+            </div>
+            <div class="rule">
+                <img src="images/ico_r6.png">
+                <p></p>
+            </div>
+            <ul class="page-indicator">
+                <li><input type="button" value="0" class="active"></li>
+                <li><input type="button" value="1"></li>
+                <li><input type="button" value="3"></li>
+                <li><input type="button" value="4"></li>
+                <li><input type="button" value="5"></li>
+                <li><input type="button" value="6"></li>
+            </ul>
+            <input type="button" id="closeRules" class="closeRules" value="Okay, let's go!"/>
+        </div>
     </div>
 </template>
 
@@ -261,5 +299,7 @@
 </template>
 
 <template name="scoreboard">
-    
+    {{#each teams}}
+		{{name}}: {{score}}
+    {{/each}}
 </template>

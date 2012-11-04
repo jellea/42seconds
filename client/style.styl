@@ -290,6 +290,42 @@ body div.game.bluebg ul.answers li input:checked
 body div.game.bluebg ul.answers li input:checked+label
   color: color_green
 
+body div.rules.bluebg
+  padding: 20px 0 0 0;
+  height: 375px;
+  bluebg()
+
+body div.rules div.rule 
+  display none
+
+body div.rules div.rule.active
+  display: block
+
+body div.rules div.rule.active img
+  width 320px
+
+body div.rules.bluebg ul.page-indicator 
+  margin: 0 20px
+  list-style-type none
+  width 280px
+  text-align center
+  padding 0
+
+body div.rules.bluebg ul.page-indicator li
+  display inline
+
+body div.rules.bluebg ul.page-indicator li input[type="button"]
+  width: 15px
+  height: 15px
+  border-radius 7px
+  background-color white
+  border: none
+  color: transparent
+  margin: 2px
+
+body div.rules.bluebg ul.page-indicator li input[type="button"].active
+  background-color color_darkblue
+
 a.button
   -webkit-border-radius: 5px
   -moz-border-radius: 5px

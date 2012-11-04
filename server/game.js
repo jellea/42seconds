@@ -26,10 +26,10 @@ function createGamecode() {
 
 Meteor.methods({
 
-	create_team: function () {
+    create_team: function () {
         return Teams.insert({'name':'Team','score':0});
-	},
-	
+    },
+    
     newgame:function () {
         return 'newgame';
     },
@@ -39,33 +39,33 @@ Meteor.methods({
     },
     
     rules:function () {
-    	return 'rules';
+        return 'rules';
     },
 
     start_new_game:function (team_id, rounds, category, difficulty) {
-    	var clock;
+        var clock;
         if(typeof rounds=='undefined') {
-    		rounds = defaultRounds;
-    	}
-    	if(typeof category=='undefined') {
-    		category = defaultCategory;
-    	}
-    	if(typeof difficulty=='undefined') {
-    		difficulty = defaultDifficulty;
-    	}
-    	if(typeof clock=='undefined') {
-        	clock = defaultClock;
+            rounds = defaultRounds;
+        }
+        if(typeof category=='undefined') {
+            category = defaultCategory;
+        }
+        if(typeof difficulty=='undefined') {
+            difficulty = defaultDifficulty;
+        }
+        if(typeof clock=='undefined') {
+            clock = defaultClock;
         }
 
         var gamecode = createGamecode();
-		
+        
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':0,});
-
+        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':1, 'scoreConfirmed':false});
+        
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-		Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});
+        Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});
         
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
@@ -117,21 +117,50 @@ Meteor.methods({
                 Games.update({gamecode:gamecode}, {$set:{clock:0}});
                 // stop the clock
                 Meteor.clearInterval(interval);
-                // declare zero or more winners
-				var game = Games.findOne({'gamecode':gamecode});
-				var teams = game.teams;
-				var highest = 0;
-				var winner = 'tie';
-				for(i=0;i<teams.length;i++) {
-					if(teams[i].score>highest) {
-						winner = teams[i].name;
-					} else if(teams[i].score==highest) {
-						winner = 'tie';
-					}
-				}
-				Games.update({'gamecode':gamecode},{$set: {'winner':winner}});
+		        var game = Games.findOne({'gamecode':gamecode});
+                var score = 0;
+		        for(i=0;i<game.answers;i++) {
+		        	if(answers[i].checkedOff) {
+		        		score = (score*1)+1;
+		        	}
+		        }
+		        if(game.handicap>=score) {
+		        	score = 0;
+		        }
+		        team = game.team;
+                var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+                for(i=0;i<teams.length;i++) {
+                    if(teams[i]._id!=team._id) {
+                        // set the other team as current team for the new game
+                        Games.update({gamecode:gamecode}, {$set:{'team':team}});
+                    } else {
+                    	// update the team object with the new score
+                        newScore = (team.score*1)+score;
+                    	Teams.update({'_id':team._id},{$set:{'score':newScore}});
+                    }
+                }
+                if(game.round>=game.rounds) {
+                	// game ENDS!
+                    // declare zero or more winners
+                    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+                    var highest = 0;
+                    var winner = 'tie';
+                    for(i=0;i<teams.length;i++) {
+                        if(teams[i].score>highest) {
+                            winner = teams[i].name;
+                        } else if(teams[i].score==highest) {
+                            winner = 'tie';
+                        }
+                    }
+                    Games.update({'gamecode':gamecode},{$set: {'winner':winner}});
+                }
             }
         }, 1000);
+    },
+    
+    scoreboard: function(gamecode) {
+        // reset scoreConfirmed, winner & handicap
+        Games.update({'gamecode':gamecode},{$set:{'winner':null,'handicap':null,'scoreConfirmed':false}});
     }
 });
 
