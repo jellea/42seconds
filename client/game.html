@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    {{> gameDice}}
+    {{> lobby}}
 </body>
 
 <template name="lobby">
@@ -128,7 +128,7 @@
         <div id="dices">
             <div class="diceface zero"><span class="dot">0</span></div>
             <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
-            <div class="dice two" style="display:none;">  <span class="dot">2</span></div>
+            <div class="diceface two" style="display:none;">  <span class="dot">2</span></div>
         </div>
         {{#if diceThrow}}
         Dice: {{diceThrow.throw}}

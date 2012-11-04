@@ -28,8 +28,8 @@ Template.gameDice.events({
         var handicap = 0;
         for(var i = 0; i < max_animations; i++) {
             Meteor.setTimeout(function() {
-                $('#dices div:visible').hide();
                 handicap = (handicap + Math.floor(Math.random() * (number_of_dices - 1)) + 1) % number_of_dices;
+                $('#dices div:visible').hide();
                 $($('#dices').children().get(handicap)).show();
                 lastindex--;
                 if(lastindex == 0) {
