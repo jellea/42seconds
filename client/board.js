@@ -57,6 +57,18 @@ Template.gameDice.roundnumber = function () {
 
 //Session.set('currentanswers', answers.find({},{limit:5}).fetch());
 
+Template.scoreboard.scores = function() {
+    var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
+    return scores;
+}
+
+Template.scoreboard.winner = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.winner;
+    }
+}
+
 Template.gameActiveteam.roundnumber = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
@@ -82,15 +94,15 @@ Template.gameActiveteam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameScorecheckWait);
+            $("body").html(Meteor.render(Template.gameScorecheckWait));
         }
     }
 }
 
 Template.gameActiveteam.score = function () {
-    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        return game.score;
+    var team = Teams.findOne(Session.get('team_id'));
+    if(team) {
+        return team.score;
     }
 }
 
@@ -146,15 +158,15 @@ Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
-            $("body").html(Template.gameScorecheck);
+            $("body").html(Meteor.render(Template.gameScorecheck));
         }
     }
 }
 
 Template.gameOpponent.score = function () {
-    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
-    if(game) {
-        return game.score;
+    var team = Teams.findOne(Session.get('team_id'));
+    if(team) {
+        return team.score;
     }
 }
 
@@ -259,6 +271,64 @@ Template.showcode.ready = function () {
         }
     }
 }
+
+
+Template.gameScorecheckWait.wait = function () {
+    Meteor.subscribe()
+    var game = Games.find({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        if(game.scoreConfirmed === true) {
+            $("body").html(Meteor.render(Template.gameResults));
+        } else {
+            console.log("Waiting for score confirmation.");
+            return false;
+        }
+    }
+};
+
+Template.gameScorecheck.answers = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.answers;
+    }
+}
+
+Template.gameScorecheck.events({
+    'click input.nextround': function () {
+        console.log("Scores confirmed");
+        var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var answers = new Array();
+        for(var i=0; i<game.answers.length; i++) {
+            if(game.answers[i].checkedOff) {
+                answers.push(game.answers[i]);
+            }
+        }
+        Teams.update({'team_id': Session.get('team_id')}, {'$set': {'score' : answers.length}});
+        Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
+        $("body").html(Meteor.render(Template.gameResults));
+    },
+    'click input.checkbox': function () {
+        console.log("Input ok click");
+        var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var answers = game.answers;
+        for(i=0;i<answers.length;i++) {
+            if(answers[i].answer === this.answer && answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+            if(answers[i].answer == this.answer) {
+                answers[i].checkedOff = true;
+                continue;
+            }
+            if(!answers[i].answer == this.answer && !answers[i].checkedOff) {
+                answers[i].checkedOff = false;
+                continue;
+            }
+        }
+        Games.update({'gamecode':Session.get('gamecode')},{$set:{'answers':answers}});
+
+    }
+})
 
 Meteor.startup(function () {
     // Allocate a new team id.
