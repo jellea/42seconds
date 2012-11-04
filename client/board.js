@@ -175,6 +175,10 @@ Template.lobby.events({
     },
     'click input#joingame':function () {
         $("body").html(Meteor.render(Template.join));
+    },
+    'click a#ruleslink':function () {
+        $("body").html(Meteor.render(Template.rules));  
+        return false;
     }
 });
 
