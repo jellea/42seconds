@@ -1,7 +1,8 @@
 42seconds
 =========
 
-Build during Startup Weekend Groningen 2012 with a team of 7(!) developers.
+Build during [Startup Weekend Groningen
+2012](http://groningen.startupweekend.org/) with a team of 7(!) developers.
 Meteor-based mobile web app based on the popular [30 Seconds
 game](http://en.wikipedia.org/wiki/30_Seconds_%28game%29).
 
