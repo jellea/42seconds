@@ -29,6 +29,7 @@ The score of the team is the number of correctly guessed words minus handicap. I
 The team who achieved to most points after playing all rounds wins!
 
 # Screenshots
+![Screenshot](http://jellea.github.com/42seconds/images/scrn2.png)
 ![Screenshot](http://jellea.github.com/42seconds/images/scrn4.png)
 ![Screenshot](http://jellea.github.com/42seconds/images/scrn5.png)
 ![Screenshot](http://jellea.github.com/42seconds/images/scrn8.png)
