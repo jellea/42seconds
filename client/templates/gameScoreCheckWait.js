@@ -19,6 +19,7 @@ Template.gameScoreCheckWait.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
         if (game.scoreConfirmed) {
+            Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.gameResults));
         }
     }

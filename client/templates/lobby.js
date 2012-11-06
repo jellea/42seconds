@@ -22,6 +22,7 @@ Template.lobby.events({
      */
     'click input#newgame':function () {
         Meteor.call('newgame', function (error, result) {
+            Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.newGame));
         });
     },
@@ -30,6 +31,7 @@ Template.lobby.events({
      * Event: Click on 'join game'
      */
     'click input#joingame':function () {
+        Spark.finalize($("body")[0]);
         $("body").html(Meteor.render(Template.join));
     },
 
@@ -37,6 +39,7 @@ Template.lobby.events({
      * Event: Click on the link to the rules
      */
     'click #ruleslink':function () {
+        Spark.finalize($("body")[0]);
         $("body").html(Meteor.render(Template.rules));
         return false;
     }

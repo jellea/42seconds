@@ -53,6 +53,7 @@ Template.gameActiveTeam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
         if(game.clock === 0) {
+            Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.gameScoreCheckWait));
         }
     }

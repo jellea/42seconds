@@ -28,6 +28,7 @@ Template.join.events({
                 return;
             }
             Template.joined.team = game.teams.length;
+            Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.joined));
         });
     },
@@ -35,6 +36,7 @@ Template.join.events({
      * Event: Click on the 'back' button.
      */
     'click img.backbutton':function () {
+        Spark.finalize($("body")[0]);
         var fragment = Meteor.render(Template.lobby);
         $("body").html(fragment);
     }

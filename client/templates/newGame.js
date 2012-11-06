@@ -26,6 +26,7 @@ Template.newGame.events({
             Session.set('teamNumber',game.teams.length);
             Session.set('gamecode', game.gamecode);
             Template.showCode.gamecode = game.gamecode;
+            Spark.finalize($("body")[0]);
             var fragment = Meteor.render(Template.showCode);
             $("body").html(fragment);
         });
@@ -36,6 +37,7 @@ Template.newGame.events({
      */
     'click input#advancedSettings':function () {
         Meteor.call('advancedSettings', function (error, gamecode) {
+            Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.advancedSettings));
         });
     },
@@ -44,6 +46,7 @@ Template.newGame.events({
      * Event: Click on the back button.
      */
     'click img.backbutton' : function () {
+        Spark.finalize($("body")[0]);
         var fragment = Meteor.render(Template.lobby);
         $("body").html(fragment);
     }

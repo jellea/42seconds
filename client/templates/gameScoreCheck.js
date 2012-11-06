@@ -45,6 +45,7 @@ Template.gameScoreCheck.events({
         var score = (answers.length - handicap) < 0 ? 0 : answers.length - handicap;
         Teams.update(Session.get('team_id'), {'$set': {'score' : score}});
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
+        Spark.finalize($("body")[0]);
         $("body").html(Meteor.render(Template.gameResults));
     },
     /**

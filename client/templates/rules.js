@@ -19,6 +19,7 @@ Template.rules.events = ({
      * Event: Click on the 'I get the rules' button
      */
     'click input#closeRules': function () {
+        Spark.finalize($("body")[0]);
         $("body").html(Meteor.render(Template.lobby));
     },
     /**

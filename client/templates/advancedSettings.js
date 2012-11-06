@@ -32,6 +32,7 @@ Template.advancedSettings.events({
             Template.showCode.gamecode = game.gamecode;
             Template.showCode.team = game.teams.length;
             Session.set('teamNumber',game.teams.length);
+            Spark.finalize($("body")[0]);
             var fragment = Meteor.render(Template.showCode);
             $("body").html(fragment);
         });
