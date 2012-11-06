@@ -16,8 +16,7 @@ Template.joined.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if (game) {
         if (game.teams.length >= 2) {
-            Spark.finalize($("body")[0]);
-            $("body").html(Meteor.render(Template.gameOpponent));
+            render("gameOpponent", "body");
         }
     }
 }

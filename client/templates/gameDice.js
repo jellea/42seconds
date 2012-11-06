@@ -27,8 +27,7 @@ var set_handicap = function(handicap) {
         Games.update({'gamecode' : Session.get('gamecode')}, {'$set':{'handicap':handicap}});
     }
     Meteor.setTimeout(function() {
-        Spark.finalize($("body")[0]);
-        $("body").html(Meteor.render(Template.gameActiveTeam));
+        render("gameActiveTeam", "body");
         Meteor.call('startClock', Session.get('gamecode'), function () {
             console.log("Game started!");
         });

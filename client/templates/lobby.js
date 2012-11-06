@@ -20,8 +20,7 @@ Template.lobby.events({
      */
     'click input#newgame':function () {
         Meteor.call('newGame', function (error, result) {
-            Spark.finalize($("body")[0]);
-            $("body").html(Meteor.render(Template.newGame));
+            render("newGame", "body");
         });
     },
 
@@ -29,16 +28,14 @@ Template.lobby.events({
      * Event: Click on 'join game'
      */
     'click input#joingame':function () {
-        Spark.finalize($("body")[0]);
-        $("body").html(Meteor.render(Template.join));
+        render("join", "body");
     },
 
     /**
      * Event: Click on the link to the rules
      */
     'click #ruleslink':function () {
-        Spark.finalize($("body")[0]);
-        $("body").html(Meteor.render(Template.rules));
+        render("rules", "body");
         return false;
     }
 });

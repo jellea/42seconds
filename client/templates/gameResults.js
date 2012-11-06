@@ -41,11 +41,9 @@ Template.gameResults.events({
         console.log("Starting new round");
         var game = Games.findOne({'gamecode': Session.get('gamecode')});
         if(game.team._id === Session.get('team_id')) {
-            Spark.finalize($("body")[0]);
-            $("body").html(Meteor.render(Template.gameDice));
+            render("gameDice", "body");
         } else {
-            Spark.finalize($("body")[0]);
-            $("body").html(Meteor.render(Template.gameOpponent));
+            render("gameOpponent", "body");
         }
     }
 });

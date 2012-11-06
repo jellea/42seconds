@@ -17,8 +17,7 @@ Template.showCode.ready = function () {
     var game = Games.findOne({'gamecode':Session.get('gamecode')});
     if (game) {
         if (game.teams.length >= 2) {
-            Spark.finalize($("body")[0]);
-            $("body").html(Meteor.render(Template.gameDice));
+            render("gameDice", "body");
         }
     }
 }
@@ -31,8 +30,6 @@ Template.showCode.events({
      * Event: Click on the 'back' button.z
      */
     'click img.backbutton' : function () {
-        Spark.finalize($("body")[0]);
-        var fragment = Meteor.render(Template.lobby);
-        $("body").html(fragment);
+        render("lobby", "body");
     }
 });
