@@ -2,9 +2,7 @@
  * @author Ruben Homs <rubenhoms@gmail.com>
  * @since 11/6/12
  * @version 0.1
- */
-
-/**
+ *
  * This file is here to put the event handlers, helpers and methods in
  * which belong to the scoreboard template.
  *

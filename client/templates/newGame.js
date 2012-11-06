@@ -2,9 +2,7 @@
  * @author Ruben Homs <rubenhoms@gmail.com>
  * @since 11/6/12
  * @version 0.1
- */
-
-/**
+ *
  * This file is here to put the event handlers, helpers and methods in
  * which belong to the newGame template.
  *
@@ -21,7 +19,7 @@ Template.newGame.events({
      * Event: Click on the 'Quick Match' button.
      */
     'click input#startgame':function () {
-        Meteor.call('start_new_game', Session.get('team_id'), function (error, game) {
+        Meteor.call('startNewGame', Session.get('team_id'), function (error, game) {
             Template.showCode.team = game.teams.length;
             Session.set('teamNumber',game.teams.length);
             Session.set('gamecode', game.gamecode);

@@ -45,3 +45,22 @@ The team who achieved to most points after playing all rounds wins!
 * [Ruben Homs](https://github.com/RubenHoms) - Developer
 * [Peter Jaap Blaakmeer](https://github.com/peterjaap) - Developer
 * [Jelle Akkerman](https://github.com/jellea) - Developer
+
+# Map structure
+The map is structured as follows and new additions or changes should be done according to the following format:
+.meteor/
+answers/
+client/
+    templates/
+        nameOfTemplate.js
+        nameOfOtherTemplate.js
+public/
+    images/
+scraper/
+    fortytwoseconds/
+        spiders/
+server/
+
+# Code guidelines
+- 4 spaces indentation
+- [IdiomaticJS code guidelines](https://github.com/rwldrn/idiomatic.js#readme)

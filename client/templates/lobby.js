@@ -2,9 +2,7 @@
  * @author Ruben Homs <rubenhoms@gmail.com>
  * @since 11/6/12
  * @version 0.1
- */
-
-/**
+ *
  * This file is here to put the event handlers, helpers and methods in
  * which belong to the lobby template.
  *
@@ -21,7 +19,7 @@ Template.lobby.events({
      * Event: Click on 'new game'
      */
     'click input#newgame':function () {
-        Meteor.call('newgame', function (error, result) {
+        Meteor.call('newGame', function (error, result) {
             Spark.finalize($("body")[0]);
             $("body").html(Meteor.render(Template.newGame));
         });

@@ -2,9 +2,7 @@
  * @author Ruben Homs <rubenhoms@gmail.com>
  * @since 11/6/12
  * @version 0.1
- */
-
-/**
+ *
  * This file is here to put the event handlers, helpers and methods in
  * which belong to the advancedSettings template.
  *
@@ -25,7 +23,7 @@ Template.advancedSettings.events({
         var difficulty = $('input[name="difficulty"]:checked').val();
 
         // Start a new game
-        Meteor.call('start_new_game', Session.get('team_id'), rounds, category, difficulty, function (error, game) {
+        Meteor.call('startNewGame', Session.get('team_id'), rounds, category, difficulty, function (error, game) {
             Template.showCode.rounds = rounds;
             Template.showCode.category = category;
             Template.showCode.difficulty = difficulty;

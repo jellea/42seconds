@@ -1,70 +1,42 @@
-////////// Server only logic //////////
+/**
+ * @author Ruben Homs <rubenhoms@gmail.com>
+ * @since 11/6/12
+ * @version 0.1
+ *
+ * The main server side methods and logic.
+ */
 
-var defaultAnswers = 5;
-var defaultRounds = 5;
-var defaultCategory = 'all';
-var defaultDifficulty = 'medium';
-var defaultClock = 42;
-var defaultNumberOfAnswers = 5;
-
-function createGamecode() {
-    var gamecode = '';
-    var random;
-    for (i = 0; i < 3; i++) {
-        if (i == 0) {
-            // don't allow 0 as first digit
-            random = Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-        } else {
-            random = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-        }
-        gamecode += '' + random;
-    }
-    var found = Games.findOne({'gamecode':gamecode});
-    if (found) {
-        return createGamecode();
-    }
-    return gamecode;
-}
-
-function loadAnswers(gamecode) {
-    var answers = new Array();
-    var checkDuplicates = new Array();
-    var fs = __meteor_bootstrap__.require('fs');
-    var data = fs.readFileSync('answers/answers.txt');
-    data = data.toString().split("\n");
-
-    for(var i=0;i<defaultNumberOfAnswers;i++) {
-        random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
-        var word = data[random];
-        if(checkDuplicates.indexOf(word)==-1) {
-            checkDuplicates.push(word);
-            answers.push({"answer":word});
-        } else {
-            i=i-1;
-        }
-    }
-    Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
-}
-
+/**
+ * Meteor methods the client can call as follows:
+ * Meteor.call('nameOfFunction', arg1, arg2, etc.., callback)
+ */
 Meteor.methods({
 
-    create_team: function () {
+    /**
+     * Create a team
+     * @return {String} _id of the team which the user stores in the session variable 'team_id'
+     */
+    createTeam: function () {
         return Teams.insert({'name':'Team','score':0});
     },
-    
-    newgame:function () {
-        return 'newgame';
+
+    /**
+     * Returns the string 'newGame' to let the client know what game type to pick (quick match)
+     * @return {String}
+     */
+    newGame:function () {
+        return 'newGame';
     },
 
     advancedSettings:function () {
         return 'advancedSettings';
     },
-    
+
     rules:function () {
         return 'rules';
     },
 
-    start_new_game:function (team_id, rounds, category, difficulty) {
+    startNewGame:function (team_id, rounds, category, difficulty) {
         var clock;
         if(typeof rounds=='undefined') {
             rounds = defaultRounds;
@@ -80,7 +52,7 @@ Meteor.methods({
         }
 
         var gamecode = createGamecode();
-        
+
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
         Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':1, 'scoreConfirmed':false});
@@ -88,24 +60,24 @@ Meteor.methods({
         // Save a record of who is in the game, so when they leave we can
         // still show them.
         Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});
-        
+
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
-		
-		loadAnswers(gamecode);
-		
+
+        loadAnswers(gamecode);
+
         Games.update({'gamecode':gamecode}, {$set:{'teams':p}});
 
         return Games.findOne({'gamecode':gamecode});
-    }, 
-    
-    keepalive: function (team_id) {
+    },
+
+    keepAlive: function (team_id) {
         Teams.update({_id:team_id},
             {$set:{last_keepalive:(new Date()).getTime(),
                 idle:false}});
     },
 
-    joined_game:function (gamecode,team_id) {
+    joinedGame:function (gamecode,team_id) {
         var game = Games.findOne({'gamecode':gamecode});
         var teamNumber = (game.teams.length*1)+1;
         Teams.update({_id:team_id},
@@ -133,25 +105,25 @@ Meteor.methods({
             if((clock % 5)==0) {
                 // check every 5 seconds for an idle player
                 var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
-		        for(i=0;i<teams.length;i++) {
-		            if(teams[i].idle) {
-		            	if(i==0) {
-		            		winner = teams[1];
-		            	} else if(i==1) {
-		            	    winner = teams[0];
-		            	}
-		                // Team IDLE! == forfeit
-		                Games.update({'gamecode':gamecode},{$set:{'forfeited':true,'winner':winner}});
-		            }
-		        }
+                for(i=0;i<teams.length;i++) {
+                    if(teams[i].idle) {
+                        if(i==0) {
+                            winner = teams[1];
+                        } else if(i==1) {
+                            winner = teams[0];
+                        }
+                        // Team IDLE! == forfeit
+                        Games.update({'gamecode':gamecode},{$set:{'forfeited':true,'winner':winner}});
+                    }
+                }
             }
             // end of game
             if (clock === 0) {
                 Games.update({gamecode:gamecode}, {$set:{clock:0}});
                 // stop the clock
                 Meteor.clearInterval(interval);
-		        var game = Games.findOne({'gamecode':gamecode});
-		        team = game.team;
+                var game = Games.findOne({'gamecode':gamecode});
+                team = game.team;
                 var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
                 for(i=0;i<teams.length;i++) {
                     if(teams[i]._id!=team._id) {
@@ -161,7 +133,7 @@ Meteor.methods({
                 }
                 //loadAnswers(gamecode);
                 if(game.round>=game.rounds) {
-                	// game ENDS!
+                    // game ENDS!
                     // declare zero or more winners
                     var teams = Teams.find({'gamecode':gamecode},{fields:{_id:true, name:true, score:true}}).fetch();
                     var highest = 0;
@@ -178,22 +150,9 @@ Meteor.methods({
             }
         }, 1000);
     },
-    
+
     scoreboard: function(gamecode) {
         // reset scoreConfirmed, winner & handicap
         Games.update({'gamecode':gamecode},{$set:{'winner':null,'handicap':null,'scoreConfirmed':false}});
     }
 });
-
-Meteor.setInterval(function () {
-    var now = (new Date()).getTime();
-    var idle_threshold = now - 70 * 1000; // 70 sec
-    var remove_threshold = now - 60 * 60 * 1000; // 1hr
-
-    Teams.update({$lt:{last_keepalive:idle_threshold}},
-        {$set:{idle:true}});
-
-    // XXX need to deal with people coming back!
-    // Teams.remove({$lt: {last_keepalive: remove_threshold}});
-
-}, 30 * 1000);

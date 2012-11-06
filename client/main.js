@@ -2,9 +2,7 @@
  * @author Ruben Homs <rubenhoms@gmail.com>
  * @since 06-11-2012
  * @version 0.1
- */
-
-/**
+ *
  * This file contains the startup methods and routines which Meteor has to go through
  * in order to startup good.
  *
@@ -12,13 +10,12 @@
  * Events and other template specific methods should be placed in their respective file.
  */
 Meteor.startup(function () {
-
     /*
      * Allocate a new team id. This will be the id which determines the score and respective their turn.
      * @param {String} error    The error if it is set.
      * @param {String} team_id  The _id of the team object just created.
      */
-    Meteor.call('create_team', function(error, team_id) {
+    Meteor.call('createTeam', function(error, team_id) {
         Session.set('team_id', team_id);
     });
 
@@ -27,6 +24,6 @@ Meteor.startup(function () {
      */
     Meteor.setInterval(function () {
         if (Meteor.status().connected)
-            Meteor.call('keepalive', Session.get('team_id'));
+            Meteor.call('keepAlive', Session.get('team_id'));
     }, 20 * 1000); // KeepAlive Every 20 seconds
 });
