@@ -21,7 +21,9 @@
  *      round:      1                   // The current round (int)
  *      scoreConfirmed: false           // Is the score already confirmed by the other party? (bool)
  *      handicap:   0                   // The handicap for the current round (int)
- *      answers:    [object, object]    // The answers for this current game and round (array)
+ *      answers:    [object->
+ *                  {answer: 'string'},
+ *                  object]             // The answers for this current game and round (array)
  * }
  * @type {Meteor.Collection}
  */
@@ -39,15 +41,6 @@ Games = new Meteor.Collection('games');
  * @type {Meteor.Collection}
  */
 Teams = new Meteor.Collection('teams');
-
-
-/**
- * {
- *      answer: Bill Gates      // The answer to guess (string)
- * }
- * @type {Meteor.Collection}
- */
-Answers = new Meteor.Collection('answers');
 
 
 /**
