@@ -209,9 +209,9 @@
             
             {{#each answers}}
             {{#if this.checkedOff}}
-            <li><input type="checkbox" class="checkbox" style="text-decoration:line-through" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
             {{else}}
-            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
+            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}">{{this.answer}}</li>
             {{/if}}
             {{/each}}
             
@@ -249,7 +249,7 @@
         <div class="score">Score {{score}}</div>
         <ul class="answers text_shadow_black_big">
             {{#each checkedOff}}
-            <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}" checked="checked"> <label for="answer-{{id}}">{{this.answer}}</label></li>
+            <li id="answer-{{id}}" class="inactive"><input type="checkbox" name="{{id}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
             {{/each}}
         </ul>
         {{#constant}}
@@ -286,9 +286,9 @@
 
                 {{#each answers}}
                 {{#if this.checkedOff}}
-                <li><input type="checkbox" style="text-decoration:line-through" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"> {{this.answer}}</li>
+                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
                 {{else}}
-                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"> {{this.answer}}</li>
+                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"><label for="answer-{{id}}">{{this.answer}}</label></li>
                 {{/if}}
                 {{/each}}
 

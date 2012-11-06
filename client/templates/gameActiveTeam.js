@@ -71,7 +71,6 @@ Template.gameActiveTeam.score = function () {
  * Event handlers for the gameActiveTeam template.
  */
 Template.gameActiveTeam.events({
-
     /**
      * Event: Click on the answer to check or uncheck it.
      */
