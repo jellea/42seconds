@@ -48,17 +48,29 @@ The team who achieved to most points after playing all rounds wins!
 
 # Map structure
 The map is structured as follows and new additions or changes should be done according to the following format:
+
 .meteor/
+
 answers/
+
 client/
+
     templates/
+
         nameOfTemplate.js
+
         nameOfOtherTemplate.js
+
 public/
+
     images/
+
 scraper/
+
     fortytwoseconds/
+
         spiders/
+
 server/
 
 # Code guidelines
