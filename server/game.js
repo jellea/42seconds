@@ -56,8 +56,8 @@ Meteor.methods({
         return 'newgame';
     },
 
-    advancedsettings:function () {
-        return 'advancedsettings';
+    advancedSettings:function () {
+        return 'advancedSettings';
     },
     
     rules:function () {
