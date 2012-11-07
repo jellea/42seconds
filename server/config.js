@@ -7,7 +7,8 @@
  * globals regarding standard round settings, standard categories and so forth and so on.
  */
 
-if(location.href.indexOf('dev')>0) {
+var dev = false;
+if(dev) {
 	var defaultClock = 10; 
 	
 	var defaultRounds = 5;
