@@ -32,5 +32,8 @@ Template.rules.events = ({
             $('div.rule').eq(0).addClass('active');
             $('ul.page-indicator input').eq(0).addClass('active');
         }
+    },
+    'click img.backbutton':function () {
+        render("lobby", "body");
     }
 });
