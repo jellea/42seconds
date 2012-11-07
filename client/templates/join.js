@@ -19,14 +19,21 @@ Template.join.events({
      */
     'click input#joingame':function () {
         var gamecode = $("#gamecode").val();
-        Session.set('gamecode',gamecode);
-        Meteor.call('joinedGame', gamecode, Session.get('team_id'), function (error, game) {
-            if (error) {
-                console.log(error);
-                return;
-            }
-            render("gameOpponent", "body"); 
-        });
+        var game = Games.findOne({'gamecode':gamecode});
+        if(game == undefined) {
+        	alert('There is no game with this gamecode!');
+        	$('#gamecode').val('');
+        	$('#gamecode').focus();
+        } else {
+	        Session.set('gamecode',gamecode);
+	        Meteor.call('joinedGame', gamecode, Session.get('team_id'), function (error, game) {
+	            if (error) {
+	                console.log(error);
+	                return;
+	            }
+	            render("gameOpponent", "body"); 
+	        });
+        }
     },
     'keyup input#gamecode': function () {
     	$('#gamecode').val($('#gamecode').val().replace(/[^0-9]/g, ''));
