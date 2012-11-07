@@ -159,15 +159,6 @@
     </div>
 </template>
 
-<template name="joined">
-    <div id="wrapper">
-        <h3>Joined game</h3>
-        <p>You're in {{ team }}</p>
-        <p>Wait for team 1 to start the game.</p>
-    </div>
-    {{ ready }}
-</template>
-
 <template name="showCode">
     <div id="wrapper">
         <header>
@@ -252,11 +243,14 @@
         <div class="game bluebg">
         <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
         <div class="score">Score {{score}}</div>
+        {{#constant}}
+        <p class="waiting_dice">Waiting for other team to roll the dice.</p>
+        {{/constant}}
         <ul class="answers text_shadow_black_big">
             {{#each checkedOff}}
             <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox" name="{{id}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
             {{/each}}
-        </ul>
+        </ul> 
         {{#constant}}
         <div class="clock"></div>
         <div class="countdown">

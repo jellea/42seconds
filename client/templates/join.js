@@ -25,9 +25,11 @@ Template.join.events({
                 console.log(error);
                 return;
             }
-            Template.joined.team = game.teams.length;
-            render("joined", "body");
+            render("gameOpponent", "body"); 
         });
+    },
+    'keyup input#gamecode': function () {
+    	$('#gamecode').val($('#gamecode').val().replace(/[^0-9]/g, ''));
     },
     /**
      * Event: Click on the 'back' button.
