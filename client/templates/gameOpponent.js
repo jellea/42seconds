@@ -17,6 +17,9 @@
 Template.gameOpponent.checkedOff = function() {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     var answers = new Array();
+    if(!game.answers || !game || !game.answers.length) {
+        return 0;
+    }
     for(var i=0; i<game.answers.length; i++) {
         if(game.answers[i].checkedOff) {
             answers.push(game.answers[i]);

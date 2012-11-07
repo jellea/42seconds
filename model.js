@@ -21,6 +21,7 @@
  *      round:      1                   // The current round (int)
  *      scoreConfirmed: false           // Is the score already confirmed by the other party? (bool)
  *      handicap:   0                   // The handicap for the current round (int)
+ *      nextRound: false                // Whether the next round already started.
  *      answers:    [object->
  *                  {answer: 'string'},
  *                  object]             // The answers for this current game and round (array)

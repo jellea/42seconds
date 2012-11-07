@@ -29,6 +29,21 @@ Template.gameResults.answers = function () {
     }
 };
 
+Template.gameResults.ready = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game.nextRound) {
+        console.log("New round started!");
+        // Render the game opponent template
+        if(game.team._id === Session.get('team_id')) {
+            Games.update({'gamecode': Session.get('gamecode')}, {'$set':{'nextRound':false}});
+            render("gameDice", "body");
+        } else {
+            Games.update({'gamecode': Session.get('gamecode')}, {'$set':{'nextRound':false}});
+            render("gameOpponent", "body");
+        }
+    }
+};
+
 /**
  * Events for the gameResults template
  */
@@ -38,12 +53,41 @@ Template.gameResults.events({
      * This will start a new round.
      */
     'click .scoreok': function () {
-        console.log("Starting new round");
         var game = Games.findOne({'gamecode': Session.get('gamecode')});
+        // Check if we're not in conflicted state
+        if(game.nextRound) {
+            return;
+        }
+
+        if(game.round === game.rounds) {
+            // The game is over.
+            var game = Games.findOne({'gamecode':Session.get('gamecode')});
+            var teamOne = game.teams[0];
+            var teamTwo = game.teams[1];
+            var winner;
+            if(teamOne.score > teamTwo.score) {
+                winner = teamOne;
+            }
+            if(teamOne.score === teamTwo.score) {
+                winner = 'tie';
+            }
+            if(teamTwo.score > teamOne.score) {
+                winner = teamTwo;
+            }
+            Games.update({'gamecode': Session.get('gamecode')}, {'$set':{'winner':winner}});
+            render("scoreboard", "body");
+            return;
+        }
+
+        console.log("Starting new round");
         if(game.team._id === Session.get('team_id')) {
-            render("gameDice", "body");
+            Meteor.call('newRound', Session.get('gamecode'), function () {
+                render("gameOpponent", "body");
+            });
         } else {
-            render("gameOpponent", "body");
+            Meteor.call('newRound', Session.get('gamecode'), function () {
+                render("gameDice", "body");
+            });
         }
     }
 });

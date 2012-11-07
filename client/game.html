@@ -204,7 +204,7 @@
         </header>
         <div class="game bluebg">
         <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
-        <div class="score text_shadow_black_small">Score -{{handicap}}</div>
+        <div class="score text_shadow_black_small">Score {{score}}</div>
         <ul class="answers text_shadow_black_big">
             
             {{#each answers}}
@@ -323,10 +323,17 @@
         </div>
         <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>
+    {{ready}}
 </template>
 
 <template name="scoreboard">
-    {{#each teams}}
-		{{name}}: {{score}}
-    {{/each}}
+    <div id="wrapper">
+        <header>
+            <img src="/images/back-button.png">
+            <img src="/images/logo-small.png">
+        </header>
+        <div class="game-results bluebg">
+            <h3>Scoreboard</h3>
+        </div>
+    </div>
 </template>

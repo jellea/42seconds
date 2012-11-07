@@ -22,20 +22,36 @@ Meteor.methods({
 
     /**
      * Returns the string 'newGame' to let the client know what game type to pick (quick match)
-     * @return {String}
+     * @return {String} newGame
      */
     newGame:function () {
         return 'newGame';
     },
 
+    /**
+     * Retunrs the string 'advancedSettings' to let the client know what game type to pick (advanced settings)
+     * @return {String} advancedSettings
+     */
     advancedSettings:function () {
         return 'advancedSettings';
     },
 
+    /**
+     * Returns the string 'rules' to let the client know what page to load (rules)
+     * @return {String} rules
+     */
     rules:function () {
         return 'rules';
     },
 
+    /**
+     * Starts a new game, loads the answers, sets the clock and returns the game.
+     * @param team_id       The team which started the game
+     * @param rounds        Number of rounds
+     * @param category      The category to play
+     * @param difficulty    The difficulty to play on
+     * @return {Games}      The game that was just created.
+     */
     startNewGame:function (team_id, rounds, category, difficulty) {
         var clock;
         if(typeof rounds=='undefined') {
@@ -55,7 +71,7 @@ Meteor.methods({
 
         var team = Teams.findOne({_id:team_id});
         // create a new game with the current team in it
-        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':1, 'scoreConfirmed':false});
+        Games.insert({'team':team, 'clock':clock, 'rounds': rounds, 'category': category, 'difficulty': difficulty, 'gamecode':gamecode, 'round':1, 'scoreConfirmed':false, 'nextRound': false});
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
@@ -71,12 +87,22 @@ Meteor.methods({
         return Games.findOne({'gamecode':gamecode});
     },
 
+    /**
+     * Keeps alive a team
+     * @param {String} team_id   The team to keep alive.
+     */
     keepAlive: function (team_id) {
         Teams.update({_id:team_id},
             {$set:{last_keepalive:(new Date()).getTime(),
                 idle:false}});
     },
 
+    /**
+     * Joins a game
+     * @param {String} gamecode The game to join.
+     * @param {String} team_id  The team which wants to join
+     * @return {Game}           The game he just joined.
+     */
     joinedGame:function (gamecode,team_id) {
         var game = Games.findOne({'gamecode':gamecode});
         var teamNumber = (game.teams.length*1)+1;
@@ -91,6 +117,10 @@ Meteor.methods({
         return Games.findOne({'gamecode':gamecode});
     },
 
+    /**
+     * Starts the clock
+     * @param {String} gamecode  The game to start the clock on.
+     */
     startClock: function(gamecode) {
         // Set the clock to the default clock
         Games.update({gamecode:gamecode}, {$set:{clock:defaultClock}});
@@ -131,7 +161,7 @@ Meteor.methods({
                         Games.update({gamecode:gamecode}, {$set:{'team':team}});
                     }
                 }
-                //loadAnswers(gamecode);
+
                 if(game.round>=game.rounds) {
                     // game ENDS!
                     // declare zero or more winners
@@ -151,8 +181,40 @@ Meteor.methods({
         }, 1000);
     },
 
-    scoreboard: function(gamecode) {
+    /**
+     * Starts a new round.
+     * @param gamecode  The game to start a new round on
+     */
+    newRound: function(gamecode) {
         // reset scoreConfirmed, winner & handicap
-        Games.update({'gamecode':gamecode},{$set:{'winner':null,'handicap':null,'scoreConfirmed':false}});
+        var game = Games.findOne({'gamecode':gamecode});
+
+        if(game.nextRound) {
+            return "redirect";
+        }
+
+        // Set the new team to play
+        var newTeam;
+        if(game.team._id === game.teams[0]._id) {
+            newTeam = game.teams[1];
+        } else {
+            newTeam = game.teams[0];
+        }
+
+        Games.update({'gamecode':gamecode},
+            {$set:
+                {
+                    'winner':null,
+                    'handicap':null,
+                    'scoreConfirmed':false,
+                    'team': newTeam,
+                    'clock': defaultClock,
+                    'round' : game.round+1,
+                    'answers': null,
+                    'nextRound': true
+                }}
+        );
+
+        loadAnswers(gamecode);
     }
 });

@@ -33,6 +33,7 @@ Template.gameScoreCheck.events({
     'click input.nextround': function () {
         console.log("Scores confirmed");
         var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+        var team = Teams.findOne(game.team._id);
         var answers = new Array();
         for(var i=0; i<game.answers.length; i++) {
             if(game.answers[i].checkedOff) {
@@ -40,8 +41,9 @@ Template.gameScoreCheck.events({
             }
         }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
-        var score = (answers.length - handicap) < 0 ? 0 : answers.length - handicap;
-        Teams.update(Session.get('team_id'), {'$set': {'score' : score}});
+        var score = (answers.length - handicap) < 0 ? team.score : (answers.length - handicap) + team.score;
+        //TODO: Set it to the other team and not the own team
+        Teams.update(game.team._id, {'$set': {'score' : score}});
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
         render("gameResults", "body");
     },
