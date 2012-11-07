@@ -19,11 +19,11 @@ Meteor.startup(function () {
 	  var viewportWidth = window.innerWidth;
 	  if (viewportWidth > 320 && viewportWidth < 600) {
 	    // Zomg, landscape!!
-	    render("landscape", "body");
-	    $('body').addClass('landscape');
+	    $('#wrapper').hide();
+	    $('#wrapper.landscape').show();
+	    $('body').css('width','600');
 	  } else {
 	    // Portrait, all is good in the world of 42!
-	    $('body').removeClass('landscape');
 	  }
 	}
 	
@@ -33,12 +33,14 @@ Meteor.startup(function () {
 	  var viewportWidth = window.innerWidth;
 	  if (viewportWidth > 320 && viewportWidth < 600) {
 	    // Zomg, landscape!!
-	    render("landscape", "body");
-	    $('body').addClass('landscape');
+	    $('#wrapper').hide();
+	    $('#wrapper.landscape').show();
+	    $('body').css('width','600');
 	  } else {
 	    // Portrait, all is good in the world of 42!
-	    render("lobby", "body");
-	    $('body').removeClass('landscape');
+	    $('#wrapper').show();
+	    $('#wrapper.landscape').hide();
+	    $('body').css('width','320');
 	  }
 	}
     /*
