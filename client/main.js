@@ -40,7 +40,7 @@ Meteor.startup(function () {
 	function handleOrientation() {
 	  setTimeout(function() { window.scrollTo(0, 1); }, 10);
 	  //this is where our detection starts
-	  if(isMobile() {
+	  if(isMobile()) {
 		var viewportWidth = window.innerWidth;
 		if (viewportWidth > 320 && viewportWidth < 600) {
 		    // Zomg, landscape!!
