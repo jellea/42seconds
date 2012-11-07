@@ -11,5 +11,10 @@ var defaultAnswers = 5;
 var defaultRounds = 5;
 var defaultCategory = 'all';
 var defaultDifficulty = 'medium';
-var defaultClock = 42;
+var dev = false;
+if(dev) {
+	var defaultClock = 10; 
+} else {
+	var defaultClock = 42;
+}
 var defaultNumberOfAnswers = 5;

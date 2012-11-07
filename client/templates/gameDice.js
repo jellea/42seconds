@@ -34,24 +34,34 @@ var set_handicap = function(handicap) {
     }, 1500);
 };
 
+function throwDice() {
+    $('input#dice').attr('disabled', 'disabled');
+    var number_of_dices = $('#dices').children().length;
+    var max_animations = 50;
+    var lastindex = max_animations;
+    var handicap = 0;
+    for(var i = 0; i < max_animations; i++) {
+        Meteor.setTimeout(function() {
+            handicap = (handicap + Math.floor(Math.random() * (number_of_dices - 1)) + 1) % number_of_dices;
+            $('#dices div:visible').hide();
+            $($('#dices').children().get(handicap)).show();
+            lastindex--;
+            if(lastindex == 0) {
+                set_handicap(handicap);
+            }
+        }, i * 50);
+    }
+}
+
+Template.gameDice.rendered = function () {
+	$(this).gShake(function() {
+		throwDice();
+	}); 
+};
+
 Template.gameDice.events({
     'click input#dice':function () {
-        $('input#dice').attr('disabled', 'disabled');
-        var number_of_dices = $('#dices').children().length;
-        var max_animations = 50;
-        var lastindex = max_animations;
-        var handicap = 0;
-        for(var i = 0; i < max_animations; i++) {
-            Meteor.setTimeout(function() {
-                handicap = (handicap + Math.floor(Math.random() * (number_of_dices - 1)) + 1) % number_of_dices;
-                $('#dices div:visible').hide();
-                $($('#dices').children().get(handicap)).show();
-                lastindex--;
-                if(lastindex == 0) {
-                    set_handicap(handicap);
-                }
-            }, i * 50);
-        }
+		throwDice();
     }
 });
 
