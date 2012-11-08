@@ -56,6 +56,10 @@ Template.gameOpponent.handicap = function () {
 Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
+
+        if(!game.answers.length) {
+            return;
+        }
     	
     	if(game.handicap != null && $('p.waiting_dice')) {
     		$('p.waiting_dice').remove();
