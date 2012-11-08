@@ -68,13 +68,15 @@ Template.gameOpponent.ready = function () {
     	
 	    var answers = new Array();
 	    for(var i=0; i<game.answers.length; i++) {
-	        if(game.answers[i].checkedOff) {
+	        if(game.answers[i].checkedOff && !typeof game.answers[i].checkedOff === "undefined") {
 	            answers.push(game.answers[i]);
-	            
 	        }
 	    }
     	
         if(game.clock === 0 || answers.length === game.answers.length) {
+            render("gameScoreCheck", "body");
+        }
+        if(answers.length === game.answers.length) {
             render("gameScoreCheck", "body");
         }
         if(game.handicap != null && $('div.countdown.run').length==0) {

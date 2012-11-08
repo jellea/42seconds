@@ -60,7 +60,7 @@ Template.gameActiveTeam.ready = function () {
 	        return 0;
 	    }
 	    for(var i=0; i<game.answers.length; i++) {
-	        if(game.answers[i].checkedOff) {
+	        if(game.answers[i].checkedOff && !typeof game.answers[i].checkedOff === "undefined") {
 	            answers.push(game.answers[i]);
 	        }
 	    }
