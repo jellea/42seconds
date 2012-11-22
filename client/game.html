@@ -1,8 +1,10 @@
 <head>
     <title>FortyTwo Seconds</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <link href='http://fonts.googleapis.com/css?family=Kameron:400,700' rel='stylesheet' type='text/css'>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="apple-touch-icon" href="/images/touch-icon-57.png"/>
@@ -14,22 +16,27 @@
     <meta property="og:title" content="FortyTwo Seconds game"/>
     <meta property="og:type" content="website"/>
     <meta property="og:image" content="/images/touch-icon-72.png">
-    <meta property="og:description" content="FortyTwo Seconds is a mobile version of the popular 30 seconds game. Easy to take with you, anywhere!">
+    <meta property="og:description"
+          content="FortyTwo Seconds is a mobile version of the popular 30 seconds game. Easy to take with you, anywhere!">
 </head>
 
 <body>
-    {{> lobby}}
+{{> lobby}}
 </body>
 
 <template name="lobby">
     <div id="wrapper">
         <img src="/images/logo.png" class="lobby">
+
         <div class="bluebg lobby">
             <input type="button" id="newgame" class="startgame" value="New game"/>
+
             <p class="lobby_or"><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="joingame" class="joingame blue" value="Join game"/>
+
             <div id="ruleslink" class="lobby_rules">
                 <img src="/images/whistle.png">
+
                 <div>fortytwo what?<br/>show me the rules!</div>
             </div>
         </div>
@@ -45,14 +52,16 @@
         <div class="newgame bluebg">
             <h3 class="text_shadow_white_big">Eya! Choose your gametype here..</h3>
             <ul class="newgame text_shadow_white_small">
-              <li>Rounds<br><strong>5</strong></li>
-              <li>Category<br><strong>All</strong></li>
-              <li>Difficulty<br><strong>Medium</strong></li>
+                <li>Rounds<br><strong>5</strong></li>
+                <li>Category<br><strong>All</strong></li>
+                <li>Difficulty<br><strong>Medium</strong></li>
             </ul>
 
             <input type="button" id="startgame" class="startgame" value="Quick match"/>
+
             <p><span class="bar"></span> or <span class="bar"></span></p>
             <input type="button" id="advancedSettings" class="advancedsettings blue" value="Advanced settings">
+
             <p>Choose your options</p>
         </div>
     </div>
@@ -65,40 +74,50 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="rules bluebg">
-        	<div class="rule active">
-        		<img src="images/phone.png" style="width:150px;margin-left:80px;"> 
-        		<p>Play this game with 4 players who are physically near you. You need two smartphones to play; one to create the game and one to join the game.</p>
-        	</div>
+            <div class="rule active">
+                <img src="images/phone.png" style="width:150px;margin-left:80px;">
+
+                <p>Play this game with 4 players who are physically near you. You need two smartphones to play; one to
+                    create the game and one to join the game.</p>
+            </div>
             <div class="rule">
                 <img src="images/ico_r1.png">
-                <p>Shake ya phone, roll the dice. The dice determines your handicap. The lower your handicap, the more points you can get.</p>
+
+                <p>Shake ya phone, roll the dice. The dice determines your handicap. The lower your handicap, the more
+                    points you can get.</p>
             </div>
             <div class="rule">
                 <img src="images/ico_r2.png">
+
                 <p>Player one describes the words to player two. Player two has to guess the words.</p>
             </div>
             <div class="rule">
                 <br>
-                <p class="rulecard"><strong>What you may do:</strong><br />
-+ Describing / singing / humming or depicting the word<br />
-+ You have to say exactly guess the word(s)<br />
-<strong>What you may not do:</strong><br />
-- Say the words on the card<br />
-- Say words derived from the answer on the card<br />
-- "Sounds like" or "rhymes with" tactics<br />
-- Refer to a letter or letters in the alphabet<br />
-- Point at an object</p>
+
+                <p class="rulecard"><strong>What you may do:</strong><br/>
+                    + Describing / singing / humming or depicting the word<br/>
+                    + You have to say exactly guess the word(s)<br/>
+                    <strong>What you may not do:</strong><br/>
+                    - Say the words on the card<br/>
+                    - Say words derived from the answer on the card<br/>
+                    - "Sounds like" or "rhymes with" tactics<br/>
+                    - Refer to a letter or letters in the alphabet<br/>
+                    - Point at an object</p>
             </div>
             <div class="rule">
                 <img src="images/ico_r4.png">
+
                 <p>When the 42 seconds are up, the other team has to check the answers.</p>
             </div>
             <div class="rule">
                 <img src="images/ico_r5.png">
-                <p>The score of the team is the number of correctly guessed words minus handicap. If the score is less than 0, the score is 0.</p>
+
+                <p>The score of the team is the number of correctly guessed words minus handicap. If the score is less
+                    than 0, the score is 0.</p>
             </div>
             <div class="rule">
                 <img src="images/ico_r6.png">
+
                 <p>The team which achieved the most points after playing all rounds wins!</p>
             </div>
             <ul class="page-indicator">
@@ -116,26 +135,30 @@
 </template>
 
 <template name="advancedSettings">
-        <div id="wrapper">
+    <div id="wrapper">
         <header>
             <img class="backbutton" src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>
         <div class="newgame bluebg">
             <h3 class="text_shadow_white_big">Settings</h3>
+
             <p class="subtitle"><span class="bar"></span> Rounds <span class="bar"></span></p>
+
             <div class="advanced_option_slider">
                 <a href="#" class="previous option-nav">&lt;</a>
                 <span class="option">5 rounds</span>
                 <a href="#" class="previous option-nav">&gt;</a>
             </div>
-            
+
             <p class="subtitle"><span class="bar"></span> Category <span class="bar"></span></p>
+
             <div class="advanced_option_slider"></div>
-            
+
             <p class="subtitle"><span class="bar"></span> Difficulty <span class="bar"></span></p>
+
             <div class="advanced_option_slider"></div>
-            
+
             <input type="button" id="joingame" class="joingame" value="Done"/>
         </div>
     </div>
@@ -150,8 +173,11 @@
         <div class="join bluebg">
             <h3 class="text_shadow_white_big">Your code:</h3>
             <input type="text" pattern="[0-9]*" maxlength="3" id="gamecode" class="gamecode">
+
             <p class="text_shadow_white_small">You are in:</p>
-            <h3 class="blue text_shadow_black_big"><img src="/images/team-blue-icon.png" align="ABSMIDDLE"> TEAM BLUE</h3>
+
+            <h3 class="blue text_shadow_black_big"><img src="/images/team-blue-icon.png" align="ABSMIDDLE"> TEAM BLUE
+            </h3>
             <br>
             <br>
             <input type="button" id="joingame" class="joingame" value="Go!"/>
@@ -167,9 +193,12 @@
         </header>
         <div class="showcode bluebg">
             <h3 class="text_shadow_white_big">Your code:</h3>
+
             <div class="your-code text_shadow_black_big">{{ gamecode }}</div>
             <p class="text_shadow_white_small">You are in:</p>
+
             <h3 class="red text_shadow_black_big"><img src="/images/team-red-icon.png" align="ABSMIDDLE"> TEAM RED</h3>
+
             <p class="text_shadow_white_small">Waiting for other party to join</p>
         </div>
     </div>
@@ -178,18 +207,19 @@
 
 <template name="gameDice">
     <div id="wrapper">
-         <header>
+        <header>
             <img src="/images/logo-small.png">
         </header>
         <div class="dice bluebg">
             <h3 class="text_shadow_white_big">Shake it baby!</h3>
+
             <div id="dices">
                 <div class="diceface zero"><span class="dot">0</span></div>
-                <div class="diceface one" style="display:none;">  <span class="dot">1</span></div>
-                <div class="diceface two" style="display:none;">  <span class="dot">2</span></div>
+                <div class="diceface one" style="display:none;"><span class="dot">1</span></div>
+                <div class="diceface two" style="display:none;"><span class="dot">2</span></div>
             </div>
             <input type="button" id="dice" class="" value="Roll the dice!">
-            </div>
+        </div>
     </div>
 </template>
 
@@ -199,40 +229,48 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
-        <div class="score text_shadow_black_small">Score {{score}}</div>
-        <ul class="answers text_shadow_black_big">
-            
-            {{#each answers}}
-            {{#if this.checkedOff}}
-            <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
-            {{else}}
-            <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}">{{this.answer}}</li>
-            {{/if}}
-            {{/each}}
-            
-        </ul>
-        {{#constant}}
-        <div class="countdown run">
-          <img src="images/wijzerplaat.png">
-          <div class="clock run">
-            <div class="pointer run">
-              <img src="images/wijzer.png">
+            <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
+
+            <div class="score text_shadow_black_small">Score {{score}}</div>
+            <ul class="answers text_shadow_black_big">
+
+                {{#each answers}}
+                {{#if this.checkedOff}}
+                <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox"
+                                                                                                     class="checkbox"
+                                                                                                     id="{{this.answer}}"
+                                                                                                     name="{{this.answer}}"
+                                                                                                     checked="checked"><label
+                        for="answer-{{id}}">{{this.answer}}</label></li>
+                {{else}}
+                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}">{{this.answer}}
+                </li>
+                {{/if}}
+                {{/each}}
+
+            </ul>
+            {{#constant}}
+            <div class="countdown run">
+                <img src="images/wijzerplaat.png">
+
+                <div class="clock run">
+                    <div class="pointer run">
+                        <img src="images/wijzer.png">
+                    </div>
+                    <div class="clock-left">
+                        <div class="half-circle">
+                        </div>
+                    </div>
+                    <div class="clock-right">
+                        <div class="half-circle">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="clock-left">
-              <div class="half-circle">
-              </div>
-            </div>
-            <div class="clock-right">
-              <div class="half-circle">
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/constant}}
+            {{/constant}}
         </div>
     </div>
-	{{ready}}
+    {{ready}}
 </template>
 
 <template name="gameOpponent">
@@ -241,37 +279,43 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
-        <div class="score">Score {{score}}</div>
-        {{#constant}}
-        <p class="waiting_dice">Waiting for other team to roll the dice.</p>
-        {{/constant}}
-        <ul class="answers text_shadow_black_big">
-            {{#each checkedOff}}
-            <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox" name="{{id}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
-            {{/each}}
-        </ul> 
-        {{#constant}}
-        <div class="clock"></div>
-        <div class="countdown">
-          <img src="images/wijzerplaat.png">
-          <div class="clock run">
-            <div class="pointer">
-              <img src="images/wijzer.png">
+            <h3 class="text_shadow_white_big">Round {{roundnumber}}</h3>
+
+            <div class="score">Score {{score}}</div>
+            {{#constant}}
+            <p class="waiting_dice">Waiting for other team to roll the dice.</p>
+            {{/constant}}
+            <ul class="answers text_shadow_black_big">
+                {{#each checkedOff}}
+                <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox"
+                                                                                                     name="{{id}}"
+                                                                                                     checked="checked"><label
+                        for="answer-{{id}}">{{this.answer}}</label></li>
+                {{/each}}
+            </ul>
+            {{#constant}}
+            <div class="clock"></div>
+            <div class="countdown">
+                <img src="images/wijzerplaat.png">
+
+                <div class="clock run">
+                    <div class="pointer">
+                        <img src="images/wijzer.png">
+                    </div>
+                    <div class="clock-left">
+                        <div class="half-circle">
+                        </div>
+                    </div>
+                    <div class="clock-right">
+                        <div class="half-circle">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="clock-left">
-              <div class="half-circle">
-              </div>
-            </div>
-            <div class="clock-right">
-              <div class="half-circle">
-              </div>
-            </div>
-          </div>
+            {{/constant}}
         </div>
-        {{/constant}}
+        {{ready}}
     </div>
-    {{ready}}
 </template>
 
 <template name="gameScoreCheck">
@@ -280,35 +324,43 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game bluebg">
-        <h3>Score check</h3>
+            <h3>Score check</h3>
             <ul class="answers text_shadow_black_big">
 
                 {{#each answers}}
                 {{#if this.checkedOff}}
-                <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}" checked="checked"><label for="answer-{{id}}">{{this.answer}}</label></li>
+                <li id="answer-{{id}}" style="text-decoration: line-through" class="inactive"><input type="checkbox"
+                                                                                                     class="checkbox"
+                                                                                                     id="{{this.answer}}"
+                                                                                                     name="{{this.answer}}"
+                                                                                                     checked="checked"><label
+                        for="answer-{{id}}">{{this.answer}}</label></li>
                 {{else}}
-                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"><label for="answer-{{id}}">{{this.answer}}</label></li>
+                <li><input type="checkbox" class="checkbox" id="{{this.answer}}" name="{{this.answer}}"><label
+                        for="answer-{{id}}">{{this.answer}}</label></li>
                 {{/if}}
                 {{/each}}
 
             </ul>
-        <input type="button" id="nextround"  class="nextround" value="Done!"/>
+            <input type="button" id="nextround" class="nextround" value="Done!"/>
         </div>
     </div>
 </template>
 
 <template name="gameScoreCheckWait">
     <div id="wrapper" class="wait">
-          <img src="/images/ajax-loader.gif">
-          <h3>Waiting</h3>
-          <p>Waiting for score confirmation.</p>
+        <img src="/images/ajax-loader.gif">
+
+        <h3>Waiting</h3>
+
+        <p>Waiting for score confirmation.</p>
     </div>
     {{ready}}
 </template>
 
 <template name="gameResults">
     <div id="wrapper">
-         <header>
+        <header>
             <img src="/images/back-button.png">
             <img src="/images/logo-small.png">
         </header>

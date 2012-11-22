@@ -36,6 +36,10 @@ Meteor.startup(function () {
         }
         // Iterate over the games and check if they can be removed.
         for(var game in games) {
+            if(!game.teams) {
+                Games.remove(game._id);
+                continue;
+            }
             // Get the both teams.
             var teamOne = Teams.findOne(game.teams[0]._id);
             var teamTwo = Teams.findOne(game.teams[1]._id);
