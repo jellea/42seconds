@@ -10,6 +10,51 @@
  * Events and other template specific methods should be placed in their respective file.
  */
 Meteor.startup(function () {
+	window.addEventListener('load', detectOrientationMode, false);
+	window.addEventListener('orientationchange', handleOrientation, false);
+	
+	function isMobile() {
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+			return true;	
+		} else {
+			return false;
+		}
+	}
+	
+	function detectOrientationMode() {
+	  setTimeout(function() { window.scrollTo(0, 1); }, 10);
+	  //this is where our detection starts
+	  if(isMobile()) {
+		var viewportWidth = window.innerWidth;
+		if (viewportWidth > 320 && viewportWidth < 600) {
+		    // Zomg, landscape!!
+		    $('#wrapper').hide();
+		    $('#wrapper.landscape').show();
+		    $('body').css('width','600');
+		} else {
+		    // Portrait, all is good in the world of 42!
+		}
+	  }
+	}
+	
+	function handleOrientation() {
+	  setTimeout(function() { window.scrollTo(0, 1); }, 10);
+	  //this is where our detection starts
+	  if(isMobile()) {
+		var viewportWidth = window.innerWidth;
+		if (viewportWidth > 320 && viewportWidth < 600) {
+		    // Zomg, landscape!!
+		    $('#wrapper').hide();
+		    $('#wrapper.landscape').show();
+		    $('body').css('width','600');
+		} else {
+		    // Portrait, all is good in the world of 42!
+		    $('#wrapper').show();
+		    $('#wrapper.landscape').hide();
+		    $('body').css('width','320');
+		}
+	  }
+	}
     /*
      * Allocate a new team id. This will be the id which determines the score and respective their turn.
      * @param {String} error    The error if it is set.

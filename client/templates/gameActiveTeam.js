@@ -50,7 +50,22 @@ Template.gameActiveTeam.handicap = function () {
 Template.gameActiveTeam.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        if(game.clock === 0) {
+    	if(game.handicap != null && $('p.waiting_dice')) {
+    		$('p.waiting_dice').remove();
+    	}
+
+
+	    var answers = new Array();
+	    if(!game.answers || !game || !game.answers.length) {
+	        return 0;
+	    }
+	    for(var i=0; i<game.answers.length; i++) {
+	        if(game.answers[i].checkedOff && !typeof game.answers[i].checkedOff === "undefined") {
+	            answers.push(game.answers[i]);
+	        }
+	    }
+    	
+        if(game.clock === 0 || answers.length === game.answers.length) {
             render("gameScoreCheckWait", "body");
         }
     }

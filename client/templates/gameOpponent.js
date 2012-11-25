@@ -56,12 +56,27 @@ Template.gameOpponent.handicap = function () {
 Template.gameOpponent.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-    	if(game.handicap && $('p.waiting_dice')) {
-    		if($('p.waiting_dice').remove()) {
-    			// 
-    		}
+
+        if(!game.answers || !game || !game.answers.length) {
+            return 0;
+        }
+
+    	
+    	if(game.handicap != null && $('p.waiting_dice')) {
+    		$('p.waiting_dice').remove();
     	}
-        if(game.clock === 0) {
+    	
+	    var answers = new Array();
+	    for(var i=0; i<game.answers.length; i++) {
+	        if(game.answers[i].checkedOff && !typeof game.answers[i].checkedOff === "undefined") {
+	            answers.push(game.answers[i]);
+	        }
+	    }
+    	
+        if(game.clock === 0 || answers.length === game.answers.length) {
+            render("gameScoreCheck", "body");
+        }
+        if(answers.length === game.answers.length) {
             render("gameScoreCheck", "body");
         }
         if(game.handicap != null && $('div.countdown.run').length==0) {
