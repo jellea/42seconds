@@ -37,9 +37,16 @@ function createGamecode() {
  * @param gamecode  The game to load the answers in.
  */
 function loadAnswers(gamecode) {
+	var game = Games.findOne({'gamecode':gamecode});
+	
+	if(typeof game.checkDuplicates!='undefined') {
+		var checkDuplicates = JSON.parse(game.checkDuplicates);
+	} else {
+		var checkDuplicates = new Array();
+	}
+	
     var answers = new Array();
     var data = new Array();
-    var checkDuplicates = new Array();
     var fs = __meteor_bootstrap__.require('fs');
     var category = 'all';
     var json = fs.readFileSync('scraper/fortytwoseconds/items.json');
@@ -61,5 +68,6 @@ function loadAnswers(gamecode) {
         }
     }
     
-    Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
+    var checkDupesSerialized = JSON.stringify(checkDuplicates);
+    Games.update({'gamecode':gamecode}, {$set:{'answers':answers,'checkDuplicates':checkDupesSerialized}});
 }
