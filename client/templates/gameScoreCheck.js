@@ -34,6 +34,12 @@ Template.gameScoreCheck.events({
         console.log("Scores confirmed");
         var game = Games.findOne({'gamecode' : Session.get('gamecode')});
         var team = Teams.findOne(game.team._id);
+        var answers = new Array();
+        for(var i=0; i<game.answers.length; i++) {
+            if(game.answers[i].checkedOff) {
+                answers.push(game.answers[i]);
+            }
+        }
         var correctAnswers = new Array();
 
         for(var i=0; i<game.answers.length; i++) {
@@ -57,10 +63,37 @@ Template.gameScoreCheck.events({
             }
         }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
-        var score = (correctAnswers.length - handicap) < 0 ? team.score : (correctAnswers.length - handicap) + team.score;
-        //TODO: Set it to the other team and not the own team
+        var score = (answers.length - handicap) < 0 ? team.score : (answers.length - handicap) + team.score;
         Teams.update(game.team._id, {'$set': {'score' : score}});
-        Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
+
+        var scores = game.roundScores || new Array();
+
+        // My team
+        var myTeam = Teams.findOne(Session.get('team_id'));
+
+        // All the teams in the game.
+        var teams = Teams.find({'gamecode': Session.get('gamecode')}).fetch();
+
+        // The other team
+        var otherTeam;
+
+        // Get the other team
+        if(teams && myTeam) {
+            for(var i=0; i<teams.length; i++) {
+                if(teams[i]._id !== myTeam._id) {
+                    otherTeam = teams[i];
+                }
+            }
+        }
+
+        // Set the new scores for the record
+        if(myTeam.name === "Team Red") {
+            scores.push({'blue': score, 'red': myTeam.score, 'round':scores.length+1});
+        } else if(myTeam.name === "Team Blue") {
+            scores.push({'red': score, 'blue' : myTeam.score, 'round':scores.length+1})
+        }
+
+        Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true, 'roundScores': scores}});;
         render("gameResults", "body");
     },
     /**

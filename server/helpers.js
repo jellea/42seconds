@@ -49,10 +49,33 @@ function loadAnswers(gamecode) {
     var data = new Array();
     
 	for(var i=0; i<defaultNumberOfAnswers; i++) {
-        if(game.category=='all' || typeof game.category == 'undefined' || game.category === null) {
-        	var words = Answers.find();
+		var answersWithGuessedPercentage = Answers.find().count() - Answers.find({'guess_percentage':null}).count();
+		
+		if(game.difficulty=='medium' || answersWithGuessedPercentage < 250) {
+	        if(game.category=='all' || typeof game.category == 'undefined' || game.category === null) {
+	        	var words = Answers.find();
+	        } else {
+	        	var words = Answers.find({'category':game.category});
+	        }
         } else {
-        	var words = Answers.find({'category':game.category});
+        	if(game.difficulty == 'Super easy') {
+        		lowerbound = 0.9;
+        		upperbound = 1;
+        	} else if(game.difficulty == 'Easy') {
+        		lowerbound = 0.75;
+        		upperbound = 1;
+        	} else if(game.difficulty == 'Hard') {
+        		lowerbound = 0.25;
+        		upperbound = 0.5;
+        	} else if(game.difficulty == 'Power extreme') {
+        		lowerbound = 0;
+        		upperbound = 0.25;
+        	}
+        	if(game.category=='all' || typeof game.category == 'undefined' || game.category === null) {
+	        	var words = Answers.find({'guess_percentage':{'$lte':upperbound,'$gte':lowerbound}}).fetch();
+	        } else {
+	        	var words = Answers.find({'guess_percentage':{'$lte':upperbound,'$gte':lowerbound},'category':game.category}).fetch();
+	        }
         }
         
         random = Math.floor(Math.random() * (words.count() - 0 + 1)) + 0; // we need to add the zero!!11!!1!

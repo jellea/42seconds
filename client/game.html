@@ -201,7 +201,7 @@
             <p class="subtitle"><span class="bar"></span> Difficulty <span class="bar"></span></p>
 
             <div class="advanced_option_slider">
-            	<select name="difficult">
+            	<select name="difficulty">
                		{{#each difficulties}}
                			<option{{#if this.selected}} selected="selected"{{/if}}>{{this.name}}</option>
                		{{/each}}
@@ -507,37 +507,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                <!--<tr>
-                    <td>round 1</td>
-                    <td class="scores">4</td>
-                    <td class="scores">5</td>
-                </tr>
-                <tr>
-                    <td>round 2</td>
-                    <td class="scores">1</td>
-                    <td class="scores">3</td>
-                </tr>
-                <tr>
-                    <td>round 3</td>
-                    <td class="scores">2</td>
-                    <td class="scores">5</td>
-                </tr>
-                <tr>
-                    <td>round 4</td>
-                    <td class="scores">3</td>
-                    <td class="scores">2</td>
-                </tr>
-                <tr>
-                    <td>round 5</td>
-                    <td class="scores">4</td>
-                    <td class="scores">1</td>
-                </tr>-->
+                {{#each roundScores}}
+                    <tr>
+                        <td>Round {{this.round}}</td>
+                        <td class="scores">{{this.red}}</td>
+                        <td class="scores">{{this.blue}}</td>
+                    </tr>
+                {{/each}}
                 <tr class="total">
-                    <td>total</td>
-                    {{#each teams}}
-                    <td class="scores">{{this.score}}</td>
-                    {{/each}}
-                </tr>
+                    <td>Total</td>
+                    <td class="scores">{{teamRedScore}}</td>
+                    <td class="scores">{{teamBlueScore}}</td>
                 </tbody>
             </table>
         </div>
