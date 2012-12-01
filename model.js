@@ -52,3 +52,14 @@ Teams = new Meteor.Collection('teams');
  * @type {Meteor.Collection}
  */
 Dice = new Meteor.Collection('dice');
+
+/**
+ * {
+ *      answer: "Christian Bale",
+ *      category: "Acteurs",
+ *      language: "nl",
+ *      link: "http://www.imdb.com/ri/STARM_100/TOP/102162/name/nm0000288"
+ * }
+ * @type {Meteor.Collection}
+ */
+Answers = new Meteor.Collection('answers');

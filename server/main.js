@@ -75,7 +75,7 @@ Meteor.methods({
 
         // Save a record of who is in the game, so when they leave we can
         // still show them.
-        Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team 1','score':0}});
+        Teams.update({_id: team_id}, {$set:{'gamecode':gamecode, 'name': 'Team Red','score':0}});
 
         var p = Teams.find({'gamecode':gamecode},
             {fields:{_id:true, name:true}}).fetch();
@@ -107,7 +107,7 @@ Meteor.methods({
         var game = Games.findOne({'gamecode':gamecode});
         var teamNumber = (game.teams.length*1)+1;
         Teams.update({_id:team_id},
-            {$set:{'gamecode':gamecode,'name':'Team '+teamNumber}},
+            {$set:{'gamecode':gamecode,'name':'Team Blue'}},
             {multi:true});
         // Save a record of who is in the game, so when they leave we can
         // still show them.

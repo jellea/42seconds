@@ -34,14 +34,15 @@ Template.gameScoreCheck.events({
         console.log("Scores confirmed");
         var game = Games.findOne({'gamecode' : Session.get('gamecode')});
         var team = Teams.findOne(game.team._id);
-        var answers = new Array();
+        var correctAnswers = new Array();
         for(var i=0; i<game.answers.length; i++) {
             if(game.answers[i].checkedOff) {
-                answers.push(game.answers[i]);
+                correctAnswers.push(game.answers[i]);
+                // TODO Add tracking of correctly answered answers
             }
         }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
-        var score = (answers.length - handicap) < 0 ? team.score : (answers.length - handicap) + team.score;
+        var score = (correctAnswers.length - handicap) < 0 ? team.score : (correctAnswers.length - handicap) + team.score;
         //TODO: Set it to the other team and not the own team
         Teams.update(game.team._id, {'$set': {'score' : score}});
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true}});
