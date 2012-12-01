@@ -7,7 +7,7 @@
  * globals regarding standard round settings, standard categories and so forth and so on.
  */
 
-var dev = true;
+var dev = false;
 if(dev) {
 	var defaultClock = 5;
 	
