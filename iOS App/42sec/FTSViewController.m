@@ -22,7 +22,8 @@
     CGFloat screenHeight = screenRect.size.height;
 	// Do any additional setup after loading the view, typically from a nib.
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-    // UIWebView *webView = [[UIWebView alloc] init];
+    webView.scrollView.scrollEnabled = NO;
+    webView.scrollView.bounces = NO;
     [webView setDelegate:self];
     
     NSString *urlAddress = @"http://fortytwoapp.com";
