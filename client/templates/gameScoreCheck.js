@@ -40,6 +40,28 @@ Template.gameScoreCheck.events({
                 answers.push(game.answers[i]);
             }
         }
+        var correctAnswers = new Array();
+
+        for(var i=0; i<game.answers.length; i++) {
+        	answer = game.answers[i];
+            if(answer.checkedOff) {
+                correctAnswers.push(answer);
+                answer = Answers.find({'answer':answer.answer}).fetch();
+                answer = answer[0];
+	            if(typeof answer.guessed == 'undefined') {
+	            	var guessed = 0;
+	            } else {
+	            	var guessed = answer.guessed;
+	            }
+	            if(typeof answer.shown == 'undefined') {
+	            	var shown = 0;
+	            } else {
+	            	var shown = answer.shown;
+	            }
+	            var newGuessed = (guessed*1)+1;
+	            Answers.update({'_id':answer._id}, {$set:{'guessed':newGuessed,'guess_percentage':(answer.shown/newGuessed)}});
+            }
+        }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;
         var score = (answers.length - handicap) < 0 ? team.score : (answers.length - handicap) + team.score;
         Teams.update(game.team._id, {'$set': {'score' : score}});
