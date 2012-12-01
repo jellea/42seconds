@@ -37,17 +37,20 @@ function createGamecode() {
  * @param gamecode  The game to load the answers in.
  */
 function loadAnswers(gamecode) {
-	console.log('loadAnswers yay');
     var answers = new Array();
+    var data = new Array();
     var checkDuplicates = new Array();
     var fs = __meteor_bootstrap__.require('fs');
-    var category = 'Sporten';
-    var data = fs.readFileSync('scraper/fortytwoseconds/items.json');
-    var data = JSON.parse(data); // because eval is evil !11!!
-    console.log(data);
-    //data = data.toString().split("\n");
-
-    for(var i=0; i<defaultNumberOfAnswers; i++) {
+    var category = 'all';
+    var json = fs.readFileSync('scraper/fortytwoseconds/items.json');
+    var json = JSON.parse(json); // because eval is evil !11!!
+    for(var i=0;i < json.length; i++) {
+    	if(json[i]['category']==category || category=='all') {
+    		data.push(json[i]['answer']);
+    	}
+    }
+	
+	for(var i=0; i<defaultNumberOfAnswers; i++) {
         random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
         var word = data[random];
         if(checkDuplicates.indexOf(word)==-1) {
@@ -57,5 +60,6 @@ function loadAnswers(gamecode) {
             i=i-1;
         }
     }
+    
     Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
 }

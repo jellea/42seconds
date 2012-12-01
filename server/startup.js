@@ -12,8 +12,6 @@
  * has compiled and loaded all the files necessary.
  */
 Meteor.startup(function () {
-		
-	loadAnswers('710');
 	 
     // Set the idle timeout checker to 30 seconds
     Meteor.setInterval(function () {
