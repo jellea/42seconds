@@ -76,13 +76,19 @@ transform(arg)
 html
     background: black
     background-image url('/images/blue-bg.jpg')
+    height 100%
 
 body
     font: 16px Kameron
-    background: white
     width: 320px
-    height: 440px
+    height: 100%
     margin: 0
+
+body #wrapper 
+    min-height: 100%;
+
+body #wrapper.white
+    background-color: white
 
 body h3 
     font-size: 27px
@@ -98,6 +104,7 @@ body header
     width: 320px
     text-align: center
     position: relative
+    background-color white
 
 body header img
     margin-top: 8px
@@ -115,7 +122,9 @@ body img.lobby
     height: 110px
 
 body div.lobby.bluebg
-    height: 250px
+    height: 260px
+    position absolute
+    bottom: 0
     bluebg()
 
 body div.lobby input:first-child
