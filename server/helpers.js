@@ -37,11 +37,15 @@ function createGamecode() {
  * @param gamecode  The game to load the answers in.
  */
 function loadAnswers(gamecode) {
+	console.log('loadAnswers yay');
     var answers = new Array();
     var checkDuplicates = new Array();
     var fs = __meteor_bootstrap__.require('fs');
-    var data = fs.readFileSync('answers/answers.txt');
-    data = data.toString().split("\n");
+    var category = 'Sporten';
+    var data = fs.readFileSync('scraper/fortytwoseconds/items.json');
+    var data = JSON.parse(data); // because eval is evil !11!!
+    console.log(data);
+    //data = data.toString().split("\n");
 
     for(var i=0; i<defaultNumberOfAnswers; i++) {
         random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
