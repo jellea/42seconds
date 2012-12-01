@@ -60,6 +60,7 @@ Meteor.methods({
         if(typeof category=='undefined') {
             category = defaultCategory;
         }
+        
         if(typeof difficulty=='undefined') {
             difficulty = defaultDifficulty;
         }

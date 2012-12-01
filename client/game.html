@@ -176,20 +176,40 @@
             <p class="subtitle"><span class="bar"></span> Rounds <span class="bar"></span></p>
 
             <div class="advanced_option_slider">
-                <a href="#" class="previous option-nav">&lt;</a>
+                <!--a href="#" class="previous option-nav">&lt;</a>
+                <span class="option">3 rounds</span>
                 <span class="option">5 rounds</span>
-                <a href="#" class="previous option-nav">&gt;</a>
+                <span class="option">10 rounds</span>
+                <a href="#" class="previous option-nav">&gt;</a-->
+               	<select name="rounds">
+               		<option value="1">1 round</option>
+               		<option value="3">3 rounds</option>
+               		<option value="5" selected="selected">5 rounds</option>
+               		<option value="10">10 rounds</option>
+               	</select>
             </div>
 
             <p class="subtitle"><span class="bar"></span> Category <span class="bar"></span></p>
 
-            <div class="advanced_option_slider"></div>
+            <div class="advanced_option_slider">
+            	<select name="category">
+               		{{#each categories}}
+               			<option>{{this}}</option>
+               		{{/each}}
+               	</select>
+            </div>
 
             <p class="subtitle"><span class="bar"></span> Difficulty <span class="bar"></span></p>
 
-            <div class="advanced_option_slider"></div>
+            <div class="advanced_option_slider">
+            	<select name="difficult">
+               		{{#each difficulties}}
+               			<option{{#if this.selected}} selected="selected"{{/if}}>{{this.name}}</option>
+               		{{/each}}
+               	</select>
+            </div>
 
-            <input type="button" id="joingame" class="joingame" value="Done"/>
+            <input type="button" id="startgame" class="startgame" value="Start game"/>
         </div>
     </div>
 	<div id="wrapper" class="landscape">
