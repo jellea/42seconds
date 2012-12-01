@@ -26,7 +26,9 @@ Meteor.startup(function () {
 	  //this is where our detection starts
 	  if(isMobile()) {
 		var viewportWidth = window.innerWidth;
-		if (viewportWidth > 320 && viewportWidth < 600) {
+		var viewportHeight = window.innerHeight;
+		ratio = viewportWidth/viewportHeight;
+		if (ratio>1) {
 		    // Zomg, landscape!!
 		    $('#wrapper').hide();
 		    $('#wrapper.landscape').show();
@@ -42,7 +44,9 @@ Meteor.startup(function () {
 	  //this is where our detection starts
 	  if(isMobile()) {
 		var viewportWidth = window.innerWidth;
-		if (viewportWidth > 320 && viewportWidth < 600) {
+		var viewportHeight = window.innerHeight;
+		ratio = viewportWidth/viewportHeight;
+		if (ratio>1) {
 		    // Zomg, landscape!!
 		    $('#wrapper').hide();
 		    $('#wrapper.landscape').show();
