@@ -32,5 +32,9 @@ Template.advancedSettings.events({
             Session.set('teamNumber',game.teams.length);
             render("showCode", "body");
         });
+    },
+    
+	'click img.backbutton' : function () {
+        render("newGame", "body");
     }
 });
