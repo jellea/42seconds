@@ -37,21 +37,39 @@ function createGamecode() {
  * @param gamecode  The game to load the answers in.
  */
 function loadAnswers(gamecode) {
-    var answers = new Array();
-    var checkDuplicates = new Array();
-    var fs = __meteor_bootstrap__.require('fs');
-    var data = fs.readFileSync('answers/answers.txt');
-    data = data.toString().split("\n");
+	var game = Games.findOne({'gamecode':gamecode});
 
-    for(var i=0; i<defaultNumberOfAnswers; i++) {
-        random = Math.floor(Math.random() * (data.length - 0 + 1)) + 0;
-        var word = data[random];
-        if(checkDuplicates.indexOf(word)==-1) {
-            checkDuplicates.push(word);
-            answers.push({"answer":word});
+	if(typeof game.checkDuplicates!='undefined') {
+		var checkDuplicates = JSON.parse(game.checkDuplicates);
+	} else {
+		var checkDuplicates = new Array();
+	}
+	
+    var answers = new Array();
+    var data = new Array();
+    
+	for(var i=0; i<defaultNumberOfAnswers; i++) {
+        if(game.category=='all' || typeof game.category == 'undefined' || game.category === null) {
+        	var words = Answers.find();
         } else {
-            i=i-1;
+        	var words = Answers.find({'category':game.category});
+        }
+        
+        random = Math.floor(Math.random() * (words.count() - 0 + 1)) + 0; // we need to add the zero!!11!!1!
+        var words = words.fetch();
+        
+        var answer = words[random];
+        
+        if(typeof answer!='undefined') {
+	        if(checkDuplicates.indexOf(answer.answer)==-1) {
+	            checkDuplicates.push(answer.answer);
+	            answers.push({"answer":answer.answer});
+	        } else {
+	            i=i-1;
+	        }
         }
     }
-    Games.update({'gamecode':gamecode}, {$set:{'answers':answers}});
+    
+    var checkDupesSerialized = JSON.stringify(checkDuplicates);
+    Games.update({'gamecode':gamecode}, {$set:{'answers':answers,'checkDuplicates':checkDupesSerialized}});
 }

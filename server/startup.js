@@ -12,10 +12,11 @@
  * has compiled and loaded all the files necessary.
  */
 Meteor.startup(function () {
+	 
     // Set the idle timeout checker to 30 seconds
     Meteor.setInterval(function () {
         var now = (new Date()).getTime();
-        var idle_threshold = now - 10 * 1000; // 70 sec of time of being idle is allowed
+        var idle_threshold = now - 10 * 1000; // 10 sec of time of being idle is allowed
         var remove_threshold = now - 20 * 1000; // 1hr
 
         Teams.update({$lt:{last_keepalive:idle_threshold}},
@@ -51,4 +52,14 @@ Meteor.startup(function () {
             }
         }
     }, 60 * 1000);
+
+    // Clear all the answers to make room for the new ones
+    Answers.remove({});
+
+    var fs = __meteor_bootstrap__.require('fs');
+    var json = fs.readFileSync('scraper/fortytwoseconds/items.json');
+    json = JSON.parse(json); // because eval is evil !11!!
+    for(var i=0;i < json.length; i++) {
+        Answers.insert(json[i]);
+    }
 });
