@@ -29,6 +29,33 @@ Template.gameResults.answers = function () {
     }
 };
 
+/**
+ * Gets your team
+ * @return {Object} Your team
+ */
+Template.gameResults.myTeam = function () {
+    var team = Teams.findOne(Session.get('team_id'));
+    if(team) {
+        return team;
+    }
+};
+
+/**
+ * Gets the other team
+ * @return {Object} The other team
+ */
+Template.gameResults.otherTeam = function () {
+    var teams = Teams.find({'gamecode': Session.get('gamecode')}).fetch()
+    var myTeam = Teams.findOne(Session.get('team_id'));
+    if(teams && myTeam) {
+        for(var i=0; i<teams.length; i++) {
+            if(teams[i]._id !== myTeam._id) {
+                return teams[i];
+            }
+        }
+    }
+}
+
 Template.gameResults.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game.nextRound) {
