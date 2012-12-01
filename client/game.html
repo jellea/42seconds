@@ -497,12 +497,51 @@
             <img src="/images/logo-small.png">
         </header>
         <div class="game-results bluebg">
-            <h3>Results</h3>
-            <ul>
-                {{#each teams}}
-                <li>{{this.name}}: {{this.score}}</li>
-                {{/each}}
-            </ul>
+            <h3 class="text_shadow_white_small">Scoreboard</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="round"></th>
+                        <th id="red" class="scores">Red</th>
+                        <th id="blue" class="scores">Blue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>round 1</td>
+                    <td class="scores">4</td>
+                    <td class="scores">5</td>
+                </tr>
+                <tr>
+                    <td>round 2</td>
+                    <td class="scores">1</td>
+                    <td class="scores">3</td>
+                </tr>
+                <tr>
+                    <td>round 3</td>
+                    <td class="scores">2</td>
+                    <td class="scores">5</td>
+                </tr>
+                <tr>
+                    <td>round 4</td>
+                    <td class="scores">3</td>
+                    <td class="scores">2</td>
+                </tr>
+                <tr>
+                    <td>round 5</td>
+                    <td class="scores">4</td>
+                    <td class="scores">1</td>
+                </tr>
+                <tr class="total">
+                    <td>total</td>
+                    <td class="scores">4</td>
+                    <td class="scores">2</td>
+                </tr>
+                </tbody>
+            </table>
+            
+            
+
         </div>
         <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>

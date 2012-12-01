@@ -25,6 +25,12 @@ transform(arg)
     -o-transform arg
     -ms-transform arg
 
+border-left-image(image)
+    -moz-border-left-image url( image )
+    -webkit-border-left-image url( image )
+    -o-border-left-image url( image )
+    border-left-image url( image )
+
 bluebg()
     background-image: url('/images/blue-bg.jpg')
 
@@ -364,10 +370,8 @@ body div.rules div.rule1.active p.rulecard
   padding: 10px
   text-align: left
 
-
 body div.rules div.rule1.active img
   width 320px
-
 
 body div.rules div.rule2
   display none
@@ -598,3 +602,41 @@ div.wait
     font-size: 15px
     left: 52px
     position: absolute
+
+.game-results
+  font-size 30px
+
+  h3
+    font-size 40px
+
+  table
+    width 100%
+    border-spacing 0
+    border-collapse:collapse;
+
+    td
+      border-top solid 1px black
+      
+    .scores
+        background-color rgba(255,255,255,0.5) !important
+        margin 1px
+        text-align center
+
+    td:last-child
+        border-left-image( "/images/blue-bg.jpg" )
+
+    tr:last-child td
+      border-top solid 4px black
+    
+    th
+      font-size 24px !important
+      border-bottom solid 4px black
+    
+  #round
+    width 60%
+
+  #red
+    width 20%
+
+  #blue
+    width 20%
