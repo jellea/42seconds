@@ -40,6 +40,28 @@ Template.gameResults.myTeam = function () {
     }
 };
 
+Template.gameResults.teamRedScore = function () {
+    var teams = Teams.find({'gamecode': Session.get('gamecode')}).fetch();
+    if(teams) {
+        for(var i = 0; i < teams.length; i++) {
+            if(teams[i].name == "Team Red") {
+                return teams[i].score;
+            }
+        }
+    }
+}
+
+Template.gameResults.teamBlueScore = function () {
+    var teams = Teams.find({'gamecode': Session.get('gamecode')}).fetch();
+    if(teams) {
+        for(var i = 0; i < teams.length; i++) {
+            if(teams[i].name == "Team Blue") {
+                return teams[i].score;
+            }
+        }
+    }
+}
+
 /**
  * Gets the other team
  * @return {Object} The other team
@@ -77,6 +99,13 @@ Template.gameResults.ready = function () {
         }
     }
 };
+
+Template.gameResults.roundScores = function () {
+    var game = Games.findOne({'gamecode': Session.get('gamecode')});
+    if(game) {
+        return game.roundScores;
+    }
+}
 
 /**
  * Events for the gameResults template

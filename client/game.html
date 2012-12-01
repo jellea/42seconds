@@ -507,35 +507,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                {{#each roundScores}}
                     <tr>
-                    <td>round 1</td>
-                    <td class="scores">4</td>
-                    <td class="scores">5</td>
-                </tr>
-                <tr>
-                    <td>round 2</td>
-                    <td class="scores">1</td>
-                    <td class="scores">3</td>
-                </tr>
-                <tr>
-                    <td>round 3</td>
-                    <td class="scores">2</td>
-                    <td class="scores">5</td>
-                </tr>
-                <tr>
-                    <td>round 4</td>
-                    <td class="scores">3</td>
-                    <td class="scores">2</td>
-                </tr>
-                <tr>
-                    <td>round 5</td>
-                    <td class="scores">4</td>
-                    <td class="scores">1</td>
-                </tr>
+                        <td>Round {{this.round}}</td>
+                        <td class="scores">{{this.red}}</td>
+                        <td class="scores">{{this.blue}}</td>
+                    </tr>
+                {{/each}}
                 <tr class="total">
-                    <td>total</td>
-                    <td class="scores">4</td>
-                    <td class="scores">2</td>
+                    <td>Total</td>
+                    <td class="scores">{{teamRedScore}}</td>
+                    <td class="scores">{{teamBlueScore}}</td>
                 </tr>
                 </tbody>
             </table>

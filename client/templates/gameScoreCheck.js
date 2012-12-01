@@ -66,9 +66,9 @@ Template.gameScoreCheck.events({
 
         // Set the new scores for the record
         if(myTeam.name === "Team Red") {
-            scores.push({'blue': score, 'red': myTeam.score});
+            scores.push({'blue': score, 'red': myTeam.score, 'round':scores.length+1});
         } else if(myTeam.name === "Team Blue") {
-            scores.push({'red': score, 'blue' : myTeam.score })
+            scores.push({'red': score, 'blue' : myTeam.score, 'round':scores.length+1})
         }
 
         Games.update({'gamecode': Session.get('gamecode')}, {'$set': {'scoreConfirmed' : true, 'roundScores': scores}});;
