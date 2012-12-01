@@ -56,6 +56,13 @@ Template.gameResults.otherTeam = function () {
     }
 }
 
+Template.gameResults.round = function () {
+    var game = Games.findOne({'gamecode' : Session.get('gamecode')});
+    if(game) {
+        return game.round;
+    }
+}
+
 Template.gameResults.ready = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game.nextRound) {
