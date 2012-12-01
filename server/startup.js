@@ -52,4 +52,14 @@ Meteor.startup(function () {
             }
         }
     }, 60 * 1000);
+
+    // Clear all the answers to make room for the new ones
+    Answers.remove({});
+
+    var fs = __meteor_bootstrap__.require('fs');
+    var json = fs.readFileSync('scraper/fortytwoseconds/items.json');
+    json = JSON.parse(json); // because eval is evil !11!!
+    for(var i=0;i < json.length; i++) {
+        Answers.insert(json[i]);
+    }
 });
