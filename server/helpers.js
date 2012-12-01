@@ -64,6 +64,18 @@ function loadAnswers(gamecode) {
 	        if(checkDuplicates.indexOf(answer.answer)==-1) {
 	            checkDuplicates.push(answer.answer);
 	            answers.push({"answer":answer.answer});
+	            if(typeof answer.shown == 'undefined') {
+	            	shown = 0;
+	            } else {
+	            	shown = answer.shown;
+	            }
+	            if(typeof answer.guessed == 'undefined') {
+	            	var guessed = 0;
+	            } else {
+	            	var guessed = answer.guessed;
+	            }
+	            var newShown = (shown*1)+1;
+	            Answers.update({'_id':answer._id}, {$set:{'shown':newShown,'guess_percentage':(newShown/guessed)}});
 	        } else {
 	            i=i-1;
 	        }

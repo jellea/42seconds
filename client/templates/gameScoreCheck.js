@@ -35,10 +35,25 @@ Template.gameScoreCheck.events({
         var game = Games.findOne({'gamecode' : Session.get('gamecode')});
         var team = Teams.findOne(game.team._id);
         var correctAnswers = new Array();
+
         for(var i=0; i<game.answers.length; i++) {
-            if(game.answers[i].checkedOff) {
-                correctAnswers.push(game.answers[i]);
-                // TODO Add tracking of correctly answered answers
+        	answer = game.answers[i];
+            if(answer.checkedOff) {
+                correctAnswers.push(answer);
+                answer = Answers.find({'answer':answer.answer}).fetch();
+                answer = answer[0];
+	            if(typeof answer.guessed == 'undefined') {
+	            	var guessed = 0;
+	            } else {
+	            	var guessed = answer.guessed;
+	            }
+	            if(typeof answer.shown == 'undefined') {
+	            	var shown = 0;
+	            } else {
+	            	var shown = answer.shown;
+	            }
+	            var newGuessed = (guessed*1)+1;
+	            Answers.update({'_id':answer._id}, {$set:{'guessed':newGuessed,'guess_percentage':(answer.shown/newGuessed)}});
             }
         }
         var handicap = Dice.findOne({ 'access_code': Session.get('gamecode')}).throw;

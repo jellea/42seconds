@@ -501,12 +501,13 @@
                 <thead>
                     <tr>
                         <th id="round"></th>
-                        <th id="red" class="scores">Red</th>
-                        <th id="blue" class="scores">Blue</th>
+                        {{#each teams}}
+                        <th id="{{this.name}}" class="scores">{{this.name}}</th>
+                        {{/each}}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <!--<tr>
                     <td>round 1</td>
                     <td class="scores">4</td>
                     <td class="scores">5</td>
@@ -530,17 +531,15 @@
                     <td>round 5</td>
                     <td class="scores">4</td>
                     <td class="scores">1</td>
-                </tr>
+                </tr>-->
                 <tr class="total">
                     <td>total</td>
-                    <td class="scores">4</td>
-                    <td class="scores">2</td>
+                    {{#each teams}}
+                    <td class="scores">{{this.score}}</td>
+                    {{/each}}
                 </tr>
                 </tbody>
             </table>
-            
-            
-
         </div>
         <input type="button" id="scoreok" class="scoreok" value="Done!"/>
     </div>
