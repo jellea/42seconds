@@ -24,7 +24,8 @@
  *      nextRound: false                // Whether the next round already started.
  *      answers:    [object->
  *                  {answer: 'string'},
- *                  object]             // The answers for this current game and round (array)
+ *                  object],            // The answers for this current game and round (array)
+ *      roundScores: [{"red": 1, "blue":0},{"red": 1, "blue":4}, etc.] // The scores for each round.
  * }
  * @type {Meteor.Collection}
  */
