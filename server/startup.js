@@ -16,7 +16,7 @@ Meteor.startup(function () {
     // Set the idle timeout checker to 30 seconds
     Meteor.setInterval(function () {
         var now = (new Date()).getTime();
-        var idle_threshold = now - 10 * 1000; // 70 sec of time of being idle is allowed
+        var idle_threshold = now - 10 * 1000; // 10 sec of time of being idle is allowed
         var remove_threshold = now - 20 * 1000; // 1hr
 
         Teams.update({$lt:{last_keepalive:idle_threshold}},
