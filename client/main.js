@@ -72,3 +72,10 @@ Meteor.startup(function () {
             Meteor.call('keepAlive', Session.get('team_id'));
     }, 20 * 1000); // KeepAlive Every 20 seconds
 });
+
+/**
+ * Event handlers for events like onClick, etc.
+ */
+$(function() {
+    $(":button ")
+})

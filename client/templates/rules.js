@@ -22,16 +22,19 @@ Template.rules.events = ({
     /**
      * Event: Click on the div.rule element
      */
-    'click div.rule': function () {
-        if ($('div.rule.active').next().is('div')) {
-            $('div.rule.active').removeClass('active').next().addClass('active');
-            $('ul.page-indicator input.active').removeClass('active').parent().next().find('input').addClass('active');
-        } else {
-            $('div.rule.active').removeClass('active');
-            $('ul.page-indicator input.active').removeClass('active');
-            $('div.rule').eq(0).addClass('active');
-            $('ul.page-indicator input').eq(0).addClass('active');
-        }
+    'click :button': function (event) {
+        /**
+         * Change the little balls
+         */
+        $(":button.active").removeClass('active');
+        $(event.currentTarget).addClass('active');
+
+        /**
+         * Change the rule
+         */
+        $('div.active').removeClass('active');
+        $('div.rule'+ event.currentTarget['value']).addClass('active');
+
     },
     'click img.backbutton':function () {
         render("lobby", "body");
