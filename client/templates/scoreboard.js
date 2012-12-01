@@ -16,7 +16,7 @@
  */
 Template.scoreboard.scores = function() {
     var teams = Teams.find({'gamecode':Session.get('gamecode')},{fields:{_id:true, name:true, score:true}}).fetch();
-    return scores;
+    return teams;
 }
 
 /**
@@ -26,6 +26,6 @@ Template.scoreboard.scores = function() {
 Template.scoreboard.winner = function () {
     var game = Games.findOne({'gamecode' : Session.get('gamecode')});
     if(game) {
-        return game.winner;
+        return game.winner.name;
     }
 }
