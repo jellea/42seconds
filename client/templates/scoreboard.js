@@ -16,7 +16,7 @@
  */
 Template.scoreboard.scores = function() {
     var teams = Teams.find({'gamecode':Session.get('gamecode')},{fields:{_id:true, name:true, score:true}}).fetch();
-    return scores;
+    return teams;
 }
 
 /**

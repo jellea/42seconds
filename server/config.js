@@ -7,11 +7,11 @@
  * globals regarding standard round settings, standard categories and so forth and so on.
  */
 
-var dev = false;
+var dev = true;
 if(dev) {
-	var defaultClock = 10; 
+	var defaultClock = 5;
 	
-	var defaultRounds = 5;
+	var defaultRounds = 1;
 	var defaultCategory = 'all';
 	var defaultDifficulty = 'medium';
 	var defaultNumberOfAnswers = 5;

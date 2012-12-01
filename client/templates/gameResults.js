@@ -61,9 +61,9 @@ Template.gameResults.events({
 
         if(game.round === game.rounds) {
             // The game is over.
-            var game = Games.findOne({'gamecode':Session.get('gamecode')});
-            var teamOne = game.teams[0];
-            var teamTwo = game.teams[1];
+            var teams = Teams.find({'gamecode':Session.get('gamecode')}).fetch();
+            var teamOne = teams[0];
+            var teamTwo = teams[1];
             var winner;
             if(teamOne.score > teamTwo.score) {
                 winner = teamOne;
