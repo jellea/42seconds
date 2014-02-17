@@ -55,8 +55,8 @@ Meteor.startup(function () {
 
     // Clear all the answers to make room for the new ones
 
-    var fs = __meteor_bootstrap__.require('fs');
-    var json = fs.readFileSync('scraper/fortytwoseconds/items.json');
+    var fs = Npm.require('fs');
+    var json = fs.readFileSync('../client/app/items.json');
     json = JSON.parse(json); // because eval is evil !11!!
     for(var i=0;i < json.length; i++) {
         if(Answers.findOne({'answer': json[i].answer})) {
